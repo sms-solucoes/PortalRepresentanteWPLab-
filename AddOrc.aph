@@ -1,0 +1,3599 @@
+<%
+	/**** Pagina de login do site ****/
+	Local cLCodLogin  := ""
+	if type ("cCodLogin") <> "U"
+		cLCodLogin := cCodLogin
+	Endif
+%>
+<!DOCTYPE html>
+<html class="fixed sidebar-left-collapsed">
+	<head>
+		<!-- Basic -->
+		<meta charset="iso-8859-1">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+	
+		<title><%=cTitle%></title>
+	
+		<meta name="keywords" content="<%=cTitle%>" />
+		<meta name="description" content="<%=cTitle%>">
+		<meta name="author" content="SMSTI">
+		<meta http-equiv="Chache-Control" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Pragma" content="no-cache" />
+	
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+	
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-select/css/bootstrap-select.min.css" />
+	    <style> 
+	    	body .btn { 
+	    		white-space: nowrap !important;
+	    		display: inline;
+	    		overflow-y: hidden;
+	    	}
+	    	
+		</style>
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
+	
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+	
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+	
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+	
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+	    <script src="assets/vendor/style-switcher/style.switcher.localstorage.js"></script>
+	
+	</head>
+	<body>
+		<section class="body">
+		
+			<!-- start: header -->
+			<header class="header">
+				<%=cHeader%>
+			</header>
+			<!-- end: header -->
+		    
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<aside id="sidebar-left" class="sidebar-left">
+				
+				    <div class="sidebar-header">
+				        <div class="sidebar-title">
+				            Menu
+				        </div>
+				        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+				            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				        </div>
+				    </div>
+						
+				    <div class="nano">
+				        <div class="nano-content">
+				            <nav id="menu" class="nav-main" role="navigation">
+				            
+				                <ul class="nav nav-main">
+				                    <%=cMenus%>
+				                </ul>
+				            </nav>
+				        </div>
+						
+				        <script>
+				            // Maintain Scroll Position
+				            if (typeof localStorage !== 'undefined') {
+				                if (localStorage.getItem('sidebar-left-position') !== null) {
+				                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+				                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+				                    
+				                    sidebarLeft.scrollTop = initialPosition;
+				                }
+				            }
+				        </script>
+					</div>
+						
+				</aside>
+				<!-- end: sidebar -->
+		
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2><%=cPagina%></h2>
+					
+						<div class="right-wrapper pull-right">
+						</div>
+					</header>
+		
+					<!-- start: page -->
+					<section class="panel">
+					<!-- <header class="panel-heading">
+					</header> -->
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel form-wizard" id="w9">
+									<form action = "" method="post" class="form-horizontal" id="formOrc">
+										<div class="tabs">
+											<ul class="nav nav-tabs nav-justify">
+												<li class="active">
+													<a href="#orc-informar" data-toggle="tab" class="text-center">Orçamento</a>
+												</li>
+												<!--
+												<li class="">
+													<a href="#orc-anexos" data-toggle="tab" class="text-center">Anexos</a>
+												</li>
+												-->
+											</ul>
+													
+											<div class="tab-content">
+												<div id="orc-informar" class="tab-pane active">
+													<!--
+													<%=cVendedor%> 
+													-->
+													
+
+													<!-- linha 0: dados do Orçamento -->
+													<%=cCodOrc%>
+
+													<!-- linha 1: dados da empresa -->
+													<div class="row form-group">
+														<div class="col-lg-6">
+															<label class="control-label">Cliente</label>
+															<%=cCliente%>
+														</div>
+														<div class="col-lg-4">
+															<label class="control-label">Tabela de Preço</label>
+															<%=cTabela%>
+														</div>
+													
+													</div>
+		
+													<div class="mb-md hidden-lg hidden-xl"></div>															
+													<div class="mb-md hidden-lg hidden-xl"></div>
+																    
+												
+													
+													<!-- linha 3: input  -->
+													<div class="row form-group">	              
+													 	<div class="col-lg-2">
+															<label class="control-label">Tipo de Orçamento</label>
+															<%=cTipoOrc%>
+														</div>
+														              
+													 	<div class="col-lg-2">
+															<label class="control-label">Tipo de Frete</label>
+															<%=cTpFrete%>
+														</div>
+
+														        
+													 	<div class="col-lg-2 hidden-lg hidden-xl" style="display:none;"> <!-- onblur="javascript:freteMinimo()" -->
+															<label class="control-label">Valor do Frete</label>
+															<input id="CJ_FRETE" name="CJ_FRETE" class="form-control money text-right" placeholder="0,00" value="<%=cValFre%>" disabled >
+														</div>
+													
+																
+														<div class="col-lg-6">
+															<label class="control-label">Transportadora</label>
+															<%=cTransp%>
+														</div>
+														
+													</div>
+													
+													<!-- linha 4 input -->
+													<div class="row form-group"> 
+													
+														<div class="col-lg-3">
+															<label class="control-label">Modalidade</label>
+															<%=cModali%>
+														</div>
+														 
+														<div class="col-lg-2">
+															<label class="control-label">Condição de Pagamento</label>
+															<%=cCondPag%>
+														</div>
+													    <!--
+														<div class="col-lg-2">
+															<label class="control-label">Operadora</label>	    
+															<%=cOperadora%>
+														</div>
+														
+														<div class="col-lg-3">
+															<label class="control-label">Bandeira</label>
+															<%=cBandeira%>
+														</div>
+														-->
+													</div>
+													
+													<!-- linha 5 input -->
+													<div class="row form-group"> 
+														<div class="col-lg-2">
+															<label class="control-label">Previsão de Faturamento</label>	              
+															<div class="input-group">	
+																<span class="input-group-addon">
+																	<i class="fa fa-calendar"></i>
+																</span>
+																<%=cEntrega%>
+															</div>
+														</div>
+														
+														
+														<%=cImport%>
+														
+														
+													</div>
+													
+													<!-- linha 6: Observações  -->
+													<div class="row form-group">		
+														<div class="col-md-5">
+															<label class="control-label" for="textareaDefault">Observação Interna</label>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="CJ_XNOTAIN" name="CJ_XNOTAIN" <%=Iif(!lEdit,'disabled','')%>><%=cObsInterna%></textarea>
+														</div> 
+														<div class="col-md-6"> 	<!-- style="display:none;" PARA NÃO EXIBIR-->
+															<label class="control-label" for="textareaDefault">Observação para Nota Fiscal</label>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="CJ_XMSGNF" name="CJ_XMSGNF" <%=Iif(!lEdit,'disabled','')%>><%=cObsNota%></textarea>
+														</div>
+													</div>					
+													<br>		
+													<br>		
+		
+													<!-- tabela com os produtos do orçamento -->
+													<div class="table-responsive" id="ItensOrc" style="overflow-x:visible">
+														<section class="panel">
+															<header class="panel-heading">
+																<h2 class="panel-title">Itens do Orçamento</h2>
+															</header>
+															<table class="table table-bordered table-striped mb-none table-hover table-condensed" id="datatable-editable" aria-describedby="datatable-details_info">
+																<thead>
+																	<tr>
+																		<%=cOrcCabec%>
+																	</tr>
+																</thead>
+																<tbody> 
+																	<%=cOrcItens%>
+																														
+																</tbody>
+															</table>
+														</section>	
+													</div>	
+													<br>
+                                                     
+             										<!-- botões com ações na tabela dos itens -->
+													<%=cBtnItens%>
+
+                                                    <br>
+                                                    <br>
+																											
+													<!-- Totais 
+													<div class="col-lg-6"></div>-->
+													<div class="col-lg-13">
+														<section class="panel">
+															<header class="panel-heading">
+																<h2 class="panel-title">Totais do Orçamento</h2>
+															</header>
+															<div class="panel-body">
+															
+																<div class="form-inline" align="center">
+																	<div class="row">
+																		<div class="col-sm-12">	      
+																			<label class="">Qtde.Itens&nbsp;</label>               
+																			<input class="form-control text-right" id="TOTAL_QITENS" name="TOTAL_QITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTQtdItem,"@E 999,999.99")%>></input>
+																			
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Itens&nbsp;</label>               
+																			<input class="form-control text-right" id="TOTAL_ITENS" name="TOTAL_ITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
+																			
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Impostos&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_IMP" name="TOTAL_IMP"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTImpostos,"@E 999,999,999,999.99")%>></input>
+																			 
+																			<!-- 
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Frete&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_FRETE" name="TOTAL_FRETE"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTFrete,"@E 999,999,999,999.99")%>></input>
+																			-->
+
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Total&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_ORC" name="TOTAL_ORC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
+																	    </div> 
+																	</div>
+																	<br>
+
+																	<div class="row">
+																		<div class="col-sm-12">	      
+																			<label class="">Saldo do Pedido&nbsp;</label>               
+																			<input class="form-control text-right" id="TOTAL_SALDO" name="TOTAL_SALDO"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTSaldo,"@E 999,999,999,999.99")%>></input>
+																		</div> 
+																	</div>
+
+																		<!-- 
+																	<div class="row">
+																		<div class="col-sm-12">	      
+																			<label class="">Comissão Prevista&nbsp;</label>               
+																			<input class="form-control text-right" id="TOTAL_COM" name="TOTAL_COM"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTComiss,"@E 999,999,999,999.99")%>></input>
+																		</div> 
+																	</div>
+																		-->	    
+																</div>
+															</div>
+														</section>
+													</div>
+			          								
+			          								<br>
+			                                        <br>
+													
+													<div class="row form-group" align="center">
+														<%=cBotoes%>
+													</div>
+												</div>													
+												
+												<!-- aba de anexos -->
+									 			<div id="orc-anexos" class="tab-pane">
+									 		   		<div class="form-group">
+														<label class="col-md-3 control-label">Anexar: </label>
+														<div class="col-md-9">
+															<div class="fileupload fileupload-new" data-provides="fileupload">
+																<div class="input-append">
+																	<div class="uneditable-input">
+																		<i class="fa fa-file fileupload-exists"></i>
+																		<span class="fileupload-preview"></span>
+																	</div>
+																	<span class="btn btn-default btn-file">
+																		<span class="fileupload-exists">Selecionar</span>
+																		<span class="fileupload-new">Arquivo</span>
+																		<input type="file" name="anexo" id="anexo" />
+																	</span>
+																	<a href="#" id="btnOrcUpload" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Gravar</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="row mg-files" data-sort-destination data-sort-id="media-gallery" id="OrcAnexos">
+             											<%=cAnexos%>
+		                                            </div>
+												</div>
+											</div>
+										</div>
+									</form>			
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+
+				
+				<div style="display:none;">
+					<form action="U_OrcUpload.apw?PR=<%=cLCodLogin%>" method="post" id="frmOrcUpload" enctype="multipart/form-data">
+						<input type="hidden" name="dirOrc" value="<%=cDirOrc%>" />
+					</form>
+				</div>
+				<footer class="panel-footer text-right">
+					Desenvolvido por  <img src="images/sms.png"  />
+				</footer>
+			</div>		
+		</section>
+		<!-- end: page -->
+	
+		<div id="dialogRemover" class="modal-block mfp-hide">
+			<section class="panel">
+				<header class="panel-heading">
+					<h2 class="panel-title">Exclusão da linha</h2>
+				</header>
+				<div class="panel-body">
+					<div class="modal-wrapper">
+						<div class="modal-text">
+							<p>Confirma a exclusão desta linha?</p>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button id="dialogConfirm" class="btn btn-primary">Confirma</button>
+							<button id="dialogCancel" class="btn btn-default">Cancela</button>
+						</div>
+					</div>
+				</footer>
+			</section>
+		</div>
+		    
+		<div id="modalSuccess" class="modal-block modal-block-success mfp-hide">
+		<section class="panel">
+			<header class="panel-heading">
+				<h2 class="panel-title">Success!</h2>
+			</header>
+			<div class="panel-body">
+				<div class="modal-wrapper">
+					<div class="modal-icon">
+						<i class="fa fa-check"></i>
+					</div>
+					<div class="modal-text">
+						<h4>Success</h4>
+						<p>This is a successfull message.</p>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button class="btn btn-success modal-dismiss">OK</button>
+					</div>
+				</div>
+			</footer>
+		</section>
+	</div>
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+		
+		<!-- Custom -->
+		<script src="custom/js/bootbox.js"></script>
+		<script src="custom/js/moeda.js"></script>
+	
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/select2/js/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> 
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/autosize/autosize.js"></script>
+		<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
+		<script src="assets/vendor/bootstrap-select/bootstrap-select.min.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script> 
+		
+		<script src="custom/js/jquery.maskMoney.js"></script> 
+		<script src="custom/js/portalMask.js"></script>
+		<script type="text/javascript">
+			var tblDesc = [];
+			var optProd = '<%=cOptProd%>';
+			var optCond = '<%=cOptCond%>';
+			var optModal = '<%=cOptModal%>';
+			/**
+			Desabilita o enter na página
+			**/
+			$(function () {
+		        $('form').bind("keypress", function (e) {
+		            if (e.keyCode == 13) return false;
+		        });
+		    }); 
+					 
+       
+		    //Formata campos de moeda
+			$(function() {
+			    //$('#iCK_PRCVEN01').maskMoney({thousands:'.', decimal:','});
+				$('.myformato').maskMoney({thousands:'.', decimal:','}); 
+				$('.percentual').maskMoney({thousands:'.', decimal:',', suffix:'%',allowNegative:true});
+			})
+			
+			function formate() {                                        
+				$('.myformato').maskMoney({thousands:'.', decimal:','});
+				$('.percentual').maskMoney({thousands:'.', decimal:',', suffix:'%',allowNegative:true});
+			}
+			<%=cTblDesc%>
+		    
+		
+			function sleep(ms) {
+			  return new Promise(resolve => setTimeout(resolve, ms));
+			}
+		
+		
+			/**
+			Funcao excutada ao selecionar o cliente
+			**/
+			function SelCliente() {
+				var cliente; 
+				
+				var dialogCli = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando dados do cliente. Aguarde...</p>',
+			        closeButton: false
+			    });
+				cliente = $("#CJ_CLIENTE").val();
+			    
+			    //Verifica se cliente tem títulos em atraso
+			    $.ajax({  
+					url: "U_GetSitCli.apw?PR=<%=cLCodLogin%>",
+					type: "POST",
+					data: 'cliente='+cliente,
+					cache: false, 
+					success: function(msg){
+						dialogCli.modal('hide');
+						
+						if (msg.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(msg);
+							return;
+						}
+						
+						if (msg != "" &&  msg.indexOf("Expires") == -1) {
+							var dialog = bootbox.dialog({
+							    title: '',
+							    message: "<p>"+msg+"</p>",
+							    backdrop: true,
+							    buttons: {
+							        ok: {
+							            label: "OK"
+							        }
+							    }
+							});
+
+							//documentação em atraso
+							if (msg.indexOf("vista") > 0 || msg.indexOf("previsto") > 0){
+								//atualiza a modalidade p/ vendas a vista
+								if (msg.indexOf("vista") > 0){
+									$("#CJ_XMODALI option[value='001']").remove();
+								} else {
+									if (msg.indexOf("previsto") > 0){
+										//Bloqueia o campo tipo de orçamento para edição
+										$("#select2-CJ_XTPORC-container").html("Previsto");
+										$("#CJ_XTPORC").attr("disabled","");	
+										$("#CJ_XTPORC").val("2");
+										
+
+									}	
+								}
+
+								//busca a tabela de preço
+								var dialogTab = bootbox.dialog({
+									message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando tabela de preço... Aguarde...</p>',
+									closeButton: false
+								});
+				
+								//Localiza a tabela de preço do cliente selecionado
+								$.ajax({
+									url: "U_GetTabela.apw?PR=<%=cLCodLogin%>",
+									data: 'cliente='+cliente,
+									type: "POST",
+									async: false,
+									success:
+										function(tabelas) {
+											
+											dialogTab.modal('hide');
+											if (tabelas.indexOf('<META HTTP-EQUIV') >= 0 ) {
+												$("html").html(tabelas);
+												return;
+											}
+											
+											if ( tabelas == "" ) {
+												bootbox.alert('Vendedor não possui tabela de preço vinculada!');
+												$("#CJ_CLIENTE").focus();  
+												
+											}
+											else {
+												//Bloqueia o campo de cliente para edição
+												$("#CJ_CLIENTE").attr("disabled","");
+												
+												//Preenche o select dos produtos
+												$("#CJ_TABELA").append(tabelas);
+												$("#CJ_TABELA").focus();
+											}
+										}	
+								});
+
+
+							} else {	
+
+								//Bloqueia os campos para impossibilitar continuar a inclusão
+								$("#CJ_CLIENTE").attr("disabled","");
+								$("#CJ_TABELA").attr("disabled","");
+								$("#CJ_XTPORC").attr("disabled","");
+								$("#CJ_TPFRETE").attr("disabled","");
+								$("#CJ_XMODALI").attr("disabled","");
+								$("#CJ_CONDPAG").attr("disabled","");
+								$("#CK_ENTREG").attr("disabled","");
+								$("#CJ_XNOTAIN").attr("disabled","");
+								$("#CJ_XMSGNF").attr("disabled","");
+								$("#CK_PRODUTO01").attr("disabled","");
+							}
+
+							//Bloqueia o campo tipo de orçamento para edição
+							//$("#select2-CJ_XTPORC-container").html("Previsto");
+							//$("#CJ_XTPORC").attr("disabled","");	
+							//$("#CJ_XTPORC").val("1");
+							
+							//$("#CJ_XTPORC").empty();
+							//optTipo = '<option value="1">Previsto</option><option value="3">Em elaboração</option>'
+							//$("#CJ_XTPORC").append(optTipo);
+						
+						} else { //busca a tabela de preço
+							var dialogTab = bootbox.dialog({
+								message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando tabela de preço... Aguarde...</p>',
+								closeButton: false
+							});
+			
+							//Localiza a tabela de preço do cliente selecionado
+							$.ajax({
+								url: "U_GetTabela.apw?PR=<%=cLCodLogin%>",
+								data: 'cliente='+cliente,
+								type: "POST",
+								async: false,
+								success:
+									function(tabelas) {
+										
+										dialogTab.modal('hide');
+										if (tabelas.indexOf('<META HTTP-EQUIV') >= 0 ) {
+											$("html").html(tabelas);
+											return;
+										}
+										if ( tabelas == "" ) {
+											bootbox.alert('Vendedor não possui tabela de preço vinculada!');
+											$("#CJ_CLIENTE").focus();  
+											
+										}
+										else {
+											//Bloqueia o campo de cliente para edição
+											$("#CJ_CLIENTE").attr("disabled","");
+											
+											//Preenche o select dos produtos
+											$("#CJ_TABELA").append(tabelas);
+											$("#CJ_TABELA").focus();
+										}
+									}	
+							});
+						}
+					}
+				});	
+			}
+			
+			
+			/**
+			Busca os produtos a partir da tabela de preço
+			**/
+			function selProd(){
+				var tabpreco;
+				var cliente;
+				var item;
+				
+				cliente = $("#CJ_CLIENTE").val();
+				tabpreco = $("#CJ_TABELA").val();
+			 	item = $("#PROXIMO").val();
+			 	
+			 	$.ajax({
+					url: "U_GetProdutos.apw?PR=<%=cLCodLogin%>",
+					data: 'cliente='+cliente+'&tabela='+tabpreco,
+					type: "POST",
+					async: false,
+					success:
+						function(produtos) {
+							if (produtos.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(produtos);
+								return;
+							}
+							
+							if ( produtos == "" ) {
+								bootbox.alert('Não foram encontrados produtos para a tabela de preço '+tabpreco+'!');
+								$("#CJ_TABELA").focus();
+							}
+							else {
+								//Bloqueia a edição do campo de tabela
+								$("#CJ_TABELA").attr("disabled","");
+								
+							 	//Preenche o select dos produtos
+							 	$("#CK_PRODUTO"+item).append($.parseHTML(produtos));
+							 	$('.selectpicker').selectpicker('render');
+			   	    			$('.selectpicker').selectpicker('refresh');
+							 	optProd = produtos;
+							}
+						}
+				});
+			}
+			
+			
+			/**
+			Busca os produtos a partir da tabela de preço
+			**/
+			function tpTabela(){
+				var tabpreco = $("#CJ_TABELA").val();
+				
+				//Libera os campos de desconto
+				$("#POLIMENTO").val('1');	
+				$("#CK_DESCONT01").removeAttr('onblur');	
+				$("#CK_DESCONT01").attr("onclick","descPolimento('01')");
+							
+			}	                
+			
+			/**
+			Busca os produtos a partir da tabela de preço
+			**/
+			function tabCartao(){
+				var tabpreco = $("#CJ_TABELA").val();
+				
+				//Verifica se a tabela é de cartao
+				$.ajax({
+					url: "U_lTabCartao.apw?PR=<%=cLCodLogin%>",
+					data: 'tabela='+tabpreco,
+					type: "POST",
+					async: false,
+					success:
+						function(modalidade) {
+							if (modalidade.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(modalidade);
+								return;
+							}
+							
+							if ( modalidade != "" ) {
+								
+							 	//Preenche o select das modalidades
+							 	document.getElementById('CJ_XMODALI').innerText = null;
+							 	$("#CJ_XMODALI").append(modalidade);
+							 	optModal = modalidade;
+							}
+						}		
+				});
+			}
+
+
+
+
+			//Manipulando as colunas
+			function ocultaColumn (colIndex) {
+				var table = document.getElementById('datatable-editable');
+				for (var r = 0; r < table.rows.length; r++)
+					table.rows[r].cells[colIndex].style.display = 'none';
+			}
+			function mostraColumn (colIndex) {
+				var table = document.getElementById('datatable-editable');
+				for (var r = 0; r < table.rows.length; r++)
+					table.rows[r].cells[colIndex].style.display = '';
+			}
+			
+			
+			/**
+			Tela para digitar os descontos de polimento
+			**/
+			function descPolimento(cItem){
+			    var nDesc  = 0;
+			    var nDesc1 = 0;
+			    var nDesc2 = 0;
+			    var nDesc3 = 0;
+			    var nVlrVenda = 0;
+			    var nVlrOri = 0;
+			    var msg = '';
+			    
+			    $(function() {
+			    //$('#iCK_PRCVEN01').maskMoney({thousands:'.', decimal:','});
+					$('.myformato').maskMoney({thousands:'.', decimal:','}); 
+					$('.percentual').maskMoney({thousands:'.', decimal:',', suffix:'%', numeralMaxLength: true});
+				})
+			    
+			    //Preenche as variáveis
+			    nDesc1 = $("#CK_XDESC01"+cItem).maskMoney('unmasked')[0];
+				nDesc2 = $("#CK_XDESC02"+cItem).maskMoney('unmasked')[0];
+				nDesc3 = $("#CK_XDESC03"+cItem).maskMoney('unmasked')[0];
+				nVlrVenda = $("#iCK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+				nVlrOri = $("#iCK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+			    
+				msg = '<div class="row form-group">'
+			 	msg +='	<br>' 
+				msg +='	<div class="row form-group">'				
+				msg +='		<div class="col-lg-1"></div>'
+			
+				//Desconto 01								
+				msg +='		<div class="col-lg-6">'
+				msg +='			<label class="control-label">% Desconto 01</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input id="iCK_XDESC01'+cItem+'" name="iCK_XDESC01'+cItem+'" class="form-control text-right percentual" maxlength="7" '
+				msg +=' 			type="text" placeholder="0,00" onchange="javascript:vldDesc('+"'"+cItem+"'"+')" '
+				if(nDesc1 > 0){ 
+					msg +='				value="'+$("#CK_XDESC01"+cItem).val()+'" '
+				}
+				msg +='			 	>'
+				msg +='			</div>'
+				//Desconto 02
+				msg +='			<label class="control-label">% Desconto 02</label>'	              
+				msg +=' 		<div class="input-group">'	                       
+				msg +='				<input id="iCK_XDESC02'+cItem+'" name="iCK_XDESC02'+cItem+'" class="form-control text-right percentual " maxlength="7" '
+				msg +=' 			type="text" placeholder="0,00" onchange="javascript:vldDesc('+"'"+cItem+"'"+')" '
+				if(nDesc2 > 0){ 
+					msg +='				value="'+$("#CK_XDESC02"+cItem).val()+'" '
+				}
+				msg +='			 	>'
+				msg +='			</div>'
+				//Desconto 03
+				msg +='			<label class="control-label">% Desconto 03</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input id="iCK_XDESC03'+cItem+'" name="iCK_XDESC03'+cItem+'" class="form-control text-right percentual " maxlength="7" ' 
+				msg +=' 			type="text" placeholder="0,00" onchange="javascript:vldDesc('+"'"+cItem+"'"+')" '
+				if(nDesc3 > 0){ 
+					msg +='				value="'+$("#CK_XDESC03"+cItem).val()+'" '
+				}
+				//Se tabela de preço for de campanha, produto não gera saldo e desabilita o campo
+				if ($("input[id='GERASALDO"+cItem+"']").val() == "2"){
+					msg += 'disabled'
+				}
+				msg +='			 	>'
+				msg +='			</div>'
+							
+			 	if(msg != ""){
+					var lDisparou = false;
+				 	bootbox.dialog({
+					    title: 'Desconto do Item',
+					    message: "<p>"+msg+"</p>",
+					    backdrop: true,
+					    buttons: {
+					    	cancel: {
+					            label: "Cancelar",
+					            callback: function(){
+					                $('.bootbox.modal').modal('hide');
+					            }
+					        },
+				            sucess: {
+				                label: "OK",
+				                callback: function () {
+									if(! lDisparou){
+
+										lDisparou = true;
+										//Atualiza as variáveis
+										nDesc1 = $("#iCK_XDESC01"+cItem).maskMoney('unmasked')[0];
+										nDesc2 = $("#iCK_XDESC02"+cItem).maskMoney('unmasked')[0];
+										nDesc3 = $("#iCK_XDESC03"+cItem).maskMoney('unmasked')[0];
+										
+										if(nDesc1 + nDesc2 + nDesc3 > 100){
+											bootbox.alert('A soma dos 3 descontos não pode passar de 100%!');
+											return false;	
+										}
+					
+										//Verifica se pelo menos um dos campos foi preenchido				                	
+										if(nDesc1 > 0 || nDesc2 > 0 || nDesc3 > 0){
+											if (nDesc1 > 0){
+												nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc1 / 100))
+											}
+											if (nDesc2 > 0){
+												nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc2 / 100))
+											}	
+											if (nDesc3 > 0){
+												nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc3 / 100))
+											}	
+											
+										}	
+											//desconto final
+											nDesc = nVlrOri - nVlrVenda
+											nDesc = (nDesc / nVlrOri) * 100
+											
+											$("#CK_DESCONT"+cItem).val(mascaraValor(nDesc.toFixed(2)));
+											$("#CK_XDESC01"+cItem).val(mascaraValor(nDesc1.toFixed(2)));
+											$("#CK_XDESC02"+cItem).val(mascaraValor(nDesc2.toFixed(2)));
+											$("#CK_XDESC03"+cItem).val(mascaraValor(nDesc3.toFixed(2)));
+											TotalItem(cItem);
+											VldValor(cItem);	
+													
+									}	
+				                }
+				            }
+				            
+				        }
+				    });
+				} 
+			}
+			
+			
+			/**
+			Valida o percentual de desconto digitado
+			**/
+			function vldDesc(cItem){
+				var nDesc1 = $("#iCK_XDESC01"+cItem).maskMoney('unmasked')[0];
+				var nDesc2 = $("#iCK_XDESC02"+cItem).maskMoney('unmasked')[0];
+				var nDesc3 = $("#iCK_XDESC03"+cItem).maskMoney('unmasked')[0];
+				//var	nVlrVenda = $("#iCK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+				var nVlrOri = $("#CK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+				var	nVlrVenda = nVlrOri;
+				var nPerDesc1 = parseFloat($("#PERDESC1"+cItem).val().replace(',',"."));
+				var nPerDesc2 = parseFloat($("#PERDESC2"+cItem).val().replace(',',"."));
+				var nPerDesc3 = parseFloat($("#PERDESC3"+cItem).val().replace(',',"."));
+				var nQuant = parseFloat($("#CK_QTDVEN"+cItem).val().replace('.',","));
+				var nPercDir = parseFloat($("#PERCDIR").val().replace(',',"."));
+				var nPercVend = parseFloat($("#PERCVEND").val().replace(',',"."));
+				var nDesc  = 0;			    
+			    var nSaldo = 0;
+				var nValCalc = 0;
+				var nDescSaldo = 0;
+
+				if (nDesc1 + nDesc2 + nDesc3 > 100) {
+					bootbox.alert('A soma dos 3 descontos não pode passar de 100%!');
+					$("#iCK_XDESC01"+cItem).val("")
+					$("#iCK_XDESC02"+cItem).val("")
+					$("#iCK_XDESC03"+cItem).val("")
+					return false;
+				}	
+				if (nDesc1 + nDesc2 + nDesc3 < -10) {
+					bootbox.alert('O desconto negativo deve ser no máximo -10%!');
+					$("#iCK_XDESC01"+cItem).val("")
+					$("#iCK_XDESC02"+cItem).val("")
+					$("#iCK_XDESC03"+cItem).val("")
+					return false;
+				}
+				//Se produto não gera saldo, o desconto máximo deve ser o cadastrado no produto
+				if ($("#GERASALDO"+cItem).val() == '2'){
+					if (nDesc1 > nPerDesc1){
+						bootbox.alert('Este produto não gera saldo. O desconto 1 máximo permitido é de '+String(nPerDesc1)+'%');
+						$("#iCK_XDESC01"+cItem).val("")
+						return false;
+					}
+					if (nDesc2 > nPerDesc2){
+						bootbox.alert('Este produto não gera saldo. O desconto 2 máximo permitido é de '+String(nPerDesc2)+'%');
+						$("#iCK_XDESC02"+cItem).val("")
+						return false;
+					}
+					if (nDesc3 > nPerDesc3){
+						bootbox.alert('Este produto não gera saldo. O desconto 3 máximo permitido é de '+String(nPerDesc3)+'%');
+						$("#iCK_XDESC03"+cItem).val("")
+						return false;
+					}
+				}
+
+				//Verifica se produto pode ultrapassar o desconto máximo cadastrado no produto
+				if ($("#GERASALDO"+cItem).val() == '1' && $("#ULTRAPASSA"+cItem).val() == '2'){
+					if (nDesc1 > nPerDesc1){
+						bootbox.alert('O desconto 1 máximo permitido é de '+String(nPerDesc1)+'%');
+						$("#iCK_XDESC01"+cItem).val("")
+						return false;
+					}
+					if (nDesc2 > nPerDesc2){
+						bootbox.alert('O desconto 2 máximo permitido é de '+String(nPerDesc2)+'%');
+						$("#iCK_XDESC02"+cItem).val("")
+						return false;
+					}
+					if (nDesc3 > nPerDesc3){
+						bootbox.alert('O desconto 3 máximo permitido é de '+String(nPerDesc3)+'%');
+						$("#iCK_XDESC03"+cItem).val("")
+						return false;
+					}
+				}
+				//Verifica se pelo menos um dos campos foi preenchido				                	
+				if(nDesc1 != 0 || nDesc2 != 0 || nDesc3 != 0){
+					if (nDesc1 != 0){
+						nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc1 / 100))
+					}
+					if (nDesc2 != 0){
+						nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc2 / 100))
+					}
+					/*	
+					if (nDesc3 != 0){
+						nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc3 / 100))
+					}	
+					*/					
+									
+					//desconto final
+					nDesc = nVlrOri - nVlrVenda
+					nDesc = (nDesc / nVlrOri) * 100
+					
+					//Atualiza o desconto que vai para o orçamento
+					$("#CK_DESCONT"+cItem).val(mascaraValor(nDesc.toFixed(2)));
+					
+					//Atualiza o saldo do desconto
+					if ($("#GERASALDO"+cItem).val() == '1'){
+
+						//Valor cheio, aplicando os 3 descontos
+						nDescT = nVlrOri - (nVlrOri * (nPerDesc1/100))
+						nDescT = nDescT - (nDescT * (nPerDesc2/100))
+						//nDescT = nDescT - (nDescT * (nPerDesc3/100))
+						
+						//Desconto do saldo
+						
+						if (nDesc3 != 0){
+							nDescSaldo = (nDescT * (nPerDesc3/100))*nQuant
+							nDescSaldo = nDescSaldo.toFixed(2)
+							//nDescSaldo = (nVlrOri * (nPerDesc3/100)).toFixed(2)*nQuant
+							//((valor de tabela – desconto 1) - desconto 2)” * desconto 3 * quantidade do item
+						}
+						nValCalc = (nDescT/(1-nPerDesc1/100)/(1-nPerDesc2/100)) * (1-nDesc1/100)*(1-nDesc2/100) 
+						//nValCalc = (nDescT/(1-nPerDesc1/100)/(1-nPerDesc2/100)/(1-nPerDesc3/100)) * (1-nDesc1/100)*(1-nDesc2/100)*(1-nDesc3/100) 
+
+						nSaldo = (nValCalc.toFixed(2)*nQuant) - (nDescT.toFixed(2)*nQuant)
+						nSaldo = nSaldo - nDescSaldo
+						/*
+						if(nSaldo > 0){
+							nSaldo = nSaldo * nPercVend
+						}
+						*/
+						$("#SALDO"+cItem).val(nSaldo.toFixed(2));
+					}		
+			
+				}
+
+				//Recalcula o total
+				TotalItem(cItem);
+				VldValor(cItem);	
+			
+			}
+			
+			
+			
+			/**
+			Busca as condições de pagamento disponíveis de acordo com a modalidade
+			**/
+			function condPag(){
+				var modali = $("#CJ_XMODALI").val();
+			 	var dialogTab = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando condições de pagamento... Aguarde...</p>',
+			        closeButton: false
+			    });
+			    	
+			 	$.ajax({
+					url: "U_GetCondPgto.apw?PR=<%=cLCodLogin%>",
+					data: 'modali='+modali,
+					type: "POST",
+					async: false,
+					success:
+						function(condicao) {
+							if (condicao.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(condicao);
+								return;
+							}
+							
+							if ( condicao == "" ) {
+								bootbox.alert('Falha ao localizar as condições de pagamento para esta modalidade!');
+								document.getElementById('CJ_CONDPAG').innerText = null;
+								$('.selectpicker').selectpicker('render');                  
+			   	    			$('.selectpicker').selectpicker('refresh'); 
+			   	    			$("#CJ_XMODALI").focus();
+							}
+							else {
+								
+							 	//Preenche o select das condições
+							 	document.getElementById('CJ_CONDPAG').innerText = null;
+							 	$("#CJ_CONDPAG").append(condicao);
+							 	optCond = condicao;
+							    if ($("#CJ_XMODALI").val() != "") {
+									$("#CJ_CONDPAG").removeAttr('disabled');
+								}
+							}
+						}
+				});
+				
+				//Se cartão, habilita os campos e busca as opções do combo operadora
+				if (modali == '005'||modali == '006'){
+					$("#OPERADORA").removeAttr('disabled');
+					$.ajax({
+						url: "U_GetOperadora.apw?PR=<%=cLCodLogin%>",
+						data: 'modali='+modali,
+						type: "POST",
+						async: false,
+						success:
+							function(operadora) {
+								if (operadora.indexOf('<META HTTP-EQUIV') >= 0 ) {
+									$("html").html(operadora);
+									return;
+								}
+								
+								if ( operadora != "" ) {
+									document.getElementById('OPERADORA').innerText = null;
+									$("#OPERADORA").append(operadora);  //apenda itens do combo
+									$("#OPERADORA").attr("required",""); 
+									$("#OPERADORA").attr("aria-required","true");  //torna obrigatório
+									 
+									$("#BANDEIRA").removeAttr('disabled');
+									$("#BANDEIRA").attr("required","");
+									$("#BANDEIRA").attr("aria-required","true");
+				   	    			$("#BANDEIRA").focus();
+								}
+							}
+					});
+				} else {
+					/*
+					//Bloqueia a edição do campo operadora e bandeira
+					document.getElementById('OPERADORA').innerText = null;
+					document.getElementById('BANDEIRA').innerText = null;
+					$("#OPERADORA").attr("disabled","");
+					$("#BANDEIRA").attr("disabled","");
+					//Remove preenchimento obrigatório
+					$("#OPERADORA").removeAttr("required");
+					$("#BANDEIRA").removeAttr("aria-required");
+					*/
+				}	
+				dialogTab.modal('hide');
+			}
+			
+			
+			
+			/**
+			Busca as bandeiras de acordo com a operadora
+			**/
+			function bandeira(){
+				var operadora = $("#OPERADORA").val();
+				var modali = $("#CJ_XMODALI").val();
+			 	var dialogTab = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando bandeiras disponíveis... Aguarde...</p>',
+			        closeButton: false
+			    });
+			    	
+			 	$.ajax({
+					url: "U_GetBandeira.apw?PR=<%=cLCodLogin%>",
+					data: 'operadora='+operadora+'&modalidade='+modali,
+					type: "POST",
+					async: false,
+					success:
+						function(bandeiras) {
+							if (bandeiras.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(bandeiras);
+								return;
+							}
+							
+							if ( bandeiras == "" ) {
+								bootbox.alert('Falha ao localizar as bandeiras para esta operadora!'); 
+			   	    			$("#OPERADORA").focus();
+							}
+							else {
+								
+							 	//Preenche o select das bandeiras
+							 	document.getElementById('BANDEIRA').innerText = null;
+							 	$("#BANDEIRA").append(bandeiras);
+							}
+						}
+				});
+				dialogTab.modal('hide');
+			}
+			
+			
+			
+			
+			/**
+			Verifica se a condição de pagamento tem desconto à vista
+			**/
+			function vldDescto(){
+				var cond = $("#CJ_CONDPAG").val();
+				var nDescVista = 0;
+				var dialogMod = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Verificando condição de pagamento... Aguarde...</p>',
+			        closeButton: false
+			    });
+			    
+				jQuery.ajax({
+						type: "POST",
+						url: "U_DESCVISTA.APW?PR=<%=cLCodLogin%>",
+						data: 'condicao='+cond,
+						error: function (jqXHR, textStatus, error){
+							dialogMod.modal('hide');
+							bootbox.alert("Falha ao recuperar informações!");
+							console.log(error);
+						},
+						success: function(retorno) {
+			            	dialogMod.modal('hide');
+
+							if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(retorno);
+								return;
+							}
+			            	
+			            	if(retorno > 0){
+			            		//Atualiza a variável
+			            		$("#DESCVISTA").val(retorno);
+			            		nDescVista = parseFloat(retorno);
+			            		
+								if (nDescVista > 0) {
+									bootbox.alert("Ao salvar o orçamento será aplicado o desconto de "+mascaraValor(nDescVista.toFixed(2))+"%."); 	
+								}
+                            } else {
+			            		$("#DESCVISTA").val("0");
+			            	} 
+
+							//Atualiza o valor dos produtos ao trocar a condição de pagamento
+							//if ($('#CONDANT').val()!="" && $("#CONDANT").val()!=cond){
+							//	AtuValProd();
+							//	$("#CONDANT").val(cond);
+							//}
+						}
+				});
+			}
+			
+			/**
+			Atualiza o valor do produto ao trocar a condição de pagamento
+			**/
+			function AtuValProd(){
+				var nItens = parseFloat($("#PROXIMO").val());
+				var i;
+				var dialogMod = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Atualizando valores do orçamento... Aguarde...</p>',
+			        closeButton: false
+			    });
+
+				for (i = 1; i<=nItens; i++) { 
+					cItem = String(i); 
+					if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+					cItmOrc = $("#CK_ITEM"+cItem).val();
+					if(cItmOrc != "x") {
+						
+						jQuery.ajax({
+							type: "POST",
+							url: "U_GATPROD.APW?PR=<%=cLCodLogin%>",
+							data: {Produto: $("#CK_PRODUTO"+cItem).val(), DescVista: $("#DESCVISTA").val(), DescRetir: $("#DESCRETIR").val()},
+							error: function (jqXHR, textStatus, error){
+								console.log(error);
+							},
+							success: function( data ) {
+								var aVlr;
+								var cMsgErro;
+								
+								if (data.substr(0, 2) == "OK") {
+									aVlr = data.substr(3).split('|#|');
+									$("input[name='CK_UM"+cItem+"']").val(aVlr[0]);
+									$.trim($("input[name='CK_PRCVEN"+cItem+"']").val(aVlr[1]));
+									$.trim($("input[name='iCK_PRCVEN"+cItem+"']").val(aVlr[1]));
+									$.trim($("input[name='CK_XVALICM"+cItem+"']").val(aVlr[2]));
+									$.trim($("input[name='CK_XICMST"+cItem+"']").val(aVlr[4]));
+									$.trim($("input[name='CK_XVALIPI"+cItem+"']").val(aVlr[3]));
+									$("input[name='CK_XFAIXAD"+cItem+"']").val(0);
+									
+									//Input hidden
+									$("input[id='ALIQ_IPI"+cItem+"']").val(aVlr[5]);
+									$("input[id='ALIQ_ICMS"+cItem+"']").val(aVlr[6]);
+									$("input[id='ALIQ_ST"+cItem+"']").val(aVlr[12]);
+									$("input[id='QTD_EMB"+cItem+"']").val(aVlr[7]);
+									$("input[id='CK_TES"+cItem+"']").val(aVlr[8]);
+									$("input[id='BASE_IPI"+cItem+"']").val(aVlr[11]);
+									$("input[id='BASE_ICMS"+cItem+"']").val(aVlr[9]);
+									$("input[id='BASE_ST"+cItem+"']").val(aVlr[10]);
+									$("input[id='VAL_ICMS"+cItem+"']").val(aVlr[2]);
+									$("input[id='VAL_ST"+cItem+"']").val(aVlr[4]);
+									$("input[id='VAL_IPI"+cItem+"']").val(aVlr[3]);
+									$("input[id='PNEU"+cItem+"']").val(aVlr[13]);
+									$("input[id='MARCA"+cItem+"']").val(aVlr[14]);
+									$("input[id='GRUPO"+cItem+"']").val(aVlr[15]);
+									$("input[id='PERDESC1"+cItem+"']").val(aVlr[16]);
+									$("input[id='PERDESC2"+cItem+"']").val(aVlr[17]);
+									$("input[id='PERDESC3"+cItem+"']").val(aVlr[18]);
+									$("input[id='GERASALDO"+cItem+"']").val(aVlr[19]);
+									$("input[id='ULTRAPASSA"+cItem+"']").val(aVlr[20]);
+									$("input[id='QTDMIN"+cItem+"']").val(aVlr[21]);
+									TotalItem(cItem);
+								} else {			
+									
+									if (data.substr(0, 4) == "ERRO") {
+										cMsgErro = data.substr(6);
+										console.log(cMsgErro);
+									} else {
+										// Quando ocorre erro no protheus	
+										console.log(data);
+									}
+								}
+							}
+						});
+					}
+				}
+				dialogMod.modal('hide');
+			}
+
+			
+			
+			/**
+			Gatilho acionado ao selecionar o produto para preencher os valores
+			**/
+			function gatProduto(objInput) {                                   
+				var nItens = parseFloat($("#PROXIMO").val());
+				var lProdOK = true
+				var nItem = objInput.attr("name").substr(10);
+				var dialogProd = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando dados do produto... Aguarde...</p>',
+			        closeButton: false
+			    });
+			    
+					
+			      //valida a digitação duplicada de itens
+				for (i = 1; i<=nItens; i++) { 
+					cItem = String(i);
+					if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+					
+					cItmOrc = $("#CK_ITEM"+cItem).val();
+					
+					if(cItmOrc != "x" && nItem != cItem ) { 
+						if ($('#CK_PRODUTO'+cItem).val() == objInput.val()){ 
+							lProdOK = false;	
+							$('#CK_PRODUTO'+nItem).val("");
+							$("#select2-CK_PRODUTO"+cItem+"-container").html("Selecione..."); 
+							}
+					}	
+				}
+				
+				if (!lProdOK ) {
+					bootbox.alert("Este item já foi informado no orçamento!");
+					dialogProd.modal('hide');
+				}
+				//Fim da validação de itens duplicados
+				
+			    
+			    
+				if ( ! objInput.is('[readonly]') && $.trim(objInput.val()) != "" && lProdOK ) {  
+					
+					jQuery.ajax({
+						type: "POST",
+						url: "U_GATPROD.APW?PR=<%=cLCodLogin%>",
+						data: {Produto: objInput.val(), DescVista: $("#DESCVISTA").val(), DescRetir: $("#DESCRETIR").val()},
+						error: function (jqXHR, textStatus, error){
+							dialogProd.modal('hide');
+							bootbox.alert("Falha ao recuperar informações!");
+							console.log(error);
+						},
+						success: function( data ) {
+							var aVlr;
+							var cMsgErro;
+							var nItem = objInput.attr("name").substr(10);
+			
+			    			dialogProd.modal('hide');
+			
+							if (data.substr(0, 2) == "OK") {
+								aVlr = data.substr(3).split('|#|');
+								$("input[name='CK_UM"+nItem+"']").val(aVlr[0]);
+								$.trim($("input[name='CK_PRCVEN"+nItem+"']").val(aVlr[1]));
+								$.trim($("input[name='iCK_PRCVEN"+nItem+"']").val(aVlr[1]));
+								$.trim($("input[name='CK_XVALICM"+nItem+"']").val(aVlr[2]));
+								$.trim($("input[name='CK_XICMST"+nItem+"']").val(aVlr[4]));
+								$.trim($("input[name='CK_XVALIPI"+nItem+"']").val(aVlr[3]));
+								$("input[name='CK_XFAIXAD"+nItem+"']").val(0);
+								
+								//Input hidden
+								$("input[id='ALIQ_IPI"+nItem+"']").val(aVlr[5]);
+								$("input[id='ALIQ_ICMS"+nItem+"']").val(aVlr[6]);
+								$("input[id='ALIQ_ST"+nItem+"']").val(aVlr[12]);
+								$("input[id='QTD_EMB"+nItem+"']").val(aVlr[7]);
+								$("input[id='CK_TES"+nItem+"']").val(aVlr[8]);
+								$("input[id='BASE_IPI"+nItem+"']").val(aVlr[11]);
+								$("input[id='BASE_ICMS"+nItem+"']").val(aVlr[9]);
+								$("input[id='BASE_ST"+nItem+"']").val(aVlr[10]);
+								$("input[id='VAL_ICMS"+nItem+"']").val(aVlr[2]);
+								$("input[id='VAL_ST"+nItem+"']").val(aVlr[4]);
+								$("input[id='VAL_IPI"+nItem+"']").val(aVlr[3]);
+								$("input[id='PNEU"+nItem+"']").val(aVlr[13]);
+								$("input[id='MARCA"+nItem+"']").val(aVlr[14]);
+								$("input[id='GRUPO"+nItem+"']").val(aVlr[15]);
+								$("input[id='PERDESC1"+nItem+"']").val(aVlr[16]);
+								$("input[id='PERDESC2"+nItem+"']").val(aVlr[17]);
+								$("input[id='PERDESC3"+nItem+"']").val(aVlr[18]);
+								$("input[id='GERASALDO"+nItem+"']").val(aVlr[19]);
+								$("input[id='ULTRAPASSA"+nItem+"']").val(aVlr[20]);
+								$("input[id='QTDMIN"+nItem+"']").val(aVlr[21]);
+								
+								//Limpa os inputs, caso tenha trocado o produto
+								$("input[name='CK_QTDVEN"+nItem+"']").removeAttr('disabled');
+								//$("input[name='iCK_PRCVEN"+nItem+"']").removeAttr('disabled');
+								//$("#CK_XFAIXAD"+nItem).removeAttr("disabled","")
+								
+								$("input[name='CK_QTDVEN"+nItem+"']").val(""); 								
+								$("#CK_XFAIXAD"+nItem).val("1"); 								
+								$("input[name='CK_VALOR"+nItem+"']").val("0,00"); 								
+								//$("input[name='CK_DESCONT"+nItem+"']").val("0,00"); 								
+								$("input[name='PER_COM"+nItem+"']").val("0,00"); 								
+								$("input[name='VAL_COM"+nItem+"']").val("0,00"); 																
+								
+							} else {			
+								
+								if (data.substr(0, 4) == "ERRO") {
+									cMsgErro = data.substr(6);
+									bootbox.alert(cMsgErro);
+									LimpaLinha(nItem);
+								} else {
+									cMsgErro = "Houve falha ao localizar os dados do produto. Tente novamente!"; 
+									bootbox.alert(cMsgErro);
+									LimpaLinha(nItem);
+									// Quando ocorre erro no protheus	
+									console.log(data);
+								} 
+								//showMsgPortal(cMsgErro);
+							}
+						}
+					});
+				
+				} else if ($.trim(objInput.val()) == "" ) {
+					LimpaLinha(nItem);
+				}
+			    
+				return false;
+			}
+
+					
+			/**
+			Funcao de calculo do total do item
+			**/
+			function TotalItem(cItemAtu) {
+				var nQuant;
+				var nVlrUnit;
+				var nVlrTabela;
+				var nTotalUnit;
+				var nICMS;
+				var nICMSST;
+				var nIPI;     
+				var nPerDesc = 0;    
+				var nValFrete;
+				var nVlrTotal;
+				var nBaseIPI;
+				var nBaseICMS;
+				var nBaseST;
+				var cFaixaDesc;	
+				var nPerCom = 0;
+				var nValCom = 0;
+				var nValDesc = 0;
+				 
+				cCodProd = $("#CK_PRODUTO"+cItemAtu).val();
+				nQuant = parseFloat($("#CK_QTDVEN"+cItemAtu).val().replace('.',"").replace(",","."));
+				nVlrTabela = $('#CK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				//nVlrUnit = $('#iCK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				cFaixaDesc = $("#CK_XFAIXAD"+cItemAtu).val();
+				nValFrete = $("#CJ_FRETE").maskMoney('unmasked')[0];
+				if ($('#CK_DESCONT'+cItemAtu).maskMoney('unmasked')[0] != 0){
+			   		nPerDesc = $("#CK_DESCONT"+cItemAtu).maskMoney('unmasked')[0];
+				}
+				nVlrUnit = nVlrTabela - (nVlrTabela*(nPerDesc/100));
+				nVlrTotal = nVlrTabela*nQuant;
+				nTotalUnit = nVlrTotal
+				nValDesc = nVlrTotal*(nPerDesc/100);
+				nVlrTotal = nVlrTotal - nValDesc;
+				
+				
+				//Tratamento para os impostos
+				nICMS = $('#CK_XVALICM'+cItemAtu).maskMoney('unmasked')[0];
+				nICMSST = $('#CK_XICMST'+cItemAtu).maskMoney('unmasked')[0];
+				nIPI = $("#CK_XVALIPI"+cItemAtu).maskMoney('unmasked')[0];
+		   		
+				//Aliquotas
+				nAliqIPI = parseFloat($("#ALIQ_IPI"+cItemAtu).val());
+				nAliqICMS = parseFloat($("#ALIQ_ICMS"+cItemAtu).val());
+				nAliqST = parseFloat($("#ALIQ_ST"+cItemAtu).val());			
+			    
+				//Valores Base
+				nBaseIPI = parseFloat($("#BASE_IPI"+cItemAtu).val());
+				nBaseICMS = parseFloat($("#BASE_ICMS"+cItemAtu).val());
+				nBaseST = parseFloat($("#BASE_ST"+cItemAtu).val());
+				
+				//Valor do imposto
+				nIPI = nBaseIPI * nQuant * (nAliqIPI /100)
+				nICMS = nBaseICMS * nQuant * (nAliqICMS /100)
+				nICMSST = nQuant * parseFloat($("#VAL_ST"+cItemAtu).val().replace(",","."));
+				
+				//nIPI = nVlrTotal*(nAliqIPI /100)
+				//nICMS = nVlrTotal*(nAliqICMS /100)
+				//nIPI = nQuant * parseFloat($("#VAL_IPI"+cItemAtu).val().replace(",","."));
+				//nICMS = nQuant * parseFloat($("#VAL_ICMS"+cItemAtu).val().replace(",","."));
+				//nICMSST = nQuant * parseFloat($("#VAL_ST"+cItemAtu).val().replace(",","."));
+			
+				//Atualiza os campos de comissão
+				$.each(tblDesc, function (i, item) {
+					if(item.op == cFaixaDesc){
+						nPerCom = item.pcom;
+					};
+			      });
+				nValCom = nVlrTotal * (nPerCom/100);
+				$.trim($("#PER_COM"+cItemAtu).val(mascaraValor(nPerCom.toFixed(2))));
+				$.trim($("#VAL_COM"+cItemAtu).val(mascaraValor(nValCom.toFixed(2))));
+				
+				
+				
+				nVlrTotal = nVlrTotal+nIPI+nICMSST;
+				nTotalUnit = nVlrTotal / nQuant;
+									
+				//Atualiza o campo do total
+				$.trim($("#CK_XVALICM"+cItemAtu).val(mascaraValor(nICMS.toFixed(2))));
+				$.trim($("#CK_XVALIPI"+cItemAtu).val(mascaraValor(nIPI.toFixed(2))));
+				$.trim($("#CK_XICMST"+cItemAtu).val(mascaraValor(nICMSST.toFixed(2))));
+				$.trim($("#iCK_PRCVEN"+cItemAtu).val(mascaraValor(nVlrUnit.toFixed(2))));
+				$.trim($("#CK_VALOR"+cItemAtu).val(mascaraValor(nVlrTotal.toFixed(2))));
+				$.trim($("#CK_XPRCIMP"+cItemAtu).val(mascaraValor(nTotalUnit.toFixed(2))));
+				//Atualiza o total geral
+			    TotalGeral();
+			}
+			 
+			/**
+			Total Geral
+			**/
+			function TotalGeral() {
+				var nItens = parseFloat($("#PROXIMO").val());
+				var i;
+				var nVlrTabela = 0;
+				var nVlrUnit = 0;
+				var nICMS = 0;
+				var nICMSST = 0;
+				var nIPI = 0;
+				var nImpostos = 0;
+				var nValFrete = 0;
+				var nTotal = 0;
+				var nQuant = 0;
+				var nValCom = 0;
+				var cCodProd;
+				var cItmOrc;
+                var nTotQuant = 0.00;
+                var nSaldo = 0;
+				
+				for (i = 1; i<=nItens; i++) { 
+					cItem = String(i); 
+					if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+					
+					cCodProd = $("#CK_PRODUTO"+cItem).val();
+					cItmOrc = $("#CK_ITEM"+cItem).val();
+					if(cItmOrc != "x") {
+						nQuant = parseFloat($("#CK_QTDVEN"+cItem).val().replace('.',"").replace(",",".")); 
+                        nTotQuant += nQuant; 
+						nVlrUnit += nQuant * $('#iCK_PRCVEN'+cItem).maskMoney('unmasked')[0];
+						nICMS += $('#CK_XVALICM'+cItem).maskMoney('unmasked')[0];
+						nICMSST += $('#CK_XICMST'+cItem).maskMoney('unmasked')[0];
+						nIPI += $("#CK_XVALIPI"+cItem).maskMoney('unmasked')[0];
+						nValCom += $("#VAL_COM"+cItem).maskMoney('unmasked')[0];
+						nTotal += $('#CK_VALOR'+cItem).maskMoney('unmasked')[0];
+						nSaldo += $('#SALDO'+cItem).maskMoney('unmasked')[0];
+					}
+				}
+				nImpostos = nICMSST+nIPI; //nICMS
+				nValFrete = $("#CJ_FRETE").maskMoney('unmasked')[0];
+				nTotal =  nTotal+nValFrete; 
+				
+				//Atualiza os totais   
+				$("#TOTAL_QITENS").val($.trim(mascaraValor(nTotQuant.toFixed(2))));
+				$("#TOTAL_ITENS").val($.trim(mascaraValor(nVlrUnit.toFixed(2))));
+				$("#TOTAL_IMP").val($.trim(mascaraValor(nImpostos.toFixed(2))));
+				$("#TOTAL_FRETE").val($("#CJ_FRETE").val());
+				$("#TOTAL_ORC").val($.trim(mascaraValor(nTotal.toFixed(2))));
+				$("#TOTAL_COM").val($.trim(mascaraValor(nValCom.toFixed(2))));
+				$("#TOTAL_SALDO").val($.trim(mascaraValor(nSaldo.toFixed(2))));
+
+				//Se saldo negativo, exibe mensagem
+				if (nSaldo < 0){
+					$("#orc-informar").html();
+					new PNotify({
+						title: 'Saldo Negativo',
+						text: 'O saldo deste orçamento ficará negativo.',
+						type: 'notice',
+					}); 
+				}
+			}
+			 
+			/**
+			Verifica se a quantidade é múltiplo da embalagem
+			**/
+			function VldQtd(cItemAtu) {
+				var nQuant;
+				var nQtdEmb;
+				var nQtdMin;
+				var resto;
+			    var lRet = true
+			    
+			 	//Valida a quantidade por embalagem
+			 	nQtdEmb = $("#QTD_EMB"+cItemAtu).val();
+			 	nQtdMin = $("#QTDMIN"+cItemAtu).val();
+			 	nQtdEmb = parseInt(nQtdEmb);
+				nQuant = parseFloat($("#CK_QTDVEN"+cItemAtu).val().replace('.',","));
+				if (nQuant > 0){ 
+					//limpa o campo de desconto
+					$('#CK_DESCONT'+cItemAtu).val("");
+					$('#CK_XDESC01'+cItemAtu).val("");
+					$('#CK_XDESC02'+cItemAtu).val("");
+					$('#CK_XDESC03'+cItemAtu).val("");
+					
+					//Valida a quantidade da embalagem
+					if (nQtdEmb > 0){
+						if (nQuant < (nQtdEmb)){
+							bootbox.alert("A quantidade deve ser múltiplo de "+nQtdEmb.toString()+".");
+							$("#CK_QTDVEN"+cItemAtu).val("");
+							lRet = false;
+							return false;
+						} else {
+							resto = nQuant % nQtdEmb;
+							if (resto != 0 ){
+								bootbox.alert("A quantidade deve ser múltiplo de "+nQtdEmb.toString()+".");
+								$("#CK_QTDVEN"+cItemAtu).val("");
+							    lRet = false;
+								return false;
+							}
+						}
+					}
+
+
+					//Valida a quantidade mínima da tabela de preço
+					if (nQtdMin > 0){
+						if (nQuant < (nQtdMin)){
+							bootbox.alert("A quantidade mínima para este item é "+nQtdMin.toString()+".");
+							$("#CK_QTDVEN"+cItemAtu).val("");
+							lRet = false;
+							return false;
+						}
+					}	
+				} else {
+					bootbox.alert("Informe a quantidade!");
+					lRet = false;
+					return false;
+				} 
+				
+				if (lRet = true){
+					//Valida o estoque do produto
+					vldEstoque(cItemAtu);
+				}
+				
+            	//Gatilho para total do item
+            	TotalItem(cItemAtu);
+			}
+			
+			
+			
+			
+			/**
+			Verifica se existe estoque disponível
+			**/
+			function vldEstoque(cItem){
+				var produto = $("#CK_PRODUTO"+cItem).val();
+				var quantidade = parseFloat($("#CK_QTDVEN"+cItem).val().replace('.',","));
+				var qtd = $("#CK_QTDVEN"+cItem).val();
+				var importadora = $("#CJ_XIMPORT").val();
+				var pneu = $("#PNEU"+cItem).val();
+				var elaboracao = $("#CJ_XTPORC").val();
+				var lret = true;
+				var retVld = true;
+				
+			 	var dialogTab = bootbox.dialog({
+			        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Verificando estoque disponível... Aguarde...</p>',
+			        closeButton: false
+			    });
+			    
+			    if (importadora == ""){ 
+			    	dialogTab.modal('hide');
+			    	bootbox.alert("O campo Importadora deve ser preenchido.");
+				    $("#CK_QTDVEN"+cItem).val("");
+				    $("#CJ_XIMPORT").focus(); 
+				    lret = false;
+					retVld = false;
+			    } else {
+			    	
+				 	$.ajax({
+						url: "U_GetEstDisp.apw?PR=<%=cLCodLogin%>",
+						data: 'produto='+produto+'&quantidade='+qtd+'&importadora='+importadora,
+						type: "POST",
+						async: false,
+						success:
+							function(retorno) {
+								if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+									$("html").html(retorno);
+									return;
+								}
+								saldo = parseInt(retorno);
+								if ( saldo <= 0 || saldo < quantidade) {
+									if(retorno < 0){
+										retorno = 0
+									};	 
+									dialogTab.modal('hide'); 
+									bootbox.alert('Não há saldo disponível em estoque para a quantidade solicitada para o item '+produto+'! <br>O saldo atual é de '+retorno+'.');
+				   	    			
+					   	    		if ($('#CJ_XTPORC').val() == "1"){
+					   	    			$("#CK_QTDVEN"+cItem).val(""); 
+					   	    			lret = false;
+					   	    			retVld = false;
+				   	    			}
+								}
+								/*
+								//Verifica a quantidade mínima para pneus
+								else { 
+									//Se o estoque de pneu for 4 ou menos, a venda só pode ser em múltipos de 4
+									if (pneu == "1" &&  saldo > 0 && saldo <= 4 && quantidade % 2 != 0){
+										if (saldo > 1){
+											dialogTab.modal('hide'); 
+											bootbox.alert('O item '+produto+' deve ser vendido em pares. O saldo atual é de '+retorno+'.');
+						   	    			$("#CK_QTDVEN"+cItem).val(""); 
+						   	    			lret = false;
+						   	    			retVld = false;
+					   	    			}
+								 	}
+								} */
+							}
+						});
+						if (lret == true){ 
+							//Habilita os campos para edição
+							$("#CK_DESCONT"+cItem).removeAttr('disabled');
+							$("#CK_XDESC01"+cItem).removeAttr('disabled');
+							$("#CK_XDESC02"+cItem).removeAttr('disabled');
+							$("#CK_XDESC03"+cItem).removeAttr('disabled');
+							$("#CK_XPEDCLI"+cItem).removeAttr('disabled');
+							$("#CK_XITEMCL"+cItem).removeAttr('disabled');
+						}      
+						dialogTab.modal('hide');
+					}
+				return retVld;
+			}
+			
+			
+			
+			
+			/**
+			Limpa os valores da linha
+			**/
+			function LimpaLinha(cItem) {
+				$("#CK_QTDVEN"+cItem).val("");
+				$("#iCK_PRCVEN"+cItem).val("");
+				$("#CK_PRCVEN"+cItem).val("");
+				$("#CK_XPRCIMP"+cItem).val("");
+				$("#CK_XVALIPI"+cItem).val("");
+				$("#CK_XVALICM"+cItem).val("");
+				$("#CK_XICMST"+cItem).val("");
+				$("#CK_VALOR"+cItem).val("");
+				$("#PER_COM"+cItem).val("");
+				$("#VAL_COM"+cItem).val("");
+				$("#CK_DESCONT"+cItem).val("");
+				$("#CK_XDESC01"+cItem).val("");
+				$("#CK_XDESC02"+cItem).val("");
+				$("#CK_XDESC03"+cItem).val("");
+				$('#CK_XFAIXAD'+cItem).val(1);
+			
+				TotalGeral();	
+			}
+
+			
+			/**
+			Verifica se o valor digitado é maior que o valor de tabela
+			**/
+			function VldValor(cItemAtu) {
+				var nVlrTabela = $('#CK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				var nVlrUnit = $('#iCK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				var produto = $("#CK_PRODUTO"+cItemAtu).val();
+				var nValMin = 0;
+				var nDescont = 0;
+				var nDescMax = 0;
+				var aDesc;
+				var lOK = true;
+				var lMostra = false;
+				var dialogTab = bootbox.dialog({
+					message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Verificando valores... Aguarde...</p>',
+			       	closeButton: false
+			       }); 
+			    
+				if ($('#CK_DESCONT'+cItemAtu).maskMoney('unmasked')[0] != 0){
+				    nDescont = $('#CK_DESCONT'+cItemAtu).maskMoney('unmasked')[0];
+
+					if (nDescont < -10) {
+						dialogTab.modal('hide');
+						bootbox.alert('O desconto negativo deve ser no máximo -10%!');
+						$('#CK_DESCONT'+cItemAtu).val("");
+						return false;	
+					} 	
+					
+				}
+				
+				//Valida o valor máximo --retirado Lucilene 11.08.20
+				//if ( lOK && nVlrUnit > nVlrTabela){ 
+				//	dialogTab.modal('hide');
+				//	bootbox.alert("O valor máximo permitido é o valor da tabela!");
+				//	$("#iCK_PRCVEN"+cItemAtu).val($('#CK_PRCVEN'+cItemAtu).val());
+				//	$("#iCK_PRCVEN"+cItemAtu).focus();
+				//	lOK = false;
+				//}
+				
+				//dialogTab.modal('hide');
+					
+				//Atualiza o valor dos impostos
+				if (lOK && nDescont != 0){
+					var cCodProd = $("#CK_PRODUTO"+cItemAtu).val();
+					var cQuant = $("#CK_QTDVEN"+cItemAtu).val();
+					//var dialogImp = bootbox.dialog({
+				    //    message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Atualizando os valores dos impostos... Aguarde...</p>',
+				    //    closeButton: false
+			    	//	});
+			    	nVlrUnit = nVlrTabela - (nVlrTabela * (nDescont/100))
+					$.ajax({
+						url: "U_GetImpostos.apw?PR=<%=cLCodLogin%>",
+						data: 'produto='+cCodProd+'&prcvenda='+nVlrUnit+'&quantidade='+cQuant,
+						type: "POST",
+						async: false,
+						error: function (jqXHR, textStatus, error){
+						dialogTab.modal('hide');
+						bootbox.alert("Falha ao atualizar o valor dos impostos!");
+						console.log(error);
+						lOK = false;
+						 },
+						 success: 
+							function(data) {
+								
+								dialogTab.modal('hide');
+								if (data.indexOf('<META HTTP-EQUIV') >= 0 ) {
+									$("html").html(data);
+									return;
+								}
+								
+								if (data.substr(0, 2) == "OK") {
+									aVlr = data.substr(3).split('|#|');
+									$.trim($("input[name='CK_XVALICM"+cItemAtu+"']").val(aVlr[2]));
+									$.trim($("input[name='CK_XICMST"+cItemAtu+"']").val(aVlr[4]));
+									$.trim($("input[name='CK_XVALIPI"+cItemAtu+"']").val(aVlr[3]));
+									$.trim($("#iCK_PRCVEN"+cItemAtu).val(mascaraValor(nVlrUnit.toFixed(2))));
+									//Input hidden
+									$("input[id='ALIQ_IPI"+cItemAtu+"']").val(aVlr[5]);
+									$("input[id='ALIQ_ICMS"+cItemAtu+"']").val(aVlr[6]);
+									$("input[id='ALIQ_ST"+cItemAtu+"']").val(aVlr[12]);
+									$("input[id='CK_TES"+cItemAtu+"']").val(aVlr[8]);
+									$("input[id='BASE_IPI"+cItemAtu+"']").val(aVlr[11]);
+									$("input[id='BASE_ICMS"+cItemAtu+"']").val(aVlr[9]);
+									$("input[id='BASE_ST"+cItemAtu+"']").val(aVlr[10]);
+									$("input[id='VAL_ICMS"+cItemAtu+"']").val(aVlr[2]);
+									$("input[id='VAL_ST"+cItemAtu+"']").val(aVlr[4]);
+									$("input[id='VAL_IPI"+cItemAtu+"']").val(aVlr[3]);
+								} else {			
+									cMsgErro = "Houve falha ao atualizar os impostos. Tente novamente!"; 
+									bootbox.alert(cMsgErro);
+									LimpaLinha(cItemAtu);
+									lOK = false;
+									if (data.substr(0, 4) == "ERRO") {
+										cMsgErro = data.substr(5);
+									} else {
+										// Quando ocorre erro no protheus	
+										console.log(data);
+									}
+								}	
+							}
+					});
+				}
+				dialogTab.modal('hide');
+				//Gatilho para total do item 
+				if(lOK){
+            		TotalItem(cItemAtu);
+            	}
+			}	
+			
+			
+			/**
+			Verifica se o valor digitado é maior que o valor de tabela
+			**/
+			function VldFaixa(cItemAtu) {
+				var nVlrTabela;
+				var nVlrUnit;
+				var nVlrMin;
+				var cFaixaDesc;
+				var aDesc;
+				
+				nVlrUnit = $('#iCK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				nVlrTabela = $('#CK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+				cFaixaDesc = $('#CK_XFAIXAD'+cItemAtu).val()
+				
+				//Atualiza o preço de acordo com a faixa
+				$.ajax({
+					url: "U_GetVlrDesc.apw?PR=<%=cLCodLogin%>",
+					data: 'prcvenda='+nVlrUnit+'&prctab='+nVlrTabela+'&faixadesc='+cFaixaDesc,
+					type: "POST",
+					async: false,
+					success: 
+						function(data) {
+							if (data.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(data);
+								return;
+							}
+							if (data.substr(0, 2) == "OK") {
+								aDesc = data.substr(2).split('|#|');							
+								$("#iCK_PRCVEN"+cItemAtu).val(aDesc[1]);
+								nVlrUnit = $('#iCK_PRCVEN'+cItemAtu).maskMoney('unmasked')[0];
+								if (nVlrUnit < aDesc[2]){ 
+							 	 	bootbox.alert("O valor mínimo para este item é R$"+aDesc[2].toString()+".");
+							 	 	$("#iCK_PRCVEN"+cItemAtu).val($('#CK_PRCVEN'+cItemAtu).val());
+									$("#iCK_PRCVEN"+cItemAtu).focus();
+									$('#CK_XFAIXAD'+cItemAtu).val(1);
+									$('#VAL_DESC'+cItemAtu).val(aDesc[3]);
+							 	}else{
+							 		$('#VAL_DESC'+cItemAtu).val(aDesc[3]);
+							 	}
+							}	
+						}
+					});
+				
+				//Valida o valor máximo
+				if (nVlrUnit > nVlrTabela){
+					bootbox.alert("O valor máximo permitido é o valor da tabela!");
+					$("#iCK_PRCVEN"+cItemAtu).val($('#CK_PRCVEN'+cItemAtu).val());
+					$("#iCK_PRCVEN"+cItemAtu).focus();
+				} else {
+					//Valida o valor mínimo
+					
+				}
+				//Gatilho para total do item
+            	TotalItem(cItemAtu);
+			}	
+			
+			/**
+			Função para anexar os documentos ao orçamento
+			**/
+			function OrcGetAnex() {
+				$.ajax({  
+					url: "U_OrcGetAn.apw?PR=<%=cLCodLogin%>",
+					type: "POST",
+					data: "fornece="+$("#fornece").val()+"&loja="+$("#loja").val(),
+					cache: false, 
+					success: function(html){    
+						$("#InfAnexos").html(html);
+							new PNotify({
+								title: 'Anexar arquivo',
+								text: 'Anexado com sucesso',
+								type: 'success',
+								icon: 'fa fa-file-o',
+								cornerclass: 'ui-pnotify-sharp'
+							});
+						$("#arquivo").remove();
+					}
+				});
+			}
+			
+			
+			/**
+			Funcao de validação do tipo de frete
+			**/
+			function VldFrete() {
+				var cFrete;
+				var tabpreco = $("#CJ_TABELA").val();
+
+				cFrete = $("#CJ_TPFRETE").val();
+				if (cFrete == 'C' || cFrete == 'F'){
+					$("#CJ_FRETE").attr("required","");
+					$("#CJ_FRETE").attr("aria-required","true"); 
+					$("#CJ_FRETE").removeAttr('disabled');
+					$("#CJ_XTRANSP").removeAttr('disabled');
+					$("#CJ_FRETE").focus();
+					$("#CJ_XTRANSP").val("");
+					$("#DESCRETIR").val("0");
+					
+					//Localiza a transportadora
+					$.ajax({
+						url: "U_GetTransp.apw?PR=<%=cLCodLogin%>",
+						type: "POST",
+						data: 'tabela='+tabpreco,
+						async: false,
+						success:
+							function(transp) {
+								if (transp.indexOf('<META HTTP-EQUIV') >= 0 ) {
+									$("html").html(transp);
+									return;
+								}
+								if ( transp != "" ) {
+								 	//Preenche o campo da transportadora 
+								 	document.getElementById('CJ_XTRANSP').innerText = null;
+								 	$("#CJ_XTRANSP").append(transp);
+								} else {
+									bootbox.alert('Cliente sem transportadora cadastrada!');
+									$("#CJ_TPFRETE").val("S")
+									$("#select2-CJ_TPFRETE-container").html("Sem Frete")
+									$("#CJ_FRETE").removeAttr("required");
+									$("#CJ_FRETE").removeAttr("aria-required");
+									$("#CJ_FRETE").attr("disabled","");
+									$("#CJ_XTRANSP").attr("disabled","");
+									$("#CJ_FRETE").val("0,00");
+									$("#CJ_XTRANSP").val("");
+									$("#select2-CJ_XTRANSP-container").html("Selecione uma Transportadora");
+								
+								}
+							}	
+					});
+					
+					 
+					//$("#select2-CJ_XTRANSP-container").html("Selecione uma Transportadora"); 
+				} 
+				if (cFrete == 'S' || cFrete == 'R') {
+					$("#CJ_FRETE").removeAttr("required");
+					$("#CJ_FRETE").removeAttr("aria-required");
+					$("#CJ_FRETE").attr("disabled","");
+					$("#CJ_XTRANSP").attr("disabled","");
+					$("#CJ_FRETE").val("0,00");
+					$("#CJ_XTRANSP").val("");
+					$("#select2-CJ_XTRANSP-container").html("Selecione uma Transportadora"); 
+					$("#DESCRETIR").val("0");
+                    // Disparar acesso para verificar o desconto retira
+				    /*
+					if ( cFrete == 'R') {
+                        $.ajax({
+                            url: "U_DescRetira.apw?PR=<%=cLCodLogin%>",
+                            type: "POST",
+                            async: false,
+                            success:
+                                function(retorno) {
+									if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+										$("html").html(retorno);
+										return;
+									}
+                                    aRet = retorno.split('|');
+                                    cTransp = aRet[0];
+                                    nDesc = parseFloat(aRet[1]);
+                                    
+                                    if(nDesc > 0){
+                                        bootbox.confirm({
+                                            title: "Transportadora retira",
+                                            message: 'Deseja aplicar o desconto de '+nDesc.toString()+'% ?',
+                                            buttons: {
+                                                cancel: {
+                                                    label: 'Não'
+                                                },
+                                                confirm: {
+                                                    label: 'Sim'
+                                                }
+                                            },
+                                            callback: function (result) {
+                                                if(result){ 
+                                                    //Atualiza a variável
+                                                    $("#DESCRETIR").val(nDesc);
+                                                } else {
+                                                    $("#DESCRETIR").val("0");
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        $("#DESCRETIR").val("0");
+                                    }	
+                                    
+                                }
+                        });	
+                    
+                    }*/
+				}
+				
+				
+				TotalGeral();
+			}
+			
+			/**
+			Validação do valor mínimo de Frete
+			**/
+			function freteMinimo(objInput) {
+				var valFre;
+				var tipoFre;
+				     
+	            tipoFre = $("#CJ_TPFRETE").val();
+	            valFre =  $("#CJ_FRETE").maskMoney('unmasked')[0];
+			 	
+			 	$.ajax({
+					url: "U_FreteMinimo.apw?PR=<%=cLCodLogin%>",
+					data: 'tipoFrete='+tipoFre,
+					type: "POST",
+					async: false,
+					success:
+						function(retorno) {
+							if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(retorno);
+								return;
+							}
+							valMin = parseInt(retorno);
+							if (tipoFre == 'C'){
+								tipo = 'CIF';
+							}
+							else {
+							 	tipo = 'FOB';
+							}
+							if (valFre < valMin ) {
+								bootbox.alert('O valor mínimo para frete do tipo '+tipo+' é R$'+retorno+'!');
+								$("#CJ_FRETE").val(retorno);
+								$("#CJ_FRETE").focus(); 
+								$("#TOTAL_FRETE").val($("#CJ_FRETE").val());
+								return false;
+							}
+							
+							TotalGeral();
+							
+						}
+				});
+			}
+			
+			/**
+			// Função para ver detalhes da linha
+			**/
+			function detalheOrc(cItem){
+			 	var msg = ""
+			 	var faixad = $("#CK_XFAIXAD"+cItem)
+			 	var produto = $("#CK_PRODUTO"+cItem)
+			 	if(produto.val() == ""){
+			 		bootbox.alert("Selecione o produto para ver os detalhes!");
+			 		return false;
+			 	}
+			 	
+			 	msg = '<div class="row form-group">'
+			 	msg +='	<header class="panel-heading">'
+			 	msg +='		<h2 class="panel-title">Detalhes da linha</h2>'
+			 	msg +='	</header>'
+				msg +='	<br>'
+				//Descrição do produto 
+				msg +='	<div class="row form-group">'				
+				msg +='		<div class="col-lg-1"></div>'				
+				msg +='		<div class="col-lg-11">'
+				msg +='			<label class="control-label">Produto</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-left" style="width: 240%;" value="'+$(produto)[0].options[$(produto)[0].selectedIndex].text.split('- ')[1]+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				msg +='	</div>'
+				//Desconto 1
+				msg +='	<div class="row form-group">'
+				msg +='		<div class="col-lg-1"></div>'					
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">% Desconto 1</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-left" value="'+$("#PERDESC1"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//Desconto 2								
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">% Desconto 2</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-left" value="'+$("#PERDESC2"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//Desconto 3								
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">% Desconto 3</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-left" value="'+$("#PERDESC3"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//Faixa de Desconto
+				/*
+				msg +='		<div class="col-lg-6">'
+				msg +='			<label class="control-label">Faixa de Desconto</label>'	              
+				msg +=' 		<div class="input-group">'
+				msg +='				<input class="form-control text-right" value="'+$(faixad)[0].options[$(faixad)[0].selectedIndex].textContent+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>' 
+				*/
+				msg +='	</div>' 
+				
+				//% IPI
+				msg +='	<div class="row form-group">'				
+				msg +='		<div class="col-lg-1"></div>'				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">Aliquota IPI</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#ALIQ_IPI"+cItem).val()+'%" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//% ICMS				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">Aliquota ICMS</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#ALIQ_ICMS"+cItem).val()+'%" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//% ICMS ST				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">Aliquota ICMS ST</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#ALIQ_ST"+cItem).val()+'%" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				msg +='	</div>'
+				//IPI   
+				msg +='	<div class="row form-group">'				
+				msg +='		<div class="col-lg-1"></div>'				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">IPI</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#CK_XVALIPI"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//ICMS				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">ICMS</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#CK_XVALICM"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				//ICMS ST				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">ICMS ST</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#CK_XICMST"+cItem).val()+'" disabled>'
+				msg +='			</div>'
+				msg +='		</div>'
+				msg +='	</div>'
+				msg +='</div>'
+				//Saldo de desconto do item
+				msg +='	<div class="row form-group">'				
+				msg +='		<div class="col-lg-1"></div>'				
+				msg +='		<div class="col-lg-3">'
+				msg +='			<label class="control-label">Saldo do item</label>'	              
+				msg +=' 		<div class="input-group">'	
+				msg +='				<input class="form-control text-right" value="'+$("#SALDO"+cItem).val()+'" disabled>' 
+				msg +='			</div>'
+				msg +='		</div>'
+				msg +='	</div>'
+
+			 	if(msg != ""){
+				 	bootbox.dialog({
+					    title: '',
+					    message: "<p>"+msg+"</p>",
+					    backdrop: true,
+					    buttons: {
+					        ok: {
+					            label: "OK"
+					        }
+					    }
+					});
+				}	
+			}
+			
+			//Remover linha
+			function removeItem(cItem){
+		    	//e.preventDefault();
+				//var btnRem = $(this);
+				cItem = parseInt(cItem);
+				
+				bootbox.confirm({
+			        title: "Exclusão da linha",
+			        message: "Confirma a exclusão desta linha?",
+			        buttons: {
+			            cancel: {
+			                label: 'Cancelar'
+			            },
+			            confirm: {
+			                label: 'Confirmar'
+			            }
+			        },
+			        callback: function (result) {
+			            if (result){
+							if (cItem < 10 ){cItem = "0"+String(cItem)};
+							
+							//Desabilita o botão
+							//btnRem.attr({ 'disabled': 'disabled' });
+							
+							$("#CK_ITEM"+cItem).val("x");
+							$("#CK_PRODUTO"+cItem).val("");
+							$("#CK_QTDVEN"+cItem).val("1");
+							$("#CK_PRUNIT"+cItem).val("0");
+							$("#iCK_PRCVEN"+cItem).val("0,00");
+							$("#CK_PRCVEN"+cItem).val("0,00");
+							$("#CK_XVALICM"+cItem).val("0,00");
+							$("#CK_XVALIPI"+cItem).val("0,00");
+							$("#CK_XICMST"+cItem).val("0,00");
+							$("#CK_VALOR"+cItem).val("0,00");
+							$("#PER_COM"+cItem).val("0,00");
+							$("#VAL_COM"+cItem).val("0,00");
+							$("#linha"+cItem).hide();
+							
+							//Atualiza o total geral
+						    TotalGeral();
+				    	}
+			        }
+			    });
+		    }
+			
+			
+			/**
+			//Anexar
+			**/
+			$("#btnInfUpload").click(function() {
+				var obAnexo = $("#anexo");
+				var obArquivo = obAnexo.clone();
+				
+  					obArquivo.attr("id", "arquivo");
+				
+				$("#frmInfUpload").append(obArquivo);
+
+				var data;
+    				var contentType = "application/x-www-form-urlencoded";
+    				var processData = true;
+    				if ($('#frmInfUpload').attr('enctype') == 'multipart/form-data') {
+        				data = new FormData($('#frmInfUpload').get(0));//seleciona classe form-horizontal adicionada na tag form do html
+        				contentType = false;
+        				processData = false;
+    				} else {
+        				data = $('#frmInfUpload').serialize();
+    				}
+    				$.ajax({
+					data: data,
+					type: $('#frmInfUpload').attr('method'),
+					url: $('#frmInfUpload').attr('action'),
+					contentType: contentType,
+        				processData: processData,
+        				success: function (response) {
+            				//seu código após sucesso
+						if( response == "Ok" ) {
+							window.location.reload();
+						} else {
+							bootbox.alert('Erro ao carregar arquivo');
+						} 
+        				},
+        				error: function (exr, sender) {
+                			bootbox.alert('Erro ao carregar pagina');
+        				}
+    				});
+			});
+			
+			//Adicionar nova linha
+			$('#btAddItm').click(function(e) {
+				e.preventDefault();
+				var newLine = parseFloat($("#PROXIMO").val())+1;
+				var nItens = parseFloat($("#PROXIMO").val());
+				var linhaAtu = String(newLine);
+				var lRet = true;
+				var lGridOK = true;
+				var btnAdd = $(this);
+				var cCodProd;
+				var cItmOrc;
+				/*
+				bootbox.confirm({
+			        message: "Confirma a inclusão de uma nova linha?",
+			        buttons: {
+			            confirm: {
+			                label: 'Sim',
+			                className: 'btn btn-primary'
+			            },
+			            cancel: {
+			                label: 'Não',
+			                className: 'btn btn-default'
+			            }
+			        },
+			        callback: function (result) {
+			            if(result == true){
+				         */   
+							if (parseInt(linhaAtu) < 10 ){linhaAtu = "0"+String(linhaAtu)};
+							
+							//Desabilita o botão
+							btnAdd.attr({ 'disabled': 'disabled' });
+					 
+							//Valida o Grid
+							if (nItens == 99){
+								lRet = false;
+								
+								$("#orc-informar").html();
+									new PNotify({
+										title: 'Quantidade máxima',
+										text: 'O orçamento atingiu a quantidade máxima de itens. Crie um novo orçamento.',
+										type: 'error',
+									});      
+								btnAdd.removeAttr('disabled');	
+								return false;
+							}		
+					
+							if (lRet == true) {
+								for (i = 1; i<=nItens; i++) { 
+									cItem = String(i);
+									if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+									
+									cCodProd = $("#CK_PRODUTO"+cItem).val();
+									cItmOrc = $("#CK_ITEM"+cItem).val();
+									if(cItmOrc != "x") { 
+										if ($('#CK_PRODUTO'+cItem).val() == "" || $('#CK_QTDVEN'+cItem).val() == ""){
+											lGridOK = false;	
+										}
+									}
+								}
+								    
+								if (lGridOK == false){
+									lRet = false;
+									
+									$("#orc-informar").html();
+										new PNotify({
+											title: 'Campo obrigatório',
+											text: 'Verifique o preenchimento dos campos Produto e Quantidade antes de incluir uma nova linha!',
+											type: 'error',
+										});
+									btnAdd.removeAttr('disabled');
+									
+									//Força fechar a janela
+									if (lRet == false){
+										bootbox.hideAll();
+									}		
+									return false;	 
+								}
+							}
+						    
+						
+						
+							//Cria a linha
+			                if (lRet == true) {
+								var tbl = document.getElementById('datatable-editable'), // table reference
+							
+					        	row = tbl.insertRow(tbl.rows.length),      // append table row
+					        	i;
+							    // insert table cells to the new row
+							    for (i = 0; i < tbl.rows[0].cells.length; i++) {
+							        createCell(row.insertCell(i),i,newLine,tbl.rows[0].cells.length-1);
+							        //Adiciona os atributos da coluna
+							        switch (i) {
+									   //Unidade de Medida
+									   case 2:
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //Quantidade
+									   case 3:
+									   	$('tr:last').find('td:last').attr('style','right');
+									   break;
+									   //Preço com impostos
+									   case 5:
+									   $('tr:last').find('td:last').attr('hidden','');
+									   //faixa de desconto      
+									   case 7:     
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //IPI
+									   case 8:
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //ICMS
+									   case 9:
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //ICMS ST
+									   case 10:
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //% Desconto
+									   case 11:
+									   	//if($("#POLIMENTO").val() == "1"){
+									   	//	$('tr:last').find('td:last').attr('style','right').attr('hidden','');
+									   	//} else {
+									   		$('tr:last').find('td:last').attr('style','right');
+									   	//}	
+									   break;
+									   //% Desconto 01
+									   case 12: 
+									   	if($("#POLIMENTO").val() == "1"){
+									   		$('tr:last').find('td:last').attr('style','right').attr('hidden','');
+									   	} else {
+									   		$('tr:last').find('td:last').attr('style','right');
+									   	}
+									   break;
+									   //% Desconto 02
+									   case 13:
+									   	if($("#POLIMENTO").val() == "1"){
+									   		$('tr:last').find('td:last').attr('style','right').attr('hidden','');
+									   	} else {
+									   		$('tr:last').find('td:last').attr('style','right');
+									   	}
+									   break;  
+									   //% Desconto 03
+									   case 14:
+   										if($("#POLIMENTO").val() == "1"){
+									   		$('tr:last').find('td:last').attr('style','right').attr('hidden','');
+									   	} else {
+									   		$('tr:last').find('td:last').attr('style','right');
+									   	}									   
+							           break;
+									   //% Comissão      
+									   case 15:     
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //valor comissão      
+									   case 16:     
+									   	$('tr:last').find('td:last').attr('hidden','');
+									   break;
+									   //pedido cliente
+									   case 17:
+									   $('tr:last').find('td:last').attr('style','right');
+									   break;
+									   //item do pedido cliente
+									   case 18:
+									   	$('tr:last').find('td:last').attr('style','right');
+									   break;
+									   
+									   //TOTAL
+									   case 19: 
+									   	$('tr:last').find('td:last').attr('style','right');
+									   break;
+									}   
+							    }
+							    //Adiciona a classe no ultimo td
+								$('tr:last').find('td:last').addClass('actions');
+						         
+						        //Adiciona id na linha
+						     	$('tr:last').attr('id','linha'+linhaAtu);
+						     	$('tr:last').attr('class','odd');
+						     	    
+								//Atualiza a quantidade de linhas
+								$("#PROXIMO").val(linhaAtu);
+							
+								//Habilita o botão para adicionar itens
+								btnAdd.removeAttr('disabled'); 
+								formate();
+							};
+/*
+						};
+					}
+			    });
+*/			    
+			});
+			
+			// create DIV element and append to the table cell
+			function createCell(cell,col,newLine,tam) {
+   				var linha = String(newLine);
+				
+				if (parseInt(linha) < 10 ){linha = "0"+String(linha)}; 
+			   	
+			   	switch (col) {
+				   //Item
+					case 0:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_ITEM'+linha);
+				     campo.setAttribute('name', 'CK_ITEM'+linha);
+				   	 campo.setAttribute('class', 'form-control text-left input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', linha);
+				   	 campo.setAttribute('type', 'text');
+					break;
+					
+				   //Select do produto
+				   case 1:
+				      campo = document.createElement('select');
+				      campo.setAttribute('class', 'selectpicker');
+				      campo.setAttribute('data-live-search', 'true');
+				      campo.setAttribute('data-width','290px');
+				      campo.setAttribute('id', 'CK_PRODUTO'+linha);
+				      campo.setAttribute('name', 'CK_PRODUTO'+linha);
+				      campo.setAttribute('required','')
+				      campo.setAttribute('aria-required','true')
+				      campo.setAttribute('value','')
+				      campo.setAttribute('onchange', 'javascript:gatProduto($(this))'); 
+				      $(campo).append($.parseHTML('<option value="">Selecione...</option>'+optProd));
+				      break;					
+					
+				   //Unidade de medida
+				   case 2:
+				   	campo = document.createElement('input'); 
+				   	campo.setAttribute('id', 'CK_UM'+linha);
+				    campo.setAttribute('name', 'CK_UM'+linha);
+				   	campo.setAttribute('class', 'form-control text-right input-block');
+				   	campo.setAttribute('disabled', 'disable');  
+				   	campo.setAttribute('value', '');
+				   	campo.setAttribute('type', 'text');  
+				    break;
+				    
+				   //Quantidade
+				   case 3:
+				   	campo = document.createElement('input'); 
+				   	campo.setAttribute('id', 'CK_QTDVEN'+linha);
+				    campo.setAttribute('name', 'CK_QTDVEN'+linha);
+				   	campo.setAttribute('class', 'form-control text-right only-numbers');
+				   	campo.setAttribute('disabled', 'disable'); 
+				   	campo.setAttribute('type', 'text');
+				   	campo.setAttribute('value', ''); 
+				   	campo.setAttribute('placeholder', '0'); 
+				   	campo.setAttribute('onblur', 'javascript:VldQtd("'+linha+'")'); 
+				   	campo.setAttribute('onkeyup', 'javascript:TotalItem("'+linha+'")'); 
+				   	campo.setAttribute('required', ''); 
+				   	campo.setAttribute('aria-required', 'true'); 
+				   break;
+				   
+				   	//Preço de tabela
+					case 4:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_PRCVEN'+linha);
+				     campo.setAttribute('name', 'CK_PRCVEN'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 //campo.setAttribute('type', 'text');
+				   	 campo.setAttribute('value', '');
+					break;
+				     
+				 	//Preço unitário com impostos
+					case 5:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XPRCIMP'+linha);
+				     campo.setAttribute('name', 'CK_XPRCIMP'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', '');
+					break;
+				   
+				   //Preço de venda 
+				   case 6:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'iCK_PRCVEN'+linha);
+				     campo.setAttribute('name', 'iCK_PRCVEN'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right myformato'); //money5
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('type', 'text');
+				   	 campo.setAttribute('value', '');
+				   	 campo.setAttribute('placeholder', '0,00');
+				   	 campo.setAttribute('onblur', 'javascript:VldValor("'+linha+'")');
+				   	 campo.setAttribute('onkeyup', 'javascript:TotalItem("'+linha+'")');
+//				   	 campo.setAttribute('onKeyPress', 'FormataValor(this,28,event,2,".",",")');
+//				   	 campo.setAttribute('onKeyPress', 'return(moeda(this,'+"'.'"+','+"','"+',event))');
+					break;
+				   
+				   //Select da faixa de desconto   
+				   case 7:
+				     campo = document.createElement('select');
+				     campo.setAttribute('type', 'text');
+				     campo.setAttribute('id', 'CK_XFAIXAD'+linha);
+				     campo.setAttribute('name', 'CK_XFAIXAD'+linha);
+				     campo.setAttribute('class', 'form-control mb-md');
+				     campo.setAttribute('disabled', 'disable'); 
+				     campo.setAttribute('onchange', 'VldFaixa("'+linha+'")'); 
+				     $.each(tblDesc, function (i, item) {
+					    $(campo).append($('<option>', { 
+					        value: item.op,
+					        text : item.descricao
+					    }));
+				      });
+					break;
+					
+					//IPI
+					case 8:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XVALIPI'+linha);
+				     campo.setAttribute('name', 'CK_XVALIPI'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', '');
+				   	 campo.setAttribute('type', 'text');
+					break;
+				     
+					//ICMS
+					case 9:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XVALICM'+linha);
+				     campo.setAttribute('name', 'CK_XVALICM'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', '');
+				   	 campo.setAttribute('type', 'text');
+					break;
+					
+					//ICMS ST
+					case 10:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XICMST'+linha);
+				     campo.setAttribute('name', 'CK_XICMST'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text');
+					break;    
+				     
+				    //% de desconto
+					case 11:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_DESCONT'+linha);
+				     campo.setAttribute('name', 'CK_DESCONT'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right percentual');
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text'); 
+				   	 campo.setAttribute('maxlength', '7'); 
+				   	 campo.setAttribute('placeholder', '0,00'); 
+				   	 campo.setAttribute('disabled', 'disable');
+				   	 if($("#POLIMENTO").val() == "1"){
+				   	 	campo.setAttribute('onclick', 'javascript:descPolimento("'+linha+'")');
+				   	 }else{
+					   	 campo.setAttribute('onblur', 'javascript:VldValor("'+linha+'")');
+					   	 campo.setAttribute('onkeyup', 'javascript:TotalItem("'+linha+'")'); 
+				   	 }				   	 
+					break;  
+					
+					//% de desconto 01
+					case 12:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XDESC01'+linha);
+				     campo.setAttribute('name', 'CK_XDESC01'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right percentual');
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text'); 
+				   	 campo.setAttribute('maxlength', '7'); 
+				   	 campo.setAttribute('placeholder', '0,00'); 
+				   	 campo.setAttribute('disabled', 'disable');
+				   	 campo.setAttribute('onblur', 'javascript:vldDesc("'+linha+'")');
+				   	 if($("#POLIMENTO").val() == "1"){
+				   	 
+				   	 }
+				   	 			   	 
+					break; 
+					
+					//% de desconto 02
+					case 13:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XDESC02'+linha);
+				     campo.setAttribute('name', 'CK_XDESC02'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right percentual');
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text'); 
+				   	 campo.setAttribute('maxlength', '7'); 
+				   	 campo.setAttribute('placeholder', '0,00'); 
+				   	 campo.setAttribute('disabled', 'disable');
+				   	 campo.setAttribute('onblur', 'javascript:vldDesc("'+linha+'")');				   	 
+					break;  
+				     
+				 	//% de desconto 03
+					case 14:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_XDESC03'+linha);
+				     campo.setAttribute('name', 'CK_XDESC03'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right percentual');
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text'); 
+				   	 campo.setAttribute('maxlength', '7'); 
+				   	 campo.setAttribute('placeholder', '0,00'); 
+				   	 campo.setAttribute('disabled', 'disable');
+				   	 campo.setAttribute('onblur', 'javascript:vldDesc("'+linha+'")');				   	 
+					break;  
+				     
+				    //% de comissão
+					case 15:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'PER_COM'+linha);
+				     campo.setAttribute('name', 'PERCOM'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('value', '');  
+				   	 campo.setAttribute('type', 'text');
+					break; 
+					
+					//Valor de comissão
+					case 16:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'VAL_COM'+linha);
+				     campo.setAttribute('name', 'VAL_COM'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('type', 'text');
+				   	 campo.setAttribute('value', '');  
+					break; 
+					
+					
+					//Pedido cliente
+				    case 17:
+				   	campo = document.createElement('input'); 
+				   	campo.setAttribute('id', 'CK_XPEDCLI'+linha);
+				    campo.setAttribute('name', 'CK_XPEDCLI'+linha);
+				   	campo.setAttribute('class', 'form-control text-right input-block');
+				   	campo.setAttribute('disabled', 'disable');  
+				   	campo.setAttribute('value', '');
+				   	campo.setAttribute('maxlength', '6'); 
+				   	campo.setAttribute('type', 'text');  
+				    break;
+				    
+				    //Item Pedido cliente
+				    case 18:
+				   	campo = document.createElement('input'); 
+				   	campo.setAttribute('id', 'CK_XITEMCL'+linha);
+				    campo.setAttribute('name', 'CK_XITEMCL'+linha);
+				   	campo.setAttribute('class', 'form-control text-right input-block');
+				   	campo.setAttribute('disabled', 'disable');  
+				   	campo.setAttribute('value', '');
+				   	campo.setAttribute('maxlength', '3'); 
+				   	campo.setAttribute('type', 'text');  
+				    break;
+					
+					//TOTAL
+					case 19:
+	 			     campo = document.createElement('input'); 
+				 	 campo.setAttribute('id', 'CK_VALOR'+linha);
+				     campo.setAttribute('name', 'CK_VALOR'+linha);
+				   	 campo.setAttribute('class', 'form-control text-right input-block');
+				   	 campo.setAttribute('disabled', 'disable'); 
+				   	 campo.setAttribute('type', 'text');
+				   	 campo.setAttribute('value', '');
+					break;
+			  
+				   //Ações  
+				   case 20:
+				   	  //Detalhes da linha
+				      campo = document.createElement('i');
+				      campo.setAttribute('class', 'fa fa-info fa-lg');    
+				      campo.setAttribute('Title', 'Detalhes da linha');
+				      campo.setAttribute('onclick', 'detalheOrc('+"'"+linha+"'"+')');
+				      cell.appendChild(campo);
+
+				      //Remover linha
+				      campo = document.createElement('i');
+				      campo.setAttribute('class', 'fa fa-times-circle fa-lg');    
+				      campo.setAttribute('Title', 'Remover linha');
+				      campo.setAttribute('onclick', 'removeItem('+"'"+linha+"'"+')');
+				      break;                                                         
+				      
+				   //Input Padrão     
+				   default:
+				   	campo = document.createElement('input'); 
+				   	campo.setAttribute('class', 'form-control input-block');
+				   	campo.setAttribute('disabled', 'disable');    
+				}
+				cell.appendChild(campo); // apenda o campo na celula da tabela
+			   	
+			   	//Adiciona as variáveis hidden
+			   	if (col == tam){           
+			   	    $('.selectpicker').selectpicker('render');
+			   	    $('.selectpicker').selectpicker('refresh');
+			   		campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'VAL_DESC'+linha);
+				    campo.setAttribute('name', 'VAL_DESC'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+			   	
+			   		campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'ALIQ_ICMS'+linha);
+				    campo.setAttribute('name', 'ALIQ_ICMS'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+			   		campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'ALIQ_IPI'+linha);
+				    campo.setAttribute('name', 'ALIQ_IPI'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+			   					   	
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'ALIQ_ST'+linha);
+				    campo.setAttribute('name', 'ALIQ_ST'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+			   		
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'VAL_ICMS'+linha);
+				    campo.setAttribute('name', 'VAL_ICMS'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);			   		
+
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'VAL_IPI'+linha);
+				    campo.setAttribute('name', 'VAL_IPI'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);			   		
+
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'VAL_ST'+linha);
+				    campo.setAttribute('name', 'VAL_ST'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);			   		
+
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'BASE_ICMS'+linha);
+				    campo.setAttribute('name', 'BASE_ICMS'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+			   		
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'BASE_ST'+linha);
+				    campo.setAttribute('name', 'BASE_ST'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);			   		
+			   		
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'BASE_IPI'+linha);
+				    campo.setAttribute('name', 'BASE_IPI'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'QTD_EMB'+linha);
+				    campo.setAttribute('name', 'QTD_EMB'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);			   		
+			   		
+			   	 	campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'CK_TES'+linha);
+				    campo.setAttribute('name', 'CK_TES'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'PERDESC1'+linha);
+				    campo.setAttribute('name', 'PERDESC1'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'PERDESC2'+linha);
+				    campo.setAttribute('name', 'PERDESC2'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'PERDESC3'+linha);
+				    campo.setAttribute('name', 'PERDESC3'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo); 
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'GERASALDO'+linha);
+				    campo.setAttribute('name', 'GERASALDO'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'ULTRAPASSA'+linha);
+				    campo.setAttribute('name', 'ULTRAPASSA'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'QTDMIN'+linha);
+				    campo.setAttribute('name', 'QTDMIN'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);
+
+					campo = document.createElement('input'); 
+				 	campo.setAttribute('id', 'SALDO'+linha);
+				    campo.setAttribute('name', 'SALDO'+linha); 
+				   	campo.setAttribute('type', 'hidden');
+				   	campo.setAttribute('value', '0');
+			   		cell.appendChild(campo);           				   					   					   		
+			   	} 
+			}
+		    
+		    //Salvar o orçamento
+			$('#btSalvar').click(function() {
+				var lRet = true
+				var i = 0;
+				var nItens = parseFloat($("#PROXIMO").val());
+				var lGrid = true;
+				var lGrid1 = true;
+				var cCodProd;
+				var cItmOrc;
+				var btnSlv = $(this);     
+				var cGrupo = "";
+				
+				//Desabilita o botão
+				btnSlv.attr({ 'disabled': 'disabled' });
+				
+				$.ajax({
+					url: "U_VerSessao.apw?PR=<%=cLCodLogin%>",
+					type: "POST",
+					async: false,
+					success:
+						function(retorno) {
+							if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(retorno);
+								return;
+							}
+							if (retorno == "nok"||retorno == ''||retorno.indexOf("Expires") != -1){
+								$("#orc-informar").html();
+								bootbox.alert('Não foi possível realizar a operação pois a sessão foi fechada. Faça login novamente.');
+								lRet = false;                 
+								btnSlv.removeAttr('disabled');
+							}
+						}	
+				});
+						
+                /**    
+				Valida os campos obrigatorios
+				**/
+				//Cliente
+				if ($("#CJ_CLIENTE").val() == "") {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Campo obrigatório',
+							text: 'Preencha o campo Cliente!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_CLIENTE").focus();
+				}
+                
+                //Tabela de preço
+				if (lRet == true && $("#CJ_TABELA").val() == "") {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Campo obrigatório',
+							text: 'Preencha o campo Tabela de Preço!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_TABELA").focus();
+				}
+				
+				//Data de Entrega
+				if (lRet == true && $("#CK_ENTREG").val() == "") {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Campo obrigatório',
+							text: 'Preencha o campo Previsão de Faturamento!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CK_ENTREGA").focus();
+				}
+				
+				
+				//Importadora 
+				if (lRet == true && $("#CJ_XIMPORT").val() == "") {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Campo obrigatório',
+							text: 'Preencha o campo Importadora!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_XIMPORT").focus();
+				}
+				
+				
+				//Condição de pagamento 
+				if (lRet == true && $("#CJ_CONDPAG").val() == "") {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Campo obrigatório',
+							text: 'Preencha o campo Condição de Pagamento!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_CONDPAG").focus();
+				}
+				
+				//Condição de pagamento DEPÓSITO
+				if (lRet == true && $("#CJ_XMODALI").val() == "002" && ( $("#CJ_CONDPAG").val() != "001") ) {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Condição de Pagamento',
+							text: 'Para a forma de pagamento depósito, utilize a condição de pagamento 001 - A VISTA!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_CONDPAG").focus();
+				}
+				
+				//Condição de pagamento DINHEIRO
+				if (lRet == true && $("#CJ_XMODALI").val() == "004" && ( $("#CJ_CONDPAG").val() != "001" && $("#CJ_CONDPAG").val() != "563") ) {
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Condição de Pagamento',
+							text: 'Para a forma de pagamento Dinheiro, utilize a condição de pagamento 001 - A VISTA ou 563 - A VISTA S/DESC!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_CONDPAG").focus();
+				}
+				
+				//Condição de pagamento DÉBITO
+				if (lRet == true && $("#CJ_XMODALI").val() == "006" && ( $("#CJ_CONDPAG").val() != "001" && $("#CJ_CONDPAG").val() != "633") ){
+					lRet = false;
+					
+					$("#orc-informar").html();
+						new PNotify({
+							title: 'Condição de Pagamento',
+							text: 'Para a forma de pagamento Cartão Débito, utilize a condição de pagamento 001 - A VISTA ou 563 - A VISTA S/DESC!',
+							type: 'error',
+						});                  
+					btnSlv.removeAttr('disabled');	
+					$("#CJ_CONDPAG").focus();
+				}
+				
+				/*
+				if (lRet == true && $("#CJ_CONDPAG").val() != "") {
+					var valMin = 0;
+					var valPar = 0;
+					
+					$.ajax({
+						url: "U_ParcMinima.apw?PR=<%=cLCodLogin%>",
+						data: 'condPgto='+$("#CJ_CONDPAG").val()+'&valor='+$("#TOTAL_ORC").val(),
+						type: "POST",
+						async: false,
+						success:
+							function(retorno) {
+								aRet = retorno.split('|');
+								valMin = parseFloat(aRet[0]);
+								valPar = parseFloat(aRet[1]);
+								if (valPar < valMin ) {
+									bootbox.alert('Para a condição de pagamento escolhida o valor previsto da parcela é de R$'+mascaraValor(valPar.toFixed(2))+'. O valor mínimo permitido por parcela é de R$'+mascaraValor(valMin.toFixed(2))+'.');
+									lRet = false;
+									btnSlv.removeAttr('disabled');
+								}
+								
+								
+							}
+					});
+				}
+				*/
+				//Transportadora e frete
+				if (lRet == true && ($("#CJ_TPFRETE").val() == "C" || $("#CJ_TPFRETE").val() == "F")) {
+					if ($("#CJ_XTRANSP").val() == ""){
+						lRet = false;
+						
+						$("#orc-informar").html();
+							new PNotify({
+								title: 'Campo obrigatório',
+								text: 'Para frete tipo CIF e FOB deve ser informada a Transportadora!',
+								type: 'error',
+							});                  
+						btnSlv.removeAttr('disabled');	
+						$("#CJ_XTRANSP").focus();
+					}
+				}
+				
+				//Se modalidade cartão, verifica o preenchimento da operadora e bandeira
+				if (lRet == true){
+					if ($("#CJ_XMODALI").val() == "005" || $("#CJ_XMODALI").val() == "006") {
+						if ($("#OPERADORA").val() == "" || $("#BANDEIRA").val() == ""){
+							lRet = false;
+							
+							$("#orc-informar").html();
+								new PNotify({
+									title: 'Campo obrigatório',
+									text: 'Para esta modalidade deve ser informada a operadora e a bandeira!',
+									type: 'error',
+								});                  
+							btnSlv.removeAttr('disabled');	
+							$("#OPERADORA").focus();
+						}
+					}
+				} 
+				
+								
+				//Grid
+				if (lRet == true) {
+					for (i = 1; i<=nItens; i++) { 
+						cItem = String(i);
+						if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+						
+						cCodProd = $("#CK_PRODUTO"+cItem).val();
+						cItmOrc = $("#CK_ITEM"+cItem).val();
+						if(cItmOrc != "x") {
+							//Valida o preenchimento dos campos produto e quantidade  
+							if ($('#CK_PRODUTO'+cItem).val() == "" || $('#CK_QTDVEN'+cItem).val() == ""){
+								lGrid = false;	
+							} 
+							//Valida o preenchimento do pedido e item
+							pedCli = $('#CK_XPEDCLI'+cItem).val();
+							itmCli = $('#CK_XITEMCL'+cItem).val();
+							if ((pedCli != "" && itmCli == "") || (pedCli == "" && itmCli != "")){
+								lGrid1 = false;
+							} 
+							
+							//Valida o estoque no orçamento firme
+							if( $('#CJ_XTPORC').val() == "1"){
+								if(vldEstoque(cItem) == false){
+									lRet = false;
+									btnSlv.removeAttr('disabled');
+								}
+							}
+							
+							//Verifica o grupo do produto
+							$('#GRUPOS').val($('#GRUPOS').val()+$('#GRUPO'+cItem).val()+"/");
+						}
+					}
+					   
+					if (lGrid == false){
+						lRet = false;
+						
+						$("#orc-informar").html();
+							new PNotify({
+								title: 'Campo obrigatório',
+								text: 'Verifique o preenchimento dos campos Produto e Quantidade!',
+								type: 'error',
+							});
+						btnSlv.removeAttr('disabled');	 
+					}
+					
+					
+					if (lGrid1 == false){
+						lRet = false;
+						
+						$("#orc-informar").html();
+							new PNotify({
+								title: 'Pedido / Item Cliente',
+								text: 'Se informado o item ou o pedido do cliente, os dois campos devem ser preenchidos!',
+								type: 'error',
+							});
+						btnSlv.removeAttr('disabled');	 
+					}  
+				}
+				
+				
+				//Valida a condição de pagamento
+				if (lRet == true){
+
+					//Chama a validação do limite e submete o formulário
+					vldOrc(btnSlv);
+				//&&
+					// $.ajax({
+					// 	url: "U_VldAcresc.apw?PR=<%=cLCodLogin%>",
+					// 	data: 'condicao='+$("#CJ_CONDPAG").val()+'&valor='+$("#TOTAL_ORC").val()+'&modalidade='+$("#CJ_XMODALI").val()+'&grupos='+$('#GRUPOS').val()+
+					// 	        '&cliente='+$("#CJ_CLIENTE").val(),
+					// 	type: "POST",
+					// 	async: false,
+					// 	success:
+					// 		function(retorno) {
+					// 			if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+					// 				$("html").html(retorno);
+					// 				return;
+					// 			}
+							
+					// 			aRet = retorno.split('|');
+					// 			cAcresc = aRet[0];
+					// 			nAcresc = parseFloat(aRet[1]);
+							
+							
+					// 			if (nAcresc > 0 ) {
+					// 				bootbox.confirm({
+					// 					title: "Pedido abaixo do mínimo",
+					// 					message: 'Pedido abaixo do valor mínimo, será aplicado acréscimo de '+cAcresc+'%. Deseja continuar?',
+					// 					buttons: {
+					// 			            cancel: {
+					// 			                label: 'Não'
+					// 			            },
+					// 			            confirm: {
+					// 			                label: 'Sim'
+					// 			            }
+					// 			        },
+					// 					callback: function (result) {
+					// 			        	if(result){ 
+					// 			        		//Atualiza a variável
+			        //     						$("#ACRESCIMO").val((nAcresc * -1).toString());
+								        		
+					// 			        		//Chama a validação do limite e submete o formulário
+					// 			        		vldOrc(btnSlv);
+					// 			        	}
+					// 			        	else {		
+					// 							btnSlv.removeAttr('disabled');
+					// 						}
+					// 			        }
+					// 				});
+					// 			} else {
+					// 				//Chama a validação do limite e submete o formulário
+					// 			 	vldOrc(btnSlv);
+					// 			}
+					// 		}
+					// });					
+				}		
+			})	
+
+			$('#btExcluir').click(function() {
+				var lRet = true
+				var i = 0;
+				var lGrid = true;
+				var cCodProd;
+				var btnSlv = $(this);
+				
+				//Desabilita o botão
+				$('#btExcluir').attr({ 'disabled': 'disabled' });
+					
+				objDados = {
+					CJ_CLIENTE:  $('#CJ_CLIENTE').val(),
+					CJ_NUM: $('#CJ_NUM').val()
+					};
+                    
+				$.ajax({
+					type: "POST",
+					    url: "U_ExcOrc.apw?PR=<%=cLCodLogin%>",
+					    async: false,
+					    data: objDados
+					    
+					}).fail(function(){                                                                                                                 
+					    bootbox.alert({
+					        title: "Exclusão de Orçamento",
+					        message: "Não foi possível excluir o orçamento.",
+					        backdrop: true,
+					        callback: function (result) {
+					         	btnSlv.removeAttr('disabled');   
+					        }
+					    });
+					}).done(function(strXml) {
+						if (strXml.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(strXml);
+							return;
+						}
+				        bootbox.alert({
+					        title: "Exclusão de Orçamento",
+					        message: "O orçamento "+$('#CJ_NUM').val()+" foi excluído com sucesso.",
+					        backdrop: true,
+					        callback: function (result) {
+					         	document.location.href = "U_Orcamento.apw?PR=<%=cLCodLogin%>";   
+					        }
+					    });
+				});
+			})	
+			
+			//Validação do valor do frete
+ 			function vldOrc(btnSlv){
+				var tipoFre = $('#CJ_TPFRETE').val();
+				var total	= $("#TOTAL_ITENS").maskMoney('unmasked')[0];
+				var valMin = 0;
+				
+				if (tipoFre == "C") {
+                    $.ajax({
+					url: "U_FreteMinimo.apw?PR=<%=cLCodLogin%>",
+					data: 'tipoFrete='+tipoFre,
+					type: "POST",
+					async: false,
+					success:
+						function(retorno) {
+							if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+								$("html").html(retorno);
+								return;
+							}
+							valMin = parseInt(retorno);
+							
+							if (total < valMin ) {
+								bootbox.alert('O valor mínimo de orçamento para frete do tipo CIF é R$'+retorno+'!');
+								btnSlv.removeAttr('disabled');
+								return false;
+							} else {
+								vldOrc1(btnSlv);	
+							}
+							
+							
+							
+						}
+					});
+				} else {
+					vldOrc1(btnSlv);
+				}
+			}
+			
+           	//Se orçamento firme e boleto, valida o limite de crédito disponível
+ 			function vldOrc1(btnSlv){
+ 				if ( ($('#CJ_XTPORC').val() == "2" || $('#CJ_XTPORC').val() == "1") && $('#CJ_XMODALI').val() == '001' ){ 
+					var cliente = $("#CJ_CLIENTE").val();
+					var total	= $("#TOTAL_ITENS").maskMoney('unmasked')[0];
+					var limDisp	= 0;
+					lRet = false;
+					
+					$.ajax({
+						url: "U_GetLimCred.apw?PR=<%=cLCodLogin%>",
+						data: 'cliente='+cliente+'&valor='+total, 
+						cache: false, 
+						type: "POST",
+						async: false,
+						success:
+							function(retorno) {
+								if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+									$("html").html(retorno);
+									return;
+								}
+								// Retorno limiteDisponivel|limiteTolerancia
+								var aRet = retorno.split('|');
+								var limDisp = 0.00;
+								var limTol  = 0.00;
+								// Pega o limite de tolerancia
+								if ( aRet.length > 1 ) {
+									limTol= parseFloat(aRet[1]);
+								}
+								// Pega o limite disponivel
+								if ( aRet.length > 0 ) {
+									limDisp= parseFloat(aRet[0]);
+								}
+															
+								// if (total > (limTol+limDisp) ) {
+								  
+								// 	bootbox.alert({
+								// 		title: 'Limite de crédito insuficiente',
+								//         message: 'Não é possível salvar o orçamento.<br> Saldo disponível: R$'+mascaraValor(limDisp.toFixed(2))+'.<br>Este cliente só pode realizar compras à vista.',    //mascaraValor(limDisp.toFixed(2))
+								// 		callback: function () {
+								// 			btnSlv.removeAttr('disabled');
+								//   			//salvarOrc(btnSlv);
+								//         } 
+								//     });       
+								
+								
+								// } else {
+								 	salvarOrc(btnSlv);
+								//}
+								
+							}
+					});
+				} else {
+					salvarOrc(btnSlv);
+				}
+ 			}
+			
+			//Submete formulario
+			function salvarOrc(btnSlv){
+				var numorc = "";
+			
+				//if (lRet == true){
+					//$("#formOrc").submit();
+					var dialogSlv = bootbox.dialog({
+				        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Salvando orçamento... Aguarde...</p>',
+				        closeButton: false
+				    }); 
+					
+					//busca os itens cadastrados
+					var ITENS = ""; 
+					var i = 0;
+					var nItens = parseFloat($("#PROXIMO").val());
+					var cCodProd;
+					var cItmOrc;
+					var cDescAcresc = "0";
+					
+					for (i = 1; i<=nItens; i++) { 
+						cItem = String(i);
+						if (parseInt(i) < 10 ){cItem = "0"+String(i)};
+						
+						cCodProd = $("#CK_PRODUTO"+cItem).val();
+						cItmOrc = $("#CK_ITEM"+cItem).val();
+						if(cItmOrc != "x") {
+							cPrcVen = $('#CK_PRCVEN'+cItem).val(); 
+							nDesc = $('#CK_DESCONT'+cItem).val();
+							// let cPrcVen = $('#iCK_PRCVEN'+cItem).val();
+							// // Se desconto negativo --> salva o preco de tabela original
+							// if ($('#CK_DESCONT'+cItem).val().substr(0,1) == "-") {
+							// 	cPrcVen = $('#CK_PRCVEN'+cItem).val();
+							// }
+
+							//Tratativa para salvar o desconto correto.
+							if($("#OPCAO").val() == "3"){
+
+								nDesc1 = $("#CK_XDESC01"+cItem).maskMoney('unmasked')[0];
+								nDesc2 = $("#CK_XDESC02"+cItem).maskMoney('unmasked')[0];
+								nDesc3 = $("#CK_XDESC03"+cItem).maskMoney('unmasked')[0];
+								nDesc = 0;
+								nVlrVenda = $("#CK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+								nVlrOri = $("#CK_PRCVEN"+cItem).maskMoney('unmasked')[0];
+
+								if(nDesc1 != 0 || nDesc2 != 0 || nDesc3 != 0){
+									if (nDesc1 != 0){
+										nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc1 / 100))
+									}
+									if (nDesc2 != 0){
+										nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc2 / 100))
+									}	
+									if (nDesc3 != 0){
+										nVlrVenda = nVlrVenda - (nVlrVenda * (nDesc3 / 100))
+									}	
+														
+													
+									//desconto final
+									nDesc = nVlrOri - nVlrVenda
+									nDesc = (nDesc / nVlrOri) * 100
+								}	
+							}
+
+							ITENS+= $('#CK_PRODUTO'+cItem).val()+';'+$('#CK_QTDVEN'+cItem).val()+';'+cPrcVen+';'+$('#CK_XFAIXAD'+cItem).val()+';';
+							ITENS+= $('#CK_XVALIPI'+cItem).val()+';'+$('#CK_XVALICM'+cItem).val()+';'+$('#CK_XICMST'+cItem).val()+';'+$('#CK_TES'+cItem).val()+';';
+							ITENS+= $('#PER_COM'+cItem).val()+';'+$('#ALIQ_ICMS'+cItem).val()+';'+$('#ALIQ_IPI'+cItem).val()+';'+$('#ALIQ_ST'+cItem).val()+';';
+							ITENS+= nDesc+';'+$('#CK_XPEDCLI'+cItem).val()+';'+$('#CK_XITEMCL'+cItem).val()+';'+$('#CK_XDESC01'+cItem).val()+';';
+							//ITENS+= $('#CK_DESCONT'+cItem).val()+';'+$('#CK_XPEDCLI'+cItem).val()+';'+$('#CK_XITEMCL'+cItem).val()+';'+$('#CK_XDESC01'+cItem).val()+';';
+							ITENS+= $('#CK_XDESC02'+cItem).val()+';'+$('#CK_XDESC03'+cItem).val()+';'+$('#SALDO'+cItem).val()+';'+$('#CK_XPRCIMP'+cItem).val()+';'+$("#ACRESCIMO").val()+'||';
+						}
+					}
+					
+				
+
+
+
+					objDados = {
+					    CJ_CLIENTE:  $('#CJ_CLIENTE').val(),
+					    CJ_TABELA: $('#CJ_TABELA').val(),
+					    CJ_VEND: $('#CJ_VEND').val(),
+					    CJ_XTPORC: $('#CJ_XTPORC').val(),
+					    CJ_TPFRETE: $('#CJ_TPFRETE').val(),
+					    CJ_FRETE: $('#CJ_FRETE').val(),
+					    CJ_XTRANSP: $('#CJ_XTRANSP').val(),
+					    
+				      	CJ_XMODALI: $('#CJ_XMODALI').val(),
+				      	CJ_CONDPAG: $('#CJ_CONDPAG').val(),
+					    CJ_DESC1: $("#DESCVISTA").val(),
+					    CJ_DESC2: $("#DESCRETIR").val(),
+					    
+					    CK_ENTREG: $('#CK_ENTREG').val(),
+					    //CJ_DTENT: $('#CJ_DTENT').val(),
+					    CJ_XIMPORT: $('#CJ_XIMPORT').val(),
+					    
+					    CJ_XNOTAIN: $('#CJ_XNOTAIN').val(),
+					    CJ_XMSGNF: $('#CJ_XMSGNF').val(),
+					    CJ_XCODPAG: $('#BANDEIRA').val(),
+					    CJ_CLIOPER: $('#OPERADORA').val(),
+					    CJ_NUM: $('#CJ_NUM').val(),
+					    CJ_XSALDO: $('#TOTAL_SALDO').val(),
+					    PROXIMO: $('#PROXIMO').val(), 
+					    OPCAO: $('#OPCAO').val(), 
+					    aItens: ITENS
+					};
+                    
+                    
+                    if($("#OPCAO").val() == "3"){
+			    		msg = "O orçamento foi incluído com sucesso.";
+			    		titulo = "Inclusão de Orçamento";
+			    		operacao = "incluir";            
+			    	}
+			    	if($("#OPCAO").val() == "4"){
+			    		msg = "O orçamento foi alterado com sucesso.";
+			    		titulo = "Alteração de Orçamento";
+			    		operacao = "alterar";
+			    	}
+			    	if($("#OPCAO").val() == "5"){
+			    		msg = "O orçamento foi excluído com sucesso.";
+			    		titulo = "Exclusão de Orçamento";
+			    		operacao = "excluir";
+			    	}
+                    
+                    
+					$.ajax({
+					    type: "POST",
+					    url: "U_SlvOrc.apw?PR=<%=cLCodLogin%>",
+					    async: false,
+					    data: objDados
+					    
+					}).fail(function(){                                                                                                                 
+					    bootbox.alert({
+					        title: titulo,
+					        message: "Não foi possível "+operacao+" o orçamento.",
+					        backdrop: true,
+					        callback: function (result) {
+					         	btnSlv.removeAttr('disabled');
+					         	dialogSlv.modal('hide');   
+					        }
+					    });
+					}).done(function(strXml) {
+						if (strXml.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(strXml);
+							return;
+						}
+					    if (strXml == 'erro'||strXml == ''||strXml.indexOf("Expires") != -1||strXml.indexOf("invalid") != -1){
+					        if (strXml == ''){
+					        	 bootbox.alert({
+							        title: titulo,
+							        message: "Aguarde o prazo de 3 minutos para "+operacao+" um  novo orçamento.",
+							        backdrop: true,
+							        callback: function (result) {
+							         	btnSlv.removeAttr('disabled');
+							         	dialogSlv.modal('hide');   
+							        }
+							    });
+					        }else{
+						        bootbox.alert({
+							        title: titulo,
+							        message: "Falha ao "+operacao+" o orçamento.",
+							        backdrop: true,
+							        callback: function (result) {
+							         	btnSlv.removeAttr('disabled');
+							         	dialogSlv.modal('hide');   
+							        }
+							    });
+							}
+						}    
+					    else {
+						    if($("#OPCAO").val() == "3"){     
+					    		numorc = " Foi gerado o orçamento nº "+strXml+"."
+					    	}
+					        bootbox.alert({
+						        title: titulo,
+						        message: msg+numorc,
+						        backdrop: true,
+						        callback: function (result) {
+						         	document.location.href = "U_Orcamento.apw?PR=<%=cLCodLogin%>"; 
+						         	dialogSlv.modal('hide');  
+						        }
+						    });
+					        
+					    }
+					});
+					  
+				//};
+			
+			
+			
+			
+			
+			}
+		</script> 
+	</body>
+</html>

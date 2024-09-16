@@ -1,0 +1,153 @@
+<%
+	/**** Pagina de login do site ****/
+	Local cLSite      := "./"   // Site 
+	Local cLTitle     := "" 	// Titulo da pagina
+	Local cLMensagem  := "" 	// Mensagens
+	Local aLEmpSel    := {}     // Empresas a selecionar
+	Local nI
+	if type("cSite") <> "U"
+		cLSite := cSite
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cSite")
+	Endif
+	if type("cTitle") <> "U"
+		cLTitle := cTitle
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cTitle")
+	Endif
+	if type("cMensagem") <> "U"
+		cLMensagem := cMensagem
+//	else
+//		conout("Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cTitle")
+	Endif
+	if type("aEmpSel") = "A"
+		aLEmpSel := aclone(aEmpSel)
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou aEmpSel")
+	Endif
+	
+%>
+<!DOCTYPE html>
+<html class="fixed">
+	<head>
+		<!-- Basic -->
+		<meta charset="iso-8859-1">
+		<title><%=cLTitle%></title>
+
+		<meta name="keywords" content="<%=cLTitle%>" />
+		<meta name="description" content="Portal <%=cLTitle%>">
+		<meta name="author" content="SMSTI">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+	</head>
+	<body>
+		<!-- start: page -->
+		<section class="body-sign">
+			<div class="center-sign">
+				<a href="<%=cLSite%>" class="logo pull-left">
+					<br/>
+					<img src="images/logo.png" alt="<%=cLTitle%>" height="50"/>
+				</a>
+
+				<div class="panel panel-sign">
+					<div class="panel-title-sign mt-xl text-right">
+						<h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Login</h2>
+					</div>
+					<div class="panel-body">
+						<form action="U_PortalLogin.apw" method="post">
+							<div class="form-group mb-lg">
+								<label>Usuário</label>
+								<div class="input-group input-group-icon">
+									<input name="login" type="text" class="form-control input-lg" required/> 
+									<span class="input-group-addon">
+										<span class="icon icon-lg">
+											<i class="fa fa-user"></i>
+										</span>
+									</span>
+								</div>                                                                           
+							</div>
+
+							<div class="form-group mb-lg">
+								<div class="clearfix">
+									<label class="pull-left">Senha</label>
+								</div>
+								<div class="input-group input-group-icon">
+									<input name="password" type="password" class="form-control input-lg" required/>
+									<span class="input-group-addon">
+										<span class="icon icon-lg">
+											<i class="fa fa-lock"></i>
+										</span>
+									</span>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-8 text-danger">
+									<%=cLMensagem%>
+								</div>
+								<div class="col-sm-4 text-right">
+									<button type="submit" class="btn btn-primary hidden-xs">Acessar</button>
+									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Acessar</button>
+								</div>
+							</div>
+							<br>
+
+						</form>
+					</div>
+					<footer class="panel-footer text-right">
+						Desenvolvido por  <a href="http://www.smsti.com.br" target="_blank"><img src="images/sms.png"alt="SMS Soluções TOTVS" /></a>
+					</footer>
+				</div>
+			</div>
+		</section>
+		
+		<!-- end: page -->
+
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="assets/vendor/select2/js/select2.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+	</body>
+</html>

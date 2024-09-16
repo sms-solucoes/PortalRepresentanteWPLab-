@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="portal/css/titulo.css">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+		<script src="portal/js/jquery-2.0.3.js"></script>
+	</head>
+<body>
+	<div class="logo"><img src="images/logo.png" width="185" border="0" /></div>
+	<div class="identificacao">
+		<div class="logado">
+			Usuário logado: <span style="color:#2EA4DF;font-weight: bold;"><%=cFulano%></span><br><br>
+			<span style="color:#2EA4DF"><a href="#" onclick="parent.logoff();" >Sair</a></span>
+		</div>
+		
+	</div>
+</body>
+</html>

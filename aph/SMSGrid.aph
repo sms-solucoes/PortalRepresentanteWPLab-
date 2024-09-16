@@ -1,0 +1,911 @@
+<%
+	/**** Pagina de login do site ****/
+//	Local cLSite      := "./"   // Site 
+	Local cLTitle     := "" 	// Titulo da pagina
+	Local cLPagina    := "" 	// Nome da página
+//	Local cLHeader    := ""
+    Local cLTopo      := ""
+	Local cLMenus     := ""
+	Local cLWidgets   := ""
+	Local cLColunas   := ""
+	Local cLItens     := ""
+	Local cLJavaScr   := ""
+    Local aLStatGrid  := {}
+	local lLSidebar   := .t.
+	Local cLCodLogin  := ""
+    Local nInd
+	if type("cSite") <> "U"
+		cLSite := cSite
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cSite")
+	Endif
+	if type("cTitle") <> "U"
+		cLTitle := cTitle
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cTitle")
+	Endif
+	if type("cPagina") <> "U"
+		cLPagina := cPagina
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cPagina")
+	Endif
+	if type("cMenus") <> "U"
+		cLMenus := cMenus
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cMenus")
+	Endif
+	if type("cWidgets") <> "U"
+		cLWidgets := cWidgets
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cWidgets")
+	Endif
+    if type("cTopo") <> "U"
+        cLTopo := cTopo
+    else
+        conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cTopo")
+    Endif
+	if type("cColunas") <> "U"
+		cLColunas := cColunas
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cColunas")
+	Endif
+	if type("cItens") <> "U"
+		cLItens := cItens
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cItens")
+	Endif
+	if type("lSidebar") = "L"
+		lLSidebar := lSidebar
+	endif
+    if type("aStatGrid") = "A"
+        aLStatGrid  := aclone(aStatGrid)
+    Endif
+	if type ("cCodLogin") <> "U"
+		cLCodLogin := cCodLogin
+	Endif
+	if type("cJavaScr") <> "U"
+		cLJavaScr := cJavaScr
+	endif
+%>
+<!DOCTYPE html>
+<html class="fixed">
+<head>
+	<!-- Basic -->
+	<meta charset="iso-8859-1">
+	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+	<title><%=cLTitle%></title>
+
+	<meta name="keywords" content="<%=cLTitle%>" />
+	<meta name="description" content="Portal <%=cLTitle%>">
+	<meta name="author" content="SMSTI">
+
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<!-- Web Fonts  -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+	<!-- Vendor CSS -->
+	<!-- <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" /> -->
+	<!-- 20210106  -->
+	<link rel="stylesheet" href="ndtb/Bootstrap-3.3.7/css/bootstrap.css" />
+	<link rel="stylesheet" href="ndtb/datatables.css" />
+
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+
+	<!-- Specific Page Vendor CSS -->
+	<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+	<link rel="stylesheet" href="assets/vendor/dropzone/basic.css" />
+	<link rel="stylesheet" href="assets/vendor/dropzone/dropzone.css" />
+	<!-- 20210106  -->
+	<link rel="stylesheet" href="ndtb/DataTables-1.10.23/css/dataTables.bootstrap.min.css" />
+	<link rel="stylesheet" href="ndtb/Buttons-1.6.5/css/buttons.dataTables.min.css" />
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+	<!-- Skin CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+	<!-- Theme Custom CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+	<!-- Head Libs -->
+	<script src="assets/vendor/modernizr/modernizr.js"></script>
+
+</head>
+<section class="body">
+	<!-- start: header -->
+	<header class="header">
+		<div class="logo-container">
+			<a href="<%= cLSite %>" class="logo pull-left">
+				<img src="images/<%='logo'+cEmpAnt%>.png" alt="<%= cLTitle %>" height="45"/>
+			</a>
+			<%if lLSidebar%>
+				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				</div>
+			<%endif%>	
+		</div>
+		<div class="header-right">
+			<span class="separator"></span>
+			<div id="userbox" class="userbox">
+				<a href="#" data-toggle="dropdown">
+					<div class="profile-info" data-lock-name="<%= HttpSession->Nome %>">
+						<span class="name"><%= HttpSession->NomeFull %></span>
+						<span class="role"><%= HttpSession->Perfil %></span>
+						<span class="role"><%= HttpSession->NomeEmpresa %></span>
+					</div>
+					<i class="fa custom-caret"></i>
+				</a>
+				<div class="dropdown-menu">
+					<ul class="list-unstyled">
+						<li>
+							<a role="menuitem" tabindex="-1" href="U_PortalLogin.apw"><i class="fa fa-power-off"></i>Sair</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- end: header -->
+
+	<div class="inner-wrapper">
+		<!-- start: sidebar -->
+		<aside id="sidebar-left" class="sidebar-left">
+		
+		    <div class="sidebar-header">
+		        <div class="sidebar-title">
+		            Menu
+		        </div>
+		        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+		            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+		        </div>
+		    </div>
+		
+		    <div class="nano">
+		        <div class="nano-content">
+		            <nav id="menu" class="nav-main" role="navigation">
+		            
+		                <ul class="nav nav-main">
+		                    <%=cLMenus%>
+		                </ul>
+		            </nav>
+		        </div>
+			
+		        <script>
+		            // Maintain Scroll Position
+		            if (typeof localStorage !== 'undefined') {
+		                if (localStorage.getItem('sidebar-left-position') !== null) {
+		                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+		                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+		                    
+		                    sidebarLeft.scrollTop = initialPosition;
+		                }
+		            }
+		        </script>
+		    </div>
+		
+		</aside>
+		<!-- end: sidebar -->
+
+		<section role="main" class="content-body">
+			<header class="page-header">
+				<h2><%=cLPagina%></h2>
+				<div class="right-wrapper pull-right">
+				</div>
+			</header>
+
+			<!-- start: page -->
+			<section class="panel">
+			<!--
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+						<a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+					</div>
+					
+					<h2 class="panel-title">Basic with Table Tools</h2>
+				</header>  
+				    
+			-->
+				<div class="panel-body">
+				    <%=cLTopo%>
+				    <br>
+				    <br> 
+				    <%if lTableTools%>
+				    <table class="table table-bordered table-striped mb-none table-hover" id="datatable-tabletools" style="width: 100%;">
+					<%else%>
+					<table class="table table-bordered mb-none" style="width: 100%;">
+				    <%endif%>
+						<thead>
+							<tr>
+								<%=cLColunas%>
+							</tr>                    
+						</thead>
+						<tbody>
+							<%=cLItens%>
+						</tbody>
+					</table>
+				</div>
+				<%if len(aLStatGrid) > 0 %>
+                <div class="panel-footer">
+                    <table class="table">
+                        <tr>
+                            <% for nInd := 1 to len(aLStatGrid) 
+                                  if (nInd % 2) = 1 %>
+                            <th align="right"><span class="smcircle sm<%= aLStatGrid[nInd, 1] %>"></span></th><th><%= aLStatGrid[nInd, 2] %></th>
+                                <% else %>
+                            <th><span class="smcircle sm<%= aLStatGrid[nInd, 1] %>"></span></th><th><%= aLStatGrid[nInd, 2] %></th>
+                                <% endif
+                               next %> 
+                        </tr>
+                    </table>
+                </div>
+                <% endif %>
+                
+			
+
+				<div class="modal fade" id="dialogMsgFin" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">Mensagem para o Financeiro</h4>
+							</div>
+							<div class="modal-body">
+								<label class="control-label">Mensagem</label>	              
+								<textarea class="form-control" rows="3" id="textoMensagem"></textarea>
+								<input type="hidden" id="recCliente"/>
+								<br>
+								<label class="control-label">Anexos</label>
+								<form action="/u_uploadfile.apw?PR=<%=cLCodLogin%>" method="POST" enctype="multipart/form-data" id="dropzone-form" class="dropzone dz-square dz-clickable">
+									<div class="dz-default dz-message">
+										<span>Clique ou arraste e solte os arquivos aqui</span>
+									</div>
+								</form>
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+								<button type="button" class="btn btn-primary" onclick="javascript:emailFin( $('#recCliente').val() );">Enviar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			</section>
+			<!-- end: page -->
+					
+		</section>
+		<footer class="panel-footer text-right">
+			Desenvolvido por  <img src="images/sms.png"  />
+		</footer>
+	</div>
+</section>
+
+
+	<!-- Vendor -->
+	<script src="assets/vendor/jquery/jquery.js"></script>
+	<!-- 20210106  -->
+	<script src="ndtb/jQuery-3.5.1/jquery-3.5.1.js"></script>
+	<script src="ndtb/datatables.js"></script>
+
+	<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+	<!-- 20210106  -->
+	<script src="ndtb/Bootstrap-3.3.7/js/bootstrap.js"></script>
+	<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+	<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+	<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+	
+	<!-- Custom -->
+	<script src="custom/js/bootbox.js"></script>
+	<script src="custom/js/moeda.js"></script>
+	
+	<!-- Specific Page Vendor -->
+	<script src="assets/vendor/select2/js/select2.js"></script>
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<!-- 20210106  -->
+	<script src="ndtb/DataTables-1.10.23/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+	<!-- 20210106  -->
+	<script src="ndtb/DataTables-1.10.23/js/dataTables.bootstrap.js"></script>
+	<script src="ndtb/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+	<script src="ndtb/JSZip-3.1.3/jszip.min.js"></script>
+	<script src="ndtb/pdfmake-0.1.53/pdfmake.min.js"></script>
+	<script src="ndtb/pdfmake-0.1.53/vfs_fonts.js"></script>
+	<script src="ndtb/Buttons-1.6.5/js/buttons.html5.js"></script>
+	<script src="ndtb/Buttons-1.6.5/js/buttons.print.min.js"></script>
+	<script src="assets/vendor/dropzone/dropzone.js"></script>
+
+	<script src="custom/js/dropzone.js"></script>
+
+	<!-- Theme Base, Components and Settings -->
+	<script src="assets/javascripts/theme.js"></script>
+	
+	<!-- Theme Initialization Files -->
+	<script src="assets/javascripts/theme.init.js"></script>
+
+	<!--
+	<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
+	<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
+	<script src="js/examples/examples.advanced.form.js"></script>
+
+	<%if lTableTools%>
+		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+	<%else%>
+		<script src="assets/javascripts/tables/examples.datatables.tabletools.nd.js"></script>
+	<%endif%>
+	-->
+	<!-- Theme Custom -->
+	<script src="assets/javascripts/theme.custom.js"></script> 
+	<script src="custom/js/datebr.js"></script> 
+
+		 
+	<script>
+	   var gOTableGrid;
+	   var gEnviarEmail = true;
+	   $(document).ready( function() {
+	   		$("#datatable-tabletools").attr("role","button");
+			// Antigamente
+	   		// var oTable = $('#datatable-tabletools').dataTable();
+	   		
+	   		// Criacao da datatable
+	   		var oTable = $('#datatable-tabletools').dataTable( {
+					dom: 'lBfrtip',
+					buttons: [
+						'excel', 'pdf', 'print'
+					]
+				    <%if ! lTableTools%>
+					, "ordering": false
+					, "searching": false
+				    <%endif%>
+					, "scrollX": true
+			   });
+			var url_atual = window.location.href;
+			gOTableGrid = oTable;
+	   		//Ordenação da tabela
+			oTable.fnSort( [ ] );
+			
+			if( url_atual.match('orcamento.apw') || url_atual.match('Orcamento.apw'))
+			{
+				oTable.fnSort( [1,	'desc' ] );
+            }            
+            
+            //Valida os percentuais no botão filtrar para curva ABC
+			$('#btFiltroP').click(function() {
+				var nPercA = parseFloat($("#PERC_A").val());
+				var nPercB = parseFloat($("#PERC_B").val());
+				var nPercC = parseFloat($("#PERC_C").val());
+			 	
+			 	if (nPercA+nPercB+nPercC != 100){
+					bootbox.alert("A soma dos percentuais de A, B e C deve ser 100!");
+					$(this).removeAttr('disabled');
+					return false;
+				}	
+			});
+
+			$(window).on('sidebar-left-toggle', function() {
+				$($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+			})
+			/*
+            Modal Dismiss
+            */
+//            $(document).on('click', '.modal-dismiss', function (e) {
+            // $('.modal-dismiss').on('click touch touchstart', function (e) {
+            //     e.preventDefault();
+            //     $.magnificPopup.close(); 
+			// }); 
+
+
+            /*
+            Modal Confirm
+            */
+//            $(document).on('click', '.modal-confirm', function (e) {
+            //    e.preventDefault();
+            //    $.magnificPopup.close();
+            //    var cemail = $("input[name='email']").val();
+            //    var cdoc = $("input[name='nrdoc']").val();
+            //    var cform = $("input[name='formDest']").val();
+            //    
+            //    var dialogMail = bootbox.dialog({
+		    //        message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Enviando e-mail... Aguarde...</p>',
+		    //        closeButton: false
+		    //    });
+            //    
+            //    //Envio de e-mail
+            //    $.ajax({
+		    //		url: "U_"+cform+"?PR=<%=cLCodLogin%>",
+		    //		data: 'email='+cemail+'&pagina='+cform+'&doc='+cdoc,
+		    //		type: "POST",
+		    //		async: false,
+		    //		success:
+		    //			function(retorno) {
+		    //				dialogMail.modal('hide');
+		    //				if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+		    //					$("html").html(retorno);
+		    //					return;
+		    //				}
+		    //				bootbox.alert(retorno);
+		    //			}	
+		    //	});
+            //});
+         
+            /*
+            Form
+            */
+            $('.modal-email').magnificPopup({
+                type: 'inline',
+                preloader: false,
+                focus: '#email',
+                modal: true,
+         
+                // When elemened is focused, some mobile browsers in some cases zoom in
+                // It looks not nice, so we disable it:
+                callbacks: {
+                    beforeOpen: function() {
+                        if($(window).width() < 700) {
+                            this.st.focus = false;
+                        } else {
+                            this.st.focus = '#email';
+                        }
+                    },
+                    elementParse: function(item) {
+                        // Function will fire for each target element
+                        // "item.el" is a target DOM element (if present)
+                        // "item.src" is a source that you may modify
+                        console.log('Parsing content. Item object that is being parsed:', item);
+						if (item.el && item.el.attr("id")) {
+                        	$("input[name='nrdoc']").val(item.el.attr("id").substr(2));
+						}
+                    }
+                }
+            });
+
+		
+		});
+		
+		function fecharEmail() {
+			$.magnificPopup.close(); 
+			return false;
+		}; 
+
+		function enviarEmail() {
+			$.magnificPopup.close();
+			var cemail = $("input[name='email']").val();
+			var cdoc = $("input[name='nrdoc']").val();
+			var cform = $("input[name='formDest']").val();
+			
+			var dialogMail = bootbox.dialog({
+				message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Enviando e-mail... Aguarde...</p>',
+				closeButton: false
+			});
+			
+			//Envio de e-mail
+			$.ajax({
+				url: "U_"+cform+"?PR=<%=cLCodLogin%>",
+				data: 'email='+cemail+'&pagina='+cform+'&doc='+cdoc,
+				type: "POST",
+				async: false,
+				success:
+					function(retorno) {
+						dialogMail.modal('hide');
+						if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(retorno);
+							return;
+						}
+						bootbox.alert(retorno);
+					}	
+			});
+			return false;
+		};
+		
+		function abreEmail(cParm) {
+			$("input[name='nrdoc']").val(cParm);
+			
+			$('.modal-email').magnificPopup({
+ 					items: {
+				      src: '#modalEmail'
+    				},				
+					type: 'inline',
+					preloader: false,
+					focus: '#email',
+					modal: true
+			}).magnificPopup('open');
+		}
+		
+		
+		//ViewDanfe
+		function ViewDanfe(notaFiscal,tipo){
+	   		$.ajax({  
+				url: "U_MailNF.apw?PR=<%=cLCodLogin%>",
+				type: "POST",
+				data: 'email=&doc='+notaFiscal+'&tipo='+tipo,
+				cache: false, 
+				success: 
+			   		function(docDanfe) {
+						if (docDanfe.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(docDanfe);
+							return;
+						}
+			   			if (docDanfe == "" ) {
+							bootbox.alert('Falha ao gerar o arquivo. Tente novamente mais tarde.');
+						}
+						if (docDanfe.substr(0,5) == "DANFE") {
+			   				window.open('/anexos/danfe/'+docDanfe,"_blank")
+			   			}
+			   		}
+			});
+		}
+		
+
+
+		//Impressão do Orçamento
+		function PrtOrc(orcto){
+	   		$.ajax({  
+				url: "U_MailOrc.apw?PR=<%=cLCodLogin%>&opc=print",
+				type: "POST",
+				data: 'opc=print&doc='+orcto,
+				cache: false, 
+				success: 
+			   		function(docOrcto) {
+						if (docOrcto.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(docOrcto);
+							return;
+						}
+			   			if (docOrcto == "" ) {
+							bootbox.alert('Falha ao gerar o arquivo. Tente novamente mais tarde.');
+						}
+						if (docOrcto.substr(0,9) == "orcamento") {
+			   				window.open('/anexos/orcamentos/'+docOrcto,"_blank")
+			   			}
+			   		}
+			});
+		}
+		
+		
+		function Filtro(){
+		
+			if( window.location.href.match('estoque.apw') || window.location.href.match('Estoque.apw')){
+				tabSel = $("#TABELA");
+				filtab = $(tabSel)[0].options[$(tabSel)[0].selectedIndex].text.split('/')[0];
+				$("#FILTAB").val(filtab);
+			}
+		//Submete formulario
+			$("#formGrid").submit();		
+		}
+		
+		/*
+		function Filtro(obBtn){
+            // this.value= '+"'"+'Aguarde...'+"'"+';this.disabled= '+"'"+'disabled'+"'"+';
+            obBtn.disabled = true;
+            //Submete formulario
+            $("#formGrid").submit();    
+        } */
+        
+        function Filtrar(obBtn){
+            // this.value= '+"'"+'Aguarde...'+"'"+';this.disabled= '+"'"+'disabled'+"'"+';
+            obBtn.disabled = true;
+            //Submete formulario
+            $("#formGrid").submit();    
+        }
+        
+        
+        
+        /**
+		// Função para ver detalhes do limite
+		**/
+		function detLimite(cCliente){
+		 	var msg = "";
+		    var total = "";
+		    var pedlib = "";
+		    var pedidos = "";
+		    var titulos = "";
+		    var saldo = "";
+		    var vencto = "";
+		    var risco = "";
+		    var orcprev = "";
+		    var orcfirme = "";
+		    var atraso = "";
+		    var utilizado = "";
+            
+			$.ajax({
+				url: "U_ConsLmt.apw?PR=<%=cLCodLogin%>",
+				data: 'cliente='+cCliente,
+				type: "POST",
+				async: false,
+				success:
+					function(retorno) {
+						if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(retorno);
+							return;
+						}
+						aRet = retorno.split('|');
+						total = aRet[0];
+						pedlib = aRet[1];
+						titulos = aRet[2];
+						saldo = aRet[3]; 
+						vencto = aRet[4];
+						risco = aRet[5];
+						pedidos = aRet[6];
+						orcprev = aRet[7];
+						orcfirme = aRet[8];
+						atraso = aRet[9];
+						utilizado = aRet[10];
+					}
+			});
+		 	
+		 	msg = '<div class="row form-group">'
+		 	msg +='	<br>'
+			//Limite Total 
+			msg +='	<div class="row form-group">'				
+			msg +='		<div class="col-lg-1"></div>'				
+			msg +='		<div class="col-lg-5">'
+			msg +='			<label class="control-label">Limite Total</label>'	              
+			msg +=' 		<div class="input-group">'	
+			msg +='				<input class="form-control text-right" value="'+total+'" disabled>' 
+			msg +='			</div>'
+			msg +='		</div>'
+	   		msg +='		<div class="col-lg-5">'
+			msg +='			<label class="control-label">Limite Disponível</label>'	              
+			msg +=' 		<div class="input-group">'	
+			msg +='				<input class="form-control text-right" value="'+saldo+'" disabled>' 
+			msg +='			</div>'
+			msg +='		</div>' 
+			msg +='	</div>' 
+			
+			//CREDITO
+			msg +='	<div class="row form-group">'				
+			msg +='		<div class="col-lg-1"></div>'
+			msg +='		<div class="col-lg-5">'
+			msg +='			<label class="control-label">Limite Utilizado</label>'	              
+			msg +=' 		<div class="input-group">'	
+			msg +='				<input class="form-control text-right" value="'+utilizado+'" disabled>'
+			msg +='			</div>'
+			msg +='		</div>'				
+			msg +='		<div class="col-lg-5">'
+			msg +='			<label class="control-label">Saldo em títulos</label>'	              
+			msg +=' 		<div class="input-group">'	
+			msg +='				<input class="form-control text-right" value="'+titulos+'" disabled>'
+			msg +='			</div>'
+			msg +='		</div>'
+			msg +='	</div>'
+
+			msg +='	<div class="row form-group">'
+			msg +='		<div class="col-lg-1"></div>'
+			msg +='		<div class="col-lg-5">'
+			msg +='			<label class="control-label">Valor em atraso</label>'	              
+			msg +=' 		<div class="input-group">'	
+			msg +='				<input class="form-control text-right" value="'+atraso+'" disabled>'
+			msg +='			</div>'
+			msg +='		</div>'		
+			msg +='	</div>'
+
+			// msg +='		<div class="col-lg-3">'
+			// msg +='			<label class="control-label">Vencimento Limite</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+vencto+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'
+			// msg +='		<div class="col-lg-2">'
+			// msg +='			<label class="control-label">Risco</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+risco+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'		
+			// msg +='	</div>'
+						
+			//Pedidos 
+			// msg +='	<div class="row form-group">'				
+			// msg +='		<div class="col-lg-1"></div>'				
+			// msg +='		<div class="col-lg-5">'
+			// msg +='			<label class="control-label">Pedidos em Aberto</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+pedidos+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'
+			// msg +='		<div class="col-lg-5">'
+			// msg +='			<label class="control-label">Pedidos Liberados</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+pedlib+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'
+			// msg +='	</div>' 
+			
+			//Orçamentos
+			// msg +='	<div class="row form-group">'				
+			// msg +='		<div class="col-lg-1"></div>'				
+			// msg +='		<div class="col-lg-5">'
+			// msg +='			<label class="control-label">Orçamentos Previstos</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+orcprev+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'
+			// msg +='		<div class="col-lg-5">'
+			// msg +='			<label class="control-label">Orçamentos Firmes</label>'	              
+			// msg +=' 		<div class="input-group">'	
+			// msg +='				<input class="form-control text-right" value="'+orcfirme+'" disabled>'
+			// msg +='			</div>'
+			// msg +='		</div>'		
+			// msg +='	</div>'	
+			// msg +='</div>'
+			
+			
+		 	if(msg != ""){
+			 	bootbox.dialog({
+				    title: 'Limite de Crédito',
+				    message: "<p>"+msg+"</p>",
+				    backdrop: true,
+				    buttons: {
+				        ok: {
+				            label: "OK"
+				        }
+				    }
+				});
+			}	
+		}
+        
+
+
+		/**
+		// Função para enviar msg ao financeiro
+		**/
+		function mensagemFin(cRecCli){
+            $("#recCliente").val(cRecCli);
+			$("#dialogMsgFin").modal('show');
+
+		}	
+			
+		/**
+		// Função para envio de e-mail ao financeiro
+		**/
+		function emailFin(cRecCli){	
+	
+			//aguardar
+			var x = [];
+			var cAnexos = "";
+			var cMensagem = $("#textoMensagem").val();	
+			var dialogTab = bootbox.dialog({
+				message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Enviando e-mail... Aguarde...</p>',
+				closeButton: false
+			});
+
+			$('#dialogMsgFin').modal('hide');
+
+			$(".dz-filename").each(function() { x.push($(this).text())});
+
+			for (i = 0; i < x.length; i++) { 
+					cAnexos += x[i]+"|";					
+			}
+			oObjDados = {'cliente': cRecCli, 'mensagem': cMensagem, 'anexos':cAnexos};
+			
+			$.ajax({
+				url: "U_EnvMsgFin.apw?PR=<%=cLCodLogin%>",
+				//data: 'cliente='+cRecCli+'&mensagem='+cMensagem+'&anexos='+cAnexos,
+				data: oObjDados,
+				type: "POST",
+				async: false,
+				success:
+					function(retorno) {
+						if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(retorno);
+							return;
+						} else {
+							//remove aguarde
+							dialogTab.modal('hide');
+							$('.bootbox.modal').modal('hide');
+							bootbox.alert("Mensagem enviada com sucesso!");
+							//document.location.href = "U_LimiteCredito.apw?PR=<%=cLCodLogin%>" ;
+						}
+					}
+			});
+					           
+		} 	
+
+        
+        /**
+		// Função para buscar as filiais que o vendedor tem acesso
+		**/
+		function getFilVend(){
+		 	var msg = ""; 
+		 	var cFilVend = "";
+            var lRet = false;
+             
+			$.ajax({
+				url: "U_FilVend.apw?PR=<%=cLCodLogin%>",
+				type: "POST",
+				async: false,
+				success:
+					function(retorno) {
+						if (retorno.indexOf('<META HTTP-EQUIV') >= 0 ) {
+							$("html").html(retorno);
+							return;
+						}
+						if(retorno != "" &&  retorno.indexOf("Expires") == -1) {
+						
+					   		msg = '<div class="row form-group">'
+						 	msg +='	<br>' 
+							msg +='	<div class="row form-group">'				
+							msg +='		<div class="col-lg-1"></div>'				
+							msg +='		<div class="col-lg-9">'
+							msg +='			<label class="control-label">Selecione a filial para geração do orçamento</label>'	              
+							msg +=' 		<div class="input-group">'	
+							msg +='				<select data-plugin-selectTwo class="form-control populate placeholder mb-md" data-plugin-options='+"'"  
+							msg +='					{ "placeholder": "Selecione...", "allowClear": false }'+"'"+' name="FILVEND" id="FILVEND" ' 
+						   	msg +='			   			required="" aria-required="true">'
+							msg += retorno
+							msg +='				</select>'
+							msg +='			</div>'
+							msg +='		</div>'
+							msg +='	</div>'	
+							msg +='</div>'
+							
+							
+						 	if(msg != ""){
+							 	bootbox.dialog({
+								    title: 'Filial Para Orçamento',
+								    message: "<p>"+msg+"</p>",
+								    backdrop: true,
+								    closeButton: false,
+								    onEscape: false,
+								    buttons: {
+							            sucess: {
+							                label: "OK",
+							                callback: function () {
+							                	cFilVend = $("#FILVEND").val();
+							                	$('.bootbox.modal').modal('hide'); 
+							                	
+		 	
+										 		//Chama função para trocar de filial
+												$.ajax({
+													url: "U_TrocaFil.apw?PR=<%=cLCodLogin%>",
+													data: 'filial='+cFilVend,
+													type: "POST",
+													async: false,
+													success:
+														function(retfil) {
+															if (retfil.indexOf('<META HTTP-EQUIV') >= 0 ) {
+																$("html").html(retfil);
+																return;
+															}
+															if(retfil != "" &&  retfil.indexOf("Expires") == -1) {
+																location.href='u_AddOrc.apw?PR=<%=cLCodLogin%>'
+															} else {
+																bootbox.alert("Falha ao logar na filial "+cFilVend+".");
+															}
+														}
+												});								                	
+							                }
+							            }
+							        },
+								});
+							}
+						} else {
+							$('.bootbox.modal').modal('hide');
+							bootbox.alert("Falha ao localizar as filiais que o vendedor tem acesso.");
+						}						
+					}
+			});
+		 	  
+		 
+		}
+        
+        <%=cLJavaScr%>
+        
+        
+	</script>
+		 
+</body>
+</html>

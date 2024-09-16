@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Portal Unimed</title>
+
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxlayout.css">
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxWindows/codebase/skins/dhtmlxcalendar.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxLayout/codebase/skins/dhtmlxcalendar_dhx_skyblue.css">
+	<link rel="stylesheet" type="text/css" href="portaql/dhtmlxSuite/dhtmlxGrid/codebase/dhtmlxgrid.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxCombo/codebase/dhtmlxcombo.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxlayout.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxWindows/codebase/dhtmlxwindows.css" />
+	
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxLayout/codebase/skins/dhtmlxlayout_dhx_skyblue.css">
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxGrid/codebase/dhtmlxgrid_skins.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxGrid/codebase/skins/dhtmlxgrid_dhx_skyblue.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_dhx_skyblue.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxLayout/codebase/skins/dhtmlxlayout_dhx_skyblue.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxWindows/codebase/skins/dhtmlxwindows_dhx_skyblue.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxForm/codebase/skins/dhtmlxform_dhx_skyblue.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxCalendar/codebase/dhtmlxcalendar.css" />
+	<link rel="stylesheet" type="text/css" href="portal/dhtmlxSuite/dhtmlxCalendar/codebase/skins/dhtmlxcalendar_dhx_skyblue.css" />
+	
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxcommon.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxlayout.js"></script>	
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxcontainer.js"></script>
+
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/dhtmlxgrid.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/dhtmlxgridcell.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_start.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_srnd.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_splt.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_form.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_over.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_validation.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_rowspan.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_nxml.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_filter.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_export.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_mcol.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_math.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/ext/dhtmlxgrid_fast.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_link.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_liveedit.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_dhxcalendar.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_combo.js" ></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxToolbar/codebase/dhtmlxtoolbar.js"></script>
+
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxWindows/codebase/dhtmlxcommon.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCombo/codebase/dhtmlxcombo.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCombo/codebase/ext/dhtmlxcombo_extra.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCombo/codebase/ext/dhtmlxcombo_whp.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxCombo/codebase/ext/dhtmlxcombo_group.js"></script>
+	<script type="text/javascript">
+		window.dhx_globalImgPath = "portal/dhtmlxSuite/imgs/";
+	</script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxcontainer.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxLayout/codebase/dhtmlxlayout.js"></script>	
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxTreeGrid/codebase/dhtmlxtreegrid.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxTreeGrid/codebase/ext/dhtmlxtreegrid_lines.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxTreeGrid/codebase/ext/dhtmlxtreegrid_filter.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxWindows/codebase/dhtmlxcontainer.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxWindows/codebase/dhtmlxwindows.js"></script>
+	
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxForm/codebase/dhtmlxform.js"></script>
+	<script type="text/javascript" src="portal/dhtmlxSuite/dhtmlxForm/codebase/ext/dhtmlxform_item_calendar.js"></script>
+	
+ 	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />   
+
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	
+	<script type="text/javascript" src="portal/js/jquery-2.0.3.js"></script>
+	<script type="text/javascript" src="portal/js/portal.js"></script>
+	<script type="text/javascript">
+		dhtmlXCalendarObject.prototype.lang = "br";
+	  	dhtmlXCalendarObject.prototype.langData = {
+	   		"br": {
+	    		dateformat: "%d/%m/%Y",
+			    monthesFNames: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+			    monthesSNames: ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
+			    daysFNames: ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"],
+			    daysSNames: ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"],
+			    weekstart: 0,
+		    	weekend: [0,6]
+   			}
+  		};
+ 	</script>
+	<%=cJS%>
+	
+</head>
+<body onload="init()">
+</body>
+</html>

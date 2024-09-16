@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="fixed sidebar-left-collapsed">
+	<head>
+		<!-- Basic -->
+		<meta charset="iso-8859-1">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+	
+		<title><%=cTitle%></title>
+	
+		<meta name="keywords" content="<%=cTitle%>" />
+		<meta name="description" content="<%=cTitle%>">
+		<meta name="author" content="SMSTI">
+	
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+	
+		<!-- Vendor CSS --> 
+		<%=cCss%>
+		
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+	    <script src="assets/vendor/style-switcher/style.switcher.localstorage.js"></script>
+	
+	</head>
+	<body>
+		<section class="body"> 
+		
+			<!-- start: header -->
+			<header class="header">
+				<%=cHeader%>
+			</header>
+			<!-- end: header -->
+		
+				<section role="main" class="content-body">
+				
+					<!-- start: page -->
+					<section class="panel">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel form-wizard" id="w9">
+									<form action = "" method="post" class="form-horizontal" id="formOrc">
+																							
+										<div class="tabs">
+											<ul class="nav nav-tabs nav-justify">
+												<li class="active">
+													<a href="#orc-informar" data-toggle="tab" class="text-center">Orçamento</a>
+												</li>
+											</ul>
+													
+												<div id="orc-informar" class="tab-pane active">
+													<!-- linha 1: dados da empresa -->
+													<div class="row form-group">
+														<div class="col-lg-4">
+															<label class="control-label">Orçamento</label>
+															<input class="form-control" value="<%=cNumOrc%>" disabled>
+														</div>
+														<div class="col-lg-4">
+															<label class="control-label">Emissão</label>
+															<input class="form-control" value="<%=cEmissao%>" disabled>
+														</div>
+													</div>
+													
+													<div class="mb-md hidden-lg hidden-xl"></div>															
+													<div class="mb-md hidden-lg hidden-xl"></div>
+														
+													<div class="row form-group">
+														<div class="col-lg-6">
+															<label class="control-label">Cliente</label>
+															<%=cCliente%>
+														</div>
+														<!--
+														<div class="col-lg-4">
+															<label class="control-label">Tabela de Preço</label>
+															<%=cTabela%>
+														</div> 
+														-->
+													
+													</div>
+		
+													<div class="mb-md hidden-lg hidden-xl"></div>															
+													<div class="mb-md hidden-lg hidden-xl"></div>
+																    
+												
+													
+													<!-- linha 3: input  -->
+													<div class="row form-group">	              
+													 	<div class="col-lg-3">
+															<label class="control-label">Modalidade</label>
+															<%=cModali%>
+														</div>
+													 	
+													 	<div class="col-lg-2">
+															<label class="control-label">Condição de Pagamento</label>
+															<%=cCondPag%>
+														</div>
+													
+													</div>
+													
+													
+													<!-- linha 4 input -->
+													<div class="row form-group">
+														<div class="col-lg-2">
+															<label class="control-label">Tipo de Frete</label>
+															<%=cTpFrete%>
+														</div>
+																
+														<div class="col-lg-4">
+															<label class="control-label">Transportadora</label>
+															<input id="CJ_XTRANSP" name="CJ_XTRANSP" class="form-control" value="<%=cTransp%>" disabled>
+														</div>
+													</div>
+													
+													
+													
+													<!-- linha 4 input -->
+													<div class="row form-group">
+														<div class="col-lg-2">
+															<label class="control-label">Previsão de Faturamento</label>	              
+															<div class="input-group">	
+																<span class="input-group-addon">
+																	<i class="fa fa-calendar"></i>
+																</span>
+																<%=cEntrega%>
+															</div>
+														</div>
+														
+														<div class="col-lg-2">
+															<label class="control-label">Tipo de Orçamento</label>
+															<%=cTipoOrc%>
+														</div>
+													</div>
+													
+													<!-- linha 5: Observações  -->
+													<div class="row form-group">
+														<!--		
+														<div class="col-md-5">
+															<label class="control-label" for="textareaDefault">Observação Interna</label>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" name="CJ_XNOTAIN" readonly="readonly"><%=cObsInterna%></textarea>
+														</div> 
+														-->
+														<div class="col-md-6">
+															<label class="control-label" for="textareaDefault">Observação para Nota Fiscal</label>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" name="CJ_XMSGNF" readonly="readonly"><%=cObsNota%></textarea>
+														</div>
+													</div>					
+													<br>		
+													<br>		
+		
+													<!-- tabela com os produtos do orçamento -->
+													<div class="table-responsive" id="ItensOrc">
+														<table class="table table-bordered table-striped mb-none table-hover table-condensed" id="datatable-editable" aria-describedby="datatable-details_info">
+															<thead>
+																<tr>
+																	<%=cOrcCabec%>
+																</tr>
+															</thead>
+															<tbody> 
+																<%=cOrcItens%>										
+															</tbody>
+														</table>
+													</div>	
+													<br>
+                                                     
+             										<!-- botões com ações na tabela dos itens -->
+													<%=cBtnItens%>
+													
+													<!-- Totais -->
+													<div class="col-lg-13">
+														<section class="panel">
+															<header class="panel-heading">
+																<h2 class="panel-title">Totais do Orçamento</h2>
+															</header>
+															<div class="panel-body">
+															
+																<div class="form-inline" align="center">
+																	<div class="row">
+																		<div class="col-sm-12">	      
+																			<label class="">Qtde.Itens&nbsp;</label>               
+																			<input class="form-control text-right" id="TOTAL_QITENS" name="TOTAL_QITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTQtdItem,"@E 999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Itens&nbsp;</label>               
+																			<input class="form-control" id="TOTAL_ITENS" name="TOTAL_ITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Impostos&nbsp;</label>
+																			<input class="form-control" id="TOTAL_IMP" name="TOTAL_IMP"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTImpostos,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp; 
+																			<!-- 
+																			<label class="">Frete&nbsp;</label>
+																			<input class="form-control" id="TOTAL_FRETE" name="TOTAL_FRETE"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTFrete,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			-->
+																			<label class="">Total&nbsp;</label>
+																			<input class="form-control" id="TOTAL_ORC" name="TOTAL_ORC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
+																	    </div> 
+																	</div>
+																	<%=cdivComis%>	    
+																</div>
+															</div>
+														</section>
+													</div>                                                     
+
+													<br>														
+													<br>														
+															
+													<div class="row form-group" align="center">
+														<%=cBotoes%>
+													</div>
+												</div>													
+												
+										</div>
+									</form>			
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+				<footer class="panel-footer text-right">
+					Desenvolvido por  <img src="http://<%=cEndServ%>/imagens/sms.png"  />
+				</footer>
+			</div>		
+		</section>
+		<!-- end: page -->
+	
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/select2/js/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> 
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/autosize/autosize.js"></script>
+		<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+		<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+		
+		<!-- Examples -->
+		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script> 
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+		<script src="custom/js/jquery.maskMoney.js"></script> 
+		<script src="custom/js/portalMask.js"></script>
+		<script src="custom/js/datatables.editable.js"></script>
+		<script src="custom/js/examples.datatables.editable.custom.js"></script>
+		<script type="text/javascript">
+			var tblDesc = [];
+			var optProd = '';
+			if('<%=lMail%>' === '.F.'){
+				window.print();
+			}
+		</script> 
+	</body>
+</html>

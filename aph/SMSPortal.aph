@@ -1,0 +1,349 @@
+<%
+	/**** Pagina de login do site ****/
+//	Local cLSite      := "./"   // Site 
+	Local cLTitle     := "" 	// Titulo da pagina
+	Local cLPagina    := "" 	// Nome da pagina
+//	Local cLHeader    := ""
+	Local cLMenus     := ""
+	Local cLWidgets   := ""
+	Local cLCodLogin  := ""
+	if type("cSite") <> "U"
+		cLSite := cSite
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cSite")
+	Endif
+	if type("cTitle") <> "U"
+		cLTitle := cTitle
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cTitle")
+	Endif
+	if type("cPagina") <> "U"
+		cLPagina := cPagina
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cPagina")
+	Endif
+	if type("cMenus") <> "U"
+		cLMenus := cMenus
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cMenus")
+	Endif
+	if type("cWidgets") <> "U"
+		cLWidgets := cWidgets
+	else
+		conout(dtoc(date())+" " + time() + " Portal "+procname(1)+"("+cValToChar(procline(1))+") Faltou cWidgets")
+	Endif
+	if type ("cCodLogin") <> "U"
+		cLCodLogin := cCodLogin
+	Endif
+	
+%>
+<!DOCTYPE html>
+<html class="fixed">
+<head>
+	<!-- Basic -->
+	<meta charset="iso-8859-1">
+	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+	<title><%=cLTitle%></title>
+
+	<meta name="keywords" content="<%=cLTitle%>" />
+	<meta name="description" content="Portal <%=cLTitle%>">
+	<meta name="author" content="SMSTI">
+
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<!-- Web Fonts  -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+	<!-- Vendor CSS -->
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+
+	<!-- Specific Page Vendor CSS -->
+	<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
+	<link rel="stylesheet" href="assets/vendor/jquery-ui/jquery-ui.css" />
+	<link rel="stylesheet" href="assets/vendor/jquery-ui/jquery-ui.theme.css" />
+	<link rel="stylesheet" href="assets/vendor/morris.js/morris.css" />
+	<link rel="stylesheet" href="assets/vendor/owl.carousel/assets/owl.carousel.css" />
+	<link rel="stylesheet" href="assets/vendor/owl.carousel/assets/owl.theme.default.css" />
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+	<!-- Skin CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+	<!-- Theme Custom CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+	<!-- Head Libs -->
+	<script src="assets/vendor/modernizr/modernizr.js"></script>
+
+</head>
+<body>
+<section class="body">
+	<!-- start: header -->
+	<header class="header">
+		<div class="logo-container">
+			<a href="<%= cLSite %>" class="logo pull-left">
+				<img src="images/<%='logo'+cEmpAnt%>.png" alt="<%= cLTitle %>" height="45"/>
+			</a>
+			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+			</div>
+		</div>
+		<div class="header-right">
+			<span class="separator"></span>
+			<div id="userbox" class="userbox">
+				<a href="#" data-toggle="dropdown">
+					<div class="profile-info" data-lock-name="<%= HttpSession->Nome %>">
+						<span class="name"><%= HttpSession->NomeFull %></span>
+					<span class="role"><%= HttpSession->Perfil %></span>
+					<span class="role"><%= HttpSession->NomeEmpresa %></span>
+					</div>
+					<i class="fa custom-caret"></i>
+				</a>
+				<div class="dropdown-menu">
+					<ul class="list-unstyled">
+						<li>
+							<a role="menuitem" tabindex="-1" href="U_PortalLogin.apw"><i class="fa fa-power-off"></i>Sair</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+				
+	</header>
+	<!-- end: header -->
+
+	<div class="inner-wrapper">
+		<!-- start: sidebar -->
+		<aside id="sidebar-left" class="sidebar-left">
+		
+		    <div class="sidebar-header">
+		        <div class="sidebar-title">
+		            Menu
+		        </div>
+		        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+		            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+		        </div>
+		    </div>
+		
+		    <div class="nano">
+		        <div class="nano-content">
+		            <nav id="menu" class="nav-main" role="navigation">
+		            
+		                <ul class="nav nav-main">
+		                    <%=cLMenus%>
+		                </ul>
+		            </nav>
+		        </div>
+			
+		        <script>
+		            // Maintain Scroll Position
+		            if (typeof localStorage !== 'undefined') {
+		                if (localStorage.getItem('sidebar-left-position') !== null) {
+		                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+		                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+		                    
+		                    sidebarLeft.scrollTop = initialPosition;
+		                }
+		            }
+		            
+		            
+		            function Filtro(){
+						//Submete formulario
+						$("#formGrid").submit();		
+					}
+		            
+		        </script>
+		    </div>
+		
+		</aside>
+		<!-- end: sidebar -->
+
+		<section role="main" class="content-body">
+			<header class="page-header">
+				<h2><%=cLPagina%></h2>
+				<div class="right-wrapper pull-right">
+				</div>
+			</header>
+
+			<!-- start: page -->
+			<section class="panel">
+				<div class="panel-body">
+					<%=cTopo%>
+				</div>
+				<br>
+			    <br> 
+			    
+			     
+				
+				
+				<div class="row">
+					<!-- WIDGETS -->
+					<div class="col-lg-7">
+						<div class="row">
+							<%=cLWidgets%>
+						</div>
+					</div>
+
+					
+					<%=cCampanhas%>
+						
+				</div>
+
+				<div class="row">
+					<!-- MAIORES VENDAS -->
+					<div class="col-lg-5">
+						<section class="panel">
+							<header class="panel-heading">
+					   			<h2 class="panel-title">
+									<span class="va-middle">Produtos Mais Vendidos</span>
+								</h2>
+							</header>
+							<div class="panel-body">
+								<div class="content">	
+									<ul class="simple-user-list">
+										<%=cMVendas%>
+									</ul>
+								</divl>
+							</div>					
+						</section>
+					</div>
+					<!-- end: page -->
+
+					<!-- VENDAS MES A MES -->
+					<div class="col-lg-7">
+						<section class="panel">
+							<header class="panel-heading">
+					   			<h2 class="panel-title">
+									<span class="va-middle">Vendas Mês a Mês (x R$1.000,00)</span>
+								</h2>
+							</header>
+							<div class="panel-body">
+								<div class="chart-data-selector" id="salesSelectorWrapper">
+									<div id="salesSelectorItems" class="chart-data-selector-items mt-sm">
+										<!-- Flot: Sales Porto Admin -->
+										<div class="chart chart-sm" data-sales-rel="Porto Admin" id="flotDashSales1" class="chart-active"></div>
+										<script>
+						
+											var flotDashSales1Data = [{
+											    data: [ <%=cVendaMes%> ],
+											    color: "#0088cc"
+											}];
+										</script>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<!-- MAIORES DEVEDORES -->
+					<div class="col-lg-5">
+						<section class="panel">
+							<header class="panel-heading">
+					   			<h2 class="panel-title">
+									<span class="va-middle">Maiores Devedores</span>
+								</h2>
+							</header>
+							<div class="panel-body">
+								<div class="content">	
+									<ul class="simple-user-list">
+										<%=cMDevedor%>
+									</ul>
+								</divl>
+							</div>					
+						</section>
+					</div>
+					<!-- end: page -->
+
+
+
+					<!-- META -->
+					<div class="col-lg-4 text-center panel-body ">
+						<h2 class="panel-title">Plano de Incentivo</h2>
+						<h2 class="panel-title mt-sm">R$ <%=cMeta%></h2>
+						<div class="liquid-meter-wrapper liquid-meter-sm mt-sm">
+							<div class="liquid-meter">
+								<meter min="0" max="100" value="<%=cAtingido%>" id="meterSales"></meter>
+							</div>
+							<div class="liquid-meter-selector" id="meterSalesSel">
+								<a href="#" data-val="<%=cAtingido%>" class="active">Atingido</a>
+								<a href="#" data-val="<%=cFalta%>">Falta</a>
+							</div>
+						</div>				
+					</div>
+
+					<! -- LISTA DE VENDAS POR VENDEDOR * SOMENTE SUPERVISOR -->
+					<%=cListVend%>
+				</div>
+
+					
+			</section>
+		</section>
+		<!-- 
+		<footer class="panel-footer text-right">
+			Desenvolvido por  <img src="images/sms.png"  />
+		</footer>
+		 -->
+	</div>
+</section>
+
+	<!-- Vendor -->
+	<script src="assets/vendor/jquery/jquery.js"></script>
+	<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+	<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+	<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+	<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+	
+	<!-- Specific Page Vendor -->
+	<script src="assets/vendor/select2/js/select2.js"></script>
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+
+	<script src="assets/vendor/jquery-ui/jquery-ui.js"></script>
+	<script src="assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js"></script>
+	<script src="assets/vendor/jquery-appear/jquery-appear.js"></script>
+	<script src="assets/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
+	<script src="assets/vendor/flot/jquery.flot.js"></script>
+	<script src="assets/vendor/flot.tooltip/flot.tooltip.js"></script>
+	<script src="assets/vendor/flot/jquery.flot.pie.js"></script>
+	<script src="assets/vendor/flot/jquery.flot.categories.js"></script>
+	<script src="assets/vendor/flot/jquery.flot.resize.js"></script>
+	<script src="assets/vendor/jquery-sparkline/jquery-sparkline.js"></script>
+	<script src="assets/vendor/raphael/raphael.js"></script>
+	<script src="assets/vendor/morris.js/morris.js"></script>
+	<script src="assets/vendor/owl.carousel/owl.carousel.js"></script>
+	<script src="assets/vendor/snap.svg/snap.svg.js"></script>
+	<script src="assets/vendor/liquid-meter/liquid.meter.js"></script>
+	
+	<!-- Theme Base, Components and Settings -->
+	<script src="assets/javascripts/theme.js"></script>
+	
+	<!-- Theme Initialization Files -->
+	<script src="assets/javascripts/theme.init.js"></script>
+		
+	<!-- Theme Custom -->
+	<script src="assets/javascripts/theme.custom.js"></script>
+		 
+	<script src="assets/javascripts/ui-elements/examples.widgets.js"></script> 
+	<script src="assets/javascripts/dashboard/examples.dashboard.js"></script>
+			 
+</body>
+</html>
