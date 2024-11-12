@@ -6,7 +6,14 @@
 //	Local cLHeader    := ""
 	Local cLMenus     := ""
 	Local cLWidgets   := ""
+	Local cLWgMeta    := ""
 	Local cLCodLogin  := ""
+	local cLMVendas   := ""
+	local cLVendaMes  := ""
+	local cLListVend  := ""
+	local cLMFiliais  := ""
+	local cLMEstados  := ""
+	local cLListaSaldo:= ""
 	if type("cSite") <> "U"
 		cLSite := cSite
 	else
@@ -35,7 +42,15 @@
 	if type ("cCodLogin") <> "U"
 		cLCodLogin := cCodLogin
 	Endif
-	
+	if type("cWgMeta") <> "U"
+		cLWgMeta   := cWgMeta
+	endif
+	if type("cMVendas") <> "U"
+		cLMVendas  := cMVendas
+	endif
+	if type("cVendaMes") <> "U"
+		cLVendaMes  := cVendaMes
+	endif
 %>
 <!DOCTYPE html>
 <html class="fixed">
@@ -93,7 +108,7 @@
 	<header class="header">
 		<div class="logo-container">
 			<a href="<%= cLSite %>" class="logo pull-left">
-				<img src="images/<%='logo'+cEmpAnt%>.png" alt="<%= cLTitle %>" height="45"/>
+				<img src="images/<%='logo'+cEmpAnt%>.png" alt="<%= cLTitle %>" height="35"/>
 			</a>
 			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -112,6 +127,9 @@
 				</a>
 				<div class="dropdown-menu">
 					<ul class="list-unstyled">
+						<!-- <li>
+							<a role="menuitem" tabindex="-1" href="U_TrocaSenhaUser.apw?PR=<%=cLCodLogin%>"><i class="fa fa-unlock-alt"></i> Alterar Senha</a>
+						</li> -->
 						<li>
 							<a role="menuitem" tabindex="-1" href="U_PortalLogin.apw"><i class="fa fa-power-off"></i>Sair</a>
 						</li>
@@ -119,7 +137,6 @@
 				</div>
 			</div>
 		</div>
-				
 	</header>
 	<!-- end: header -->
 
@@ -127,44 +144,41 @@
 		<!-- start: sidebar -->
 		<aside id="sidebar-left" class="sidebar-left">
 		
-		    <div class="sidebar-header">
-		        <div class="sidebar-title">
-		            Menu
-		        </div>
-		        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-		            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-		        </div>
-		    </div>
+			<div class="sidebar-header">
+				<div class="sidebar-title">
+					Menu
+				</div>
+				<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				</div>
+			</div>
 		
-		    <div class="nano">
-		        <div class="nano-content">
-		            <nav id="menu" class="nav-main" role="navigation">
-		            
-		                <ul class="nav nav-main">
-		                    <%=cLMenus%>
-		                </ul>
-		            </nav>
-		        </div>
+			<div class="nano">
+				<div class="nano-content">
+					<nav id="menu" class="nav-main" role="navigation">
+					
+						<ul class="nav nav-main">
+							<%=cLMenus%>
+						</ul>
+					</nav>
+				</div>
 			
-		        <script>
-		            // Maintain Scroll Position
-		            if (typeof localStorage !== 'undefined') {
-		                if (localStorage.getItem('sidebar-left-position') !== null) {
-		                    var initialPosition = localStorage.getItem('sidebar-left-position'),
-		                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
-		                    
-		                    sidebarLeft.scrollTop = initialPosition;
-		                }
-		            }
-		            
-		            
-		            function Filtro(){
-						//Submete formulario
-						$("#formGrid").submit();		
+				<script>
+					// Maintain Scroll Position
+					if (typeof localStorage !== 'undefined') {
+						if (localStorage.getItem('sidebar-left-position') !== null) {
+							var initialPosition = localStorage.getItem('sidebar-left-position'),
+								sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+							
+							sidebarLeft.scrollTop = initialPosition;
+						}
 					}
-		            
-		        </script>
-		    </div>
+					function Filtro(){
+						//Submete formulario
+						$("#formGrid").submit();
+					}
+				</script>
+			</div>
 		
 		</aside>
 		<!-- end: sidebar -->
@@ -182,115 +196,29 @@
 					<%=cTopo%>
 				</div>
 				<br>
-			    <br> 
-			    
-			     
-				
-				
+				<br> 
+				<!-- WIDGETS -->
 				<div class="row">
-					<!-- WIDGETS -->
-					<div class="col-lg-7">
-						<div class="row">
-							<%=cLWidgets%>
-						</div>
+					<div class="col-lg-8">
+						<%=cLWidgets%>
 					</div>
-
-					
-					<%=cCampanhas%>
-						
-				</div>
-
+					<div class="col-lg-4 ">
+						<%=cLWgMeta%>
+					</div> 
+				</div> 
+				<br>
 				<div class="row">
-					<!-- MAIORES VENDAS -->
 					<div class="col-lg-5">
-						<section class="panel">
-							<header class="panel-heading">
-					   			<h2 class="panel-title">
-									<span class="va-middle">Produtos Mais Vendidos</span>
-								</h2>
-							</header>
-							<div class="panel-body">
-								<div class="content">	
-									<ul class="simple-user-list">
-										<%=cMVendas%>
-									</ul>
-								</divl>
-							</div>					
-						</section>
+						<!-- Produtos Mais Vendidos -->
+						 <%=cMVendas%>
+					</div>	
+	
+					<div class="col-lg-7">
+						<!-- Vendas Mï¿½s a Mï¿½s (x R$1.000,00) -->
+						 <%=cLVendaMes%>
 					</div>
 					<!-- end: page -->
-
-					<!-- VENDAS MES A MES -->
-					<div class="col-lg-7">
-						<section class="panel">
-							<header class="panel-heading">
-					   			<h2 class="panel-title">
-									<span class="va-middle">Vendas Mês a Mês (x R$1.000,00)</span>
-								</h2>
-							</header>
-							<div class="panel-body">
-								<div class="chart-data-selector" id="salesSelectorWrapper">
-									<div id="salesSelectorItems" class="chart-data-selector-items mt-sm">
-										<!-- Flot: Sales Porto Admin -->
-										<div class="chart chart-sm" data-sales-rel="Porto Admin" id="flotDashSales1" class="chart-active"></div>
-										<script>
-						
-											var flotDashSales1Data = [{
-											    data: [ <%=cVendaMes%> ],
-											    color: "#0088cc"
-											}];
-										</script>
-									</div>
-								</div>
-							</div>
-						</section>
-					</div>
-
-				</div>
-
-				<div class="row">
-
-					<!-- MAIORES DEVEDORES -->
-					<div class="col-lg-5">
-						<section class="panel">
-							<header class="panel-heading">
-					   			<h2 class="panel-title">
-									<span class="va-middle">Maiores Devedores</span>
-								</h2>
-							</header>
-							<div class="panel-body">
-								<div class="content">	
-									<ul class="simple-user-list">
-										<%=cMDevedor%>
-									</ul>
-								</divl>
-							</div>					
-						</section>
-					</div>
-					<!-- end: page -->
-
-
-
-					<!-- META -->
-					<div class="col-lg-4 text-center panel-body ">
-						<h2 class="panel-title">Plano de Incentivo</h2>
-						<h2 class="panel-title mt-sm">R$ <%=cMeta%></h2>
-						<div class="liquid-meter-wrapper liquid-meter-sm mt-sm">
-							<div class="liquid-meter">
-								<meter min="0" max="100" value="<%=cAtingido%>" id="meterSales"></meter>
-							</div>
-							<div class="liquid-meter-selector" id="meterSalesSel">
-								<a href="#" data-val="<%=cAtingido%>" class="active">Atingido</a>
-								<a href="#" data-val="<%=cFalta%>">Falta</a>
-							</div>
-						</div>				
-					</div>
-
-					<! -- LISTA DE VENDAS POR VENDEDOR * SOMENTE SUPERVISOR -->
-					<%=cListVend%>
-				</div>
-
-					
+				</div>				
 			</section>
 		</section>
 		<!-- 
@@ -332,6 +260,7 @@
 	<script src="assets/vendor/owl.carousel/owl.carousel.js"></script>
 	<script src="assets/vendor/snap.svg/snap.svg.js"></script>
 	<script src="assets/vendor/liquid-meter/liquid.meter.js"></script>
+	<script src="https://kit.fontawesome.com/bd50f37eef.js" crossorigin="anonymous"></script>
 	
 	<!-- Theme Base, Components and Settings -->
 	<script src="assets/javascripts/theme.js"></script>

@@ -6,28 +6,37 @@
 /*__________________________________________________________________________
 ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
 ¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦Funçäo    ¦ Orcamento   ¦ Autor ¦ Lucilene Mendes     ¦ Data ¦28.08.17 ¦¦¦
+¦¦¦Funçäo    ¦ PedVenda  ¦ Autor ¦ Lucilene Mendes     ¦ Data ¦28.08.17 ¦¦¦
 ¦¦+----------+------------------------------------------------------------¦¦¦
-¦¦¦Descriçäo ¦ Grid com os orçamentos em aberto do vendedor.			  ¦¦¦
+¦¦¦Descriçäo ¦ Grid com os pedidos de venda                 			  ¦¦¦
 ¦¦+-----------------------------------------------------------------------+¦¦
 ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
-User Function Orcamento()
+User Function PedVenda()
 Local cHtml
-Local cLink	:= ""                      
-Local cCombo	:= ""                      
+Local cLink		:= ""                      
+// Local cCombo	:= ""                      
 Local cDataDe	:= ""
 Local cDataAte	:= ""
 Local cFiltDe	:= ""
 Local cFilAte	:= ""                      
 Local aStatus:= {} 
 Local cLinkDet  := ""
+Local cCookie   := ""
+Local aValCookie:= {}
+// Local cCliente	:= ""
+Local cFilCli   := ""
+Local aClientes	:= {}
+// local oObjLog := LogSMS():new()
+local aLinItens := {}     // Linhas de itens
+local nCnt      := 0	  // Contador de itens
+local nIt
 Private cColunas:= ""
 Private cItens	:= ""  
 Private cTopo	:= ""  
 Private cSite	:= "u_PortalLogin.apw"
-Private cPagina	  := "Orçamentos"
+Private cPagina	  := "Pedidos de Venda"
 Private cTitle	  := "" 
 Private lTableTools:= .T.
 Private lSidebar:= .F.
@@ -37,26 +46,24 @@ Private cVendLogin:= ""
 Web Extended Init cHtml Start U_inSite()
 
 	// TODO - Pedro 20210208 - Remover???
+	conout("@@@ CodVend: " + HttpSession->CodVend)
 	If Empty(HttpSession->CodVend)
+		conout("@@@ CodVend: entrou no redirecionamento")
 		cHtml:= '<META HTTP-EQUIV="Refresh" CONTENT="0 ; URL='+cSite+'">'	
 		Return cHtml
-	Else
-		If !Empty(HttpSession->Superv) .and. HttpSession->Superv <> HttpSession->CodVend
-			HttpSession->CodVend:= HttpSession->Superv
-		Endif
 	Endif
 	
 	cVendLogin := u_GetUsrPR()
 	cCodLogin  := U_SetParPR(cVendLogin)
 
 	// Pega do parâmetro com o Titulo do Portal
-	cTitle	:= SuperGetMV("PS_TITLE", .T., "Portal SMS")
-	
+	//cTitle	:= SuperGetMV("PS_TITLE", .T., "Portal SMS")
+	cTitle := "Portal SMS"
 	// Define a funcao a ser chama no link
 	cSite	:= "u_SMSPortal.apw?PR="+cCodLogin
 	
 	// Monta o cabeçalho para a pagina
-	cHeader := U_PSHeader(cTitle, cSite) 	
+	cHeader := U_PSHeader(cTitle, cSite, cCodLogin) 	
 	
 	//Função que atualiza os menus
 	cMenus := U_GetMenus(AllTrim(Upper(Procname())), cVendLogin)
@@ -74,6 +81,8 @@ Web Extended Init cHtml Start U_inSite()
 		//Atualiza as variáveis no valor do filtro
 		cFiltDe:= dtoc(stod(cDataDe))
 		cFilAte:= dtoc(stod(cDataAte))    
+		// cCliente:= HttpPost->cliente
+		cFilCli := HttpPost->filcliente
 	Else
 	    //Variáveis dos input dos filtros
 		cFiltDe:= dtoc(date()-30)
@@ -81,21 +90,72 @@ Web Extended Init cHtml Start U_inSite()
 		//Variáveis de filtro da query
 		cDataDe:= dtos(date()-30)
 		cDataAte:= dtos(date())
+		// cCliente:= '1'
+		cFilCli := "T"
+		// Parametros de cookie
+		if !empty(&("HttpCookies->F"+procname()))
+			cCookie := decode64(&("HttpCookies->F"+procname()))
+		endif
+		if left(cCookie, len("usuario:"+cVendLogin)) == "usuario:"+cVendLogin
+			aValCookie := strtokarr(cCookie, "|");
+			// for nIt := 2 to len(aValCookie)
+			nIt := 2
+			while nIt <= len(aValCookie)
+				do case
+				case aValCookie[nIt] = "filcliente"
+					cFilCli := subs(aValCookie[nIt], at(":", aValCookie[nIt])+1)
+				case aValCookie[nIt] = "datade"
+					cFiltDe := subs(aValCookie[nIt], at(":", aValCookie[nIt])+1)
+					cDataDe := dtos(ctod(cFiltDe))
+				case aValCookie[nIt] = "dataate"
+					cFilAte  := subs(aValCookie[nIt], at(":", aValCookie[nIt])+1)
+					cDataAte := dtos(ctod(cFilAte))
+				endcase
+				nIt++
+			enddo
+			// next
+		endif
 	Endif
-	    
+
+	// aClientes := u_getClientes(cVendLogin)
+
+	// Se usuario nao tem acesso a clientes - volta a tela inicial
+	// if empty(len(aClientes))
+	// 	cHtml:= '<META HTTP-EQUIV="Refresh" CONTENT="0 ; URL='+cSite+'">'	
+	// 	Return cHtml
+	// endif
+	// Formatacao de cookie para salvamento
+	// cCookie := Encode64(cVendLogin+"|"+cFilCli+"|"+cDataDe+"|"+cDataAte)
+
+	//HTTPHEADOUT->Set-Cookie := "PedVenda="+cCookie
 	//Topo da janela
 	//Botão incluir novo orçamento
+
+	cLink:= "U_AddPed.apw?PR="+cCodLogin
+
 	cTopo:= '<div class="row form-group">'
-  	cTopo+= '	<div class="col-sm-3">'
-//    cTopo+= '		<button class="btn btn-primary" id="btAddOrc" name="btAddOrc" onclick="javascript: getFilVend();">'
-    cTopo+= '		<button class="btn btn-primary" id="btAddOrc" name="btAddOrc" onclick="javascript: location.href='+"'"+'u_AddOrc.apw?PR='+cCodLogin+"'"+';">'
-    cTopo+= '		  <i class="fa fa-plus"></i> Novo Orçamento</button>'
+	cTopo+= '	<div class="col-sm-3" style="padding: 20px;">'
+	cTopo+= '		<button class="btn btn-primary" id="btAddOrc" name="btAddPed" onclick="javascript: getFilVend();">'
+    // cTopo+= '		<button class="btn btn-primary" id="btAddOrc" name="btAddOrc" onclick="window.document.location='+"'"+cLink+"'"+'";>'
+    cTopo+= '		  <i class="fa fa-plus"></i> Novo Pedido</button>'
     cTopo+= '  	</div>'
-    
+	cTopo+= '  	<br>'
     //Filtros
-    cTopo+= '	<div class="col-sm-9" align="right">'
-    cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="U_Orcamento.apw?PR='+cCodLogin+'">'
-  	cTopo+= '		<label class="col-md-2 control-label">Emissão De:</label>'
+    cTopo+= '	<div class="col-sm-12">'
+    cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="U_PedVenda.apw?PR='+cCodLogin+'">'
+    // cTopo+= '		<label class="col-md-1 control-label">Empresa</label>'
+    // cTopo+= '  		<div class="col-sm-2">'
+	// cTopo+= '		 	<div class="input-group">'
+	// cTopo+= '				<select data-plugin-selectTwo class="form-control populate mb-md" name="filcliente" id="filcliente" '
+	// cTopo+= ' 				data-plugin-options='+"'"+'{"minimumResultsForSearch": "-1"}'+"'"+' required="" aria-required="true" value="'+cFilCli+'">'
+	// cTopo+= '					<option value="T"'+Iif(cFilCli=='T',' selected','')+'>Todos</option>'
+	// for nIt := 1 to len(aClientes)
+	// 	cTopo+= 					'<option value="'+aClientes[nIt, 1]+aClientes[nIt, 2]+'"'+Iif(cFilCli==aClientes[nIt, 1]+aClientes[nIt, 2],' selected','')+'>'+aClientes[nIt, 3]+'</option>'
+	// next
+    // cTopo+= '				</select>'
+    // cTopo+= '			</div>'
+    // cTopo+= '		</div>'
+  	cTopo+= '		<label class="col-md-1 control-label">Emissão De:</label>'
     cTopo+= '  		<div class="col-md-3">'
 	cTopo+= '		 	<div class="input-group">'
     cTopo+= '    			<span class="input-group-addon">'
@@ -107,7 +167,7 @@ Web Extended Init cHtml Start U_inSite()
     cTopo+= '			</div>'
     cTopo+= '		</div>'       
   
-    cTopo+= '		<label class="col-md-2 control-label">Emissão Até:</label>'
+    cTopo+= '		<label class="col-md-1 control-label">Emissão Até:</label>'
 	cTopo+= '		<div class="col-md-3">'
 	cTopo+= '			<div class="input-group">'
     cTopo+= '				<span class="input-group-addon">'
@@ -124,89 +184,120 @@ Web Extended Init cHtml Start U_inSite()
 	cTopo+= '	</div>'
 	cTopo+= '</div>'
 	 	
-	cQry:= " Select DISTINCT SCJ.CJ_FILIAL, SCJ.CJ_NUM, SCJ.CJ_CLIENTE, SCJ.CJ_LOJA, A1_NOME, A1_EMAIL, SCJ.CJ_EMISSAO, SCJ.CJ_STATUS, CK_NUMPV, SCJ.CJ_VEND, SCJ.CJ_XTPORC, SCJ.R_E_C_N_O_ RECSCJ, "
-	cQry+= " C5_NOTA, SCJ.CJ_COTCLI "
-	cQry+= " From "+RetSqlName("SCJ")+" SCJ " 
-	cQry+= " Inner Join "+RetSqlName("SA1")+" SA1 On A1_FILIAL = '"+xFilial("SA1")+"' AND A1_COD = SCJ.CJ_CLIENTE AND A1_LOJA = SCJ.CJ_LOJA AND SA1.D_E_L_E_T_ = ' ' " 
-	cQry+= " Inner Join "+RetSqlName("SCK")+" SCK On CK_FILIAL = SCJ.CJ_FILIAL AND CK_NUM = SCJ.CJ_NUM AND SCK.D_E_L_E_T_ = ' ' "
-	cQry+= " Left Join "+RetSqlName("SC5")+" SC5 ON C5_FILIAL = CK_FILIAL AND C5_NUM = CK_NUMPV AND SC5.D_E_L_E_T_ = ' ' "
-	cQry+= " Where  SCJ.D_E_L_E_T_ = ' ' "  //SCJ.CJ_FILIAL = '"+xFilial("SCJ")+"' AND
-    If HttpSession->Tipo = 'S' //Supervisor acessa todos os orçamentos da sua equipe
-    	cQry+= " AND SCJ.CJ_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
-    Else
-		cQry+= " AND SCJ.CJ_VEND = '"+cVendLogin+"' "
-    Endif
-    If !Empty(cDataAte)
-    	cQry+= " And SCJ.CJ_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' "
-    Endif
-    cQry+= " Order by SCJ.CJ_EMISSAO, SCJ.CJ_NUM, SCJ.CJ_CLIENTE, SCJ.CJ_LOJA "
+	cQry := " SELECT DISTINCT SC5.C5_FILIAL, "
+	cQry += " SC5.C5_NUM, "
+	cQry += " SC5.C5_CLIENTE, "
+	cQry += " SC5.C5_LOJACLI, "
+	cQry += " SA1.A1_NOME, "
+	cQry += " SA1.A1_EMAIL, "
+	cQry += " SA1.A1_CGC, "
+	cQry += " SC5.C5_EMISSAO, "
+	cQry += " SC5.C5_NOTA /*, SCJ.CJ_STATUS */" //  R_E_CNO C5RECNO
+	cQry += " FROM "+RetSqlName("SC5")+" SC5 " 
+	cQry += " INNER Join "+RetSqlName("SA1")+" SA1 ON A1_COD = SC5.C5_CLIENTE AND A1_LOJA = SC5.C5_LOJACLI AND SA1.D_E_L_E_T_ = ' ' " 
+	cQry += " WHERE C5_TIPO = 'N'" // AND F2_FILIAL = '"+xFilial("SF2")+"'
+	cQry += " AND SC5.D_E_L_E_T_ = ' ' "
+	cQry += " AND SC5.C5_VEND1 = '"+cVendLogin+"' "
+	cQry += " AND C5_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' ""
+    cQry += " ORDER BY SC5.C5_EMISSAO DESC , SC5.C5_NUM DESC"
+
+	conout("@@@ query1:" + cQry)
+	
 	If Select("QRY") > 0
 		QRY->(dbCloseArea())
 	Endif	
+
 	APWExOpenQuery(ChangeQuery(cQry),'QRY',.T.)
-	
-	
+
 	//Cabeçalho do grid
 	cColunas+='<th>Filial</th>'
-	cColunas+='<th>Orçamento</th>'
-	cColunas+='<th>Status</th>'
+	cColunas+='<th>Pedido</th>'
+	// cColunas+='<th>Status</th>'
 	cColunas+='<th>Emissão</th>'
-	cColunas+='<th>Hora</th>'
 	cColunas+='<th>Cliente</th>'
 	cColunas+='<th>Nome</th>'
-	cColunas+='<th>Pedido</th>'
-	If HttpSession->Tipo = 'S'
-		cColunas+='<th>Vendedor</th>'
-	Endif
-	cColunas+='<th></th>'         
+
+	cColunas+='<th></th>'
 	
-	aStatus:= RetSx3Box(Posicione('SX3',2,'CJ_STATUS','X3CBox()'),,,1)
+	// aStatus:= RetSx3Box(Posicione('SX3',2,'CJ_STATUS','X3CBox()'),,,1)
 	
 	While QRY->(!Eof())
+		// if cVendLogin == "000207"
+		// 	oObjLog:saveMsg("Registro "+QRY->CJ_NUM)
+		// endif
 		//Atualiza os controles do grid
-		cLink:= "U_MntOrc.apw?PR="+cCodLogin+"&rec="+cValtoChar(QRY->RECSCJ)
+		cLink:= "U_ViewPedido.apw?PR="+cCodLogin+"&rec="+QRY->C5_NUM
+		// clink:="#"
 		cLinkDet  := '"onclick="window.document.location='+"'"+cLink+"&opc=view'"+';"'
 		cItens+='<tr>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_FILIAL+'</td>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_NUM+'</td>'
-	    If (nSeek := Ascan(aStatus, { |x| x[ 2 ] == QRY->CJ_STATUS })) > 0
-  			cCombo := AllTrim( aStatus[nSeek,3])
+	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->C5_FILIAL+'</td>'
+	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->C5_NUM+'</td>'
+	    // If (nSeek := Ascan(aStatus, { |x| x[ 2 ] == QRY->CJ_STATUS })) > 0
+  		// 	cCombo := AllTrim( aStatus[nSeek,3])
 
-			If QRY->CJ_STATUS $ 'Q|C'
-				cCombo:= 'Cancelado'
-			Elseif QRY->CJ_XTPORC == '3' .and. QRY->CJ_STATUS <> 'B'
-				cCombo:= 'Em Elaboração'		
-			Endif	
-  		Endif
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+Iif(Empty(QRY->C5_NOTA),cCombo,"NF Gerada")+'</td>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';" data-order="'+(QRY->CJ_EMISSAO)+QRY->CJ_COTCLI+'">'+dtoc(stod(QRY->CJ_EMISSAO))+'</td>'
-		cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';" data-order="'+(QRY->CJ_EMISSAO)+QRY->CJ_COTCLI+'">'+QRY->CJ_COTCLI+'</td>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_CLIENTE+'/'+QRY->CJ_LOJA+'</td>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+Alltrim(QRY->A1_NOME)+'</td>'
-	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CK_NUMPV+'</td>'
-	    If HttpSession->Tipo = 'S'
-	    	cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_VEND+' - '+Posicione("SA3",1,xFilial("SA3")+QRY->CJ_VEND,"A3_NREDUZ")+'</td>'
-	    Endif
+		// 	If QRY->CJ_STATUS $ 'Q|C'
+		// 		cCombo:= 'Cancelado'
+		// 	Elseif QRY->CJ_XTPORC == '3' .and. QRY->CJ_STATUS <> 'B'
+		// 		cCombo:= 'Em Elaboração'
+		// 	Endif
+		// Elseif QRY->CJ_STATUS $ 'Q|C'
+		// 	cCombo:= 'Cancelado'
+		// elseif QRY->CJ_XTPORC == '3' .and. QRY->CJ_STATUS <> 'B'
+		// 	cCombo:= 'Em Elaboração'
+  		// Endif
+	    // cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+Iif(Empty(QRY->C5_NOTA),cCombo,"NF Gerada")+'</td>'
+	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';" data-order="'+(QRY->C5_EMISSAO)+'">'+dtoc(stod(QRY->C5_EMISSAO))+'</td>'
+	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->C5_CLIENTE+'/'+QRY->C5_LOJACLI+'</td>'
+	    cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+Alltrim(QRY->A1_NOME)+" - " + right(trim(QRY->A1_CGC),6) + '</td>'
+		// if !empty(SC5->(fieldpos("C5_XOCCLI")))
+		// 	cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->C5_XOCCLI+'</td>'
+		// endif
+	    // cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CK_NUMPV+'</td>'
+// 	    If HttpSession->Tipo = 'S'
+// //	    	cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_VEND+' - '+trim(Posicione("SA3",1,xFilial("SA3")+QRY->CJ_VEND,"A3_NREDUZ"))+'</td>'
+// 	    	cItens+='	<td role="button" onclick="window.document.location='+"'"+cLink+"&opc=view'"+';">'+QRY->CJ_VEND+' - '+trim(QRY->A3_NREDUZ)+'</td>'
+// 	    Endif
 	    cItens+='	<td class="actions">' 
 	    
-	    cItens+=	' <a href="'+cLink+'&opc=copy" class="on-default" data-toggle="tooltip" data-original-title="Copiar Orçamento"><i class="fa fa-files-o"></i></a>'
-	    If QRY->CJ_STATUS $ "AF"
-	    	cItens+=' <a href="'+cLink+'&opc=edit" class="on-default" data-toggle="tooltip" data-original-title="Alterar Orçamento"><i class="fa fa-pencil"></i></a>'
-	    	cItens+=' <a href="'+cLink+'&opc=dele" class="on-default" data-toggle="tooltip" data-original-title="Excluir Orçamento"><i class="fa fa-trash-o"></i></a>'
-	    	cItens+=' <a href="'+cLink+'&opc=estq" class="on-default" data-toggle="tooltip" data-original-title="Consulta Estoque"><i class="fa fa-archive"></i></a>'
-	    EndIf
-		cItens+='   	<a class="modal-email" href="#" data-toggle="tooltip" data-original-title="Enviar orçamento por e-mail" title="" onClick="javascript:abreEmail('+cValtoChar(QRY->RECSCJ)+');">'
-		cItens+='			<i class="fa fa-envelope-o"></i></a>'
-	    cItens+='   <a href="#" data-toggle="tooltip" data-original-title="Imprimir Orçamento" title="" onClick="javascript:PrtOrc('+cValtoChar(QRY->RECSCJ)+');"><i class="fa fa-print"></i></a>'
+	    // cItens+=	' <a href="'+cLink+'&opc=copy" class="on-default" data-toggle="tooltip" data-original-title="Copiar Orçamento"><i class="fa fa-files-o"></i></a>'
+	    // If QRY->CJ_STATUS $ "AF" .and. Iif(!Empty(QRY->STATUSB),QRY->STATUSB $ "AF",.T.)
+	    // 	cItens+=' <a href="'+cLink+'&opc=edit" class="on-default" data-toggle="tooltip" data-original-title="Alterar Orçamento"><i class="fa fa-pencil"></i></a>'
+	    // 	cItens+=' <a href="'+cLink+'&opc=dele" class="on-default" data-toggle="tooltip" data-original-title="Excluir Orçamento"><i class="fa fa-trash-o"></i></a>'
+	    // EndIf
+		// cItens+='   	<a class="modal-email" href="#" data-toggle="tooltip" data-original-title="Enviar orçamento por e-mail" title="" onClick="javascript:abreEmail('+cValtoChar(QRY->RECSCJ)+');">'
+		// cItens+='			<i class="fa fa-envelope-o"></i></a>'
+	    // cItens+='   <a href="#" data-toggle="tooltip" data-original-title="Imprimir Pedido" title="" onClick="javascript:PrtOrc('+cValtoChar(QRY->RECSCJ)+');"><i class="fa fa-print"></i></a>'
 	    cItens+='	</td>'
 	    cItens+='</tr>'
+		nCnt++	  // Contador de itens
+		// Quebra da string em 500 itens
+		if nCnt = 500 
+			aadd(aLinItens, cItens)     // Linhas de itens
+			cItens := ""
+			nCnt := 0
+		endif
 	 
 		QRY->(dbSkip())
 	End
-    cItens+= montarForm("Orçamento","MailOrc.apw?PR="+cCodLogin)
+	// Quebra da string em 500 itens
+	aadd(aLinItens, cItens)     // Linhas de itens
+	cItens := ""
+	for nCnt := 1 to len(aLinItens)
+		cItens += aLinItens[nCnt]
+	next
+	// if cVendLogin == "000207"
+	// 	oObjLog:saveMsg("Fim while")
+	// endif
+    cItens+= montarForm("Pedido Venda","MailOrc.apw?PR="+cCodLogin)
+	// if cVendLogin == "000207"
+	// 	oObjLog:saveMsg("Fim montarForm")
+	// endif
 	
 	//Retorna o HTML para construção da página 
 	cHtml := H_SMSGrid()	
+	// if cVendLogin == "000207"
+	// 	oObjLog:saveMsg("Fim H_SMSGrid")
+	// endif
 	
 Web Extended End
 
@@ -215,7 +306,7 @@ Return (cHTML)
 // Montar o formulário para mandar por e-mail
 static function montarForm(cTitulo, cSubm)
 Local cRet:=""
-Local cEmail:= ""
+// Local cEmail:= ""
 
 cRet+= '<!-- Modal Form -->'+CRLF
 cRet+= '         <div id="modalEmail" class="modal-block modal-block-primary mfp-hide">'+CRLF
@@ -248,34 +339,8 @@ cRet+= '                </footer>'+CRLF
 cRet+= '            </section>'+CRLF
 cRet+= '         </div>'+CRLF
 	
-return cRet    
+return cRet  
 
-/*__________________________________________________________________________
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦Funçäo    ¦ WidGetOrc     ¦ Autor ¦ Lucilene Mendes   ¦ Data ¦23.08.17 ¦¦¦
-¦¦+----------+------------------------------------------------------------¦¦¦
-¦¦¦Descriçäo ¦ PE para gerar o WidGet de Cotações para o Portal  		  ¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-User Function WidGetOrc()
-Local cQry := ""
-
-	cQry:= " SELECT COUNT(DISTINCT C8_NUM) AS SC8_NUM  " 
-	cQry+= " FROM "+RetSqlName("SC8")+" SC8 "     
-	cQry+= " Where C8_FILIAL = '"+xFilial("SC8")+"' AND C8_FORNECE = '"+HttpSession->Fornece+"' AND C8_LOJA = '"+HttpSession->Loja+"' AND SC8.D_E_L_E_T_ = ' ' " 
-	cQry+= " AND C8_NUMPED = ' ' " 
-
-	If Select("QRY") > 0
-		QRY->(dbCloseArea())
-	Endif
-	
-	APWExOpenQuery(ChangeQuery(cQry),'QRY',.T.)
-
-	cWidgets += U_GetWdGet(1, {aParam[4], QRY->SC8_NUM, aParam[2], "Em processo de cotação", aParam[5]+".apw"})
-
-Return  
 
 /*__________________________________________________________________________
 ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
@@ -317,25 +382,22 @@ Web Extended End
 Return (cHTML)
 
 User Function fFilVend(cCodVend,cFilFiltro)
-Local cRet:= ""
-Local cQry:= ""
-	//Busca as filiais que o vendedor tem acesso
-	cQry:= "Select DISTINCT ZTV_FILIAL "
-	cQry+= "From "+RetSqlName("ZTV")+" ZTV "
-//	cQry+= "Where ZTV_VEND = '"+HttpSession->CodVend+"' "
-	cQry+= "Where ZTV_VEND = '"+cCodVend+"' "
-	cQry+= "And ZTV.D_E_L_E_T_ = ' ' "
+	Local cRet:= ""
+	Local cQry:= ""
+
+	cQry:= " SELECT M0_CODFIL, M0_FILIAL "
+	cQry+= " FROM SYS_COMPANY "
+	cQry+= " WHERE D_E_L_E_T_ = ' ' "
+
 	If Select("QRF") > 0
 		QRF->(dbCloseArea())
 	Endif
 	APWExOpenQuery(ChangeQuery(cQry),'QRF',.T.)	
 	
 	While QRF->(!Eof())
-		cRet+= '	<option value="'+Alltrim(QRF->ZTV_FILIAL)+'" '+Iif(Alltrim(QRF->ZTV_FILIAL)= cFilFiltro,' selected ','')+'>'+Alltrim(QRF->ZTV_FILIAL)+" - "+FWFilialName(SM0->M0_CODIGO,QRF->ZTV_FILIAL,2)+'</option>'
+		cRet+= '	<option value="'+Alltrim(QRF->M0_CODFIL)+'" '+Iif(Alltrim(QRF->M0_CODFIL)= cFilFiltro,' selected ','')+'>'+Alltrim(QRF->M0_CODFIL)+" - "+Alltrim(QRF->M0_FILIAL)+'</option>'
 	    QRF->(dbSkip())
 	End
-
-	
 
 Return cRet
 /*__________________________________________________________________________
@@ -360,11 +422,11 @@ Web Extended Init cHtml Start U_inSite()
 	If Empty(HttpSession->CodVend)
 		cHtml:= '<META HTTP-EQUIV="Refresh" CONTENT="0 ; URL='+cSite+'">'	
 		Return cHtml
-	Else
-		If !Empty(HttpSession->Superv) .and. HttpSession->Superv <> HttpSession->CodVend
-			HttpSession->CodVend:= HttpSession->Superv
-		Endif
 	Endif
+	// Else
+	// 	If !Empty(HttpSession->Superv) .and. HttpSession->Superv <> HttpSession->CodVend
+	// 		HttpSession->CodVend:= HttpSession->Superv
+	// 	Endif
 	
 	cVendLogin := u_GetUsrPR()
 	cCodLogin  := U_SetParPR(cVendLogin)

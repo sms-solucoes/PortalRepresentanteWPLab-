@@ -723,7 +723,7 @@ Endif
 			cItensHid += '<input type="hidden" class="" id="BASE_ICMS'+cItem+'" name="BASE_ICMS'+cItem+'" value="0">'
 			cItensHid += '<input type="hidden" class="" id="BASE_ST'+cItem+'" name="BASE_ST'+cItem+'" value="0">'
 			cItensHid += '<input type="hidden" class="" id="BASE_IPI'+cItem+'" name="BASE_IPI'+cItem+'" value="0">'
-			cItensHid += '<input type="hidden" class="" id="QTD_EMB'+cItem+'" name="QTD_EMB'+cItem+'" value="'+cValtochar(SB1->B1_QE)+'">'
+			cItensHid += '<input type="hidden" class="" id="B1_QE'+cItem+'" name="B1_QE'+cItem+'" value="'+cValtochar(SB1->B1_QE)+'">'
 			cItensHid += '<input type="hidden" class="" id="CK_TES'+cItem+'" name="CK_TES'+cItem+'" value="'+SCK->CK_TES+'">'
 			cItensHid += '<input type="hidden" class="" id="PNEU'+cItem+'" name="PNEU'+cItem+'" value="">'
 			cItensHid += '<input type="hidden" class="" id="QTDMIN'+cItem+'" name="QTDMIN'+cItem+'" value="'+cvaltochar(Posicione("DA1",1,xFilial("DA1")+SCJ->CJ_TABELA+SCK->CK_PRODUTO,"DA1_XQTMIN"))+'">'

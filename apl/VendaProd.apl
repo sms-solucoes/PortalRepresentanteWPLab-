@@ -115,7 +115,7 @@ Web Extended Init cHtml Start U_inSite()
 	cTopo+= '			<select data-plugin-selectTwo class="form-control populate placeholder mb-md" data-plugin-options='+"'"
 	cTopo+= '			{ "placeholder": "Selecione...", "allowClear": false }'+"'"+' name="PRODUTO" id="PRODUTO" '
 	cTopo+= '			required="" aria-required="true">'
-	cTopo+= u_GetProdTB(cProduto,lPneu)
+	cTopo+= u_GetProdTB(cProduto)
 	cTopo+= '			</select>'
 	cTopo+= '		</div>'
 
@@ -150,23 +150,24 @@ Web Extended Init cHtml Start U_inSite()
     cQry := " SELECT D2_FILIAL, D2_EMISSAO, D2_DOC, D2_SERIE, D2_COD, B1_DESC, D2_QUANT, D2_PRCVEN, D2_TOTAL, D2_VALBRUT, "
 	cQry += " D2_CLIENTE, D2_LOJA, A1_NOME, A1_NREDUZ, A1_DDD, A1_TEL, F2_VEND1 "
 	cQry += " FROM "+RetSqlName("SD2")+"  SD2 "
-	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_FILIAL = '"+xFilial("SA1")+"' AND A1_COD = D2_CLIENTE AND A1_LOJA = D2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_COD = D2_CLIENTE AND A1_LOJA = D2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry += " INNER JOIN "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE AND F2_CLIENTE = D2_CLIENTE "
 	cQry += " 	AND F2_LOJA = D2_LOJA AND SF2.D_E_L_E_T_ = ' ' "
-    If HttpSession->Tipo = "S" //Supervisor
-		cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
-	Else
+    // If HttpSession->Tipo = "S" //Supervisor
+	// 	cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+	// Else
 		cQry += "   AND F2_VEND1 = '"+HttpSession->CodVend+"' "
-	Endif
-	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"' AND B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
-	
-	
+	// Endif
+	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE D2_EMISSAO BETWEEN '"+cDataDe+"' and '"+cDataAte+"' " 
 	
-		cQry += " AND D2_COD = '"+cProduto+"' " 
+		cQry += " AND D2_COD = '"+cProduto+"' "
 	
 	cQry += " AND SD2.D_E_L_E_T_ = ' ' "
 	cQry += " Order by D2_EMISSAO, D2_DOC, D2_ITEM " 
+
+	conout("@@@ query6:" + cQry)
+	
 	cQry := ChangeQuery(cQry)
 		
 	If Select("QRP") > 0
@@ -174,7 +175,7 @@ Web Extended Init cHtml Start U_inSite()
 	Endif	 	
 	APWExOpenQuery(ChangeQuery(cQry),'QRP',.T.)
 	 
-	//Preenche o select de produtos
+	// Preenche o select de produtos
 	While QRP->(!Eof())
         
 		cItens+='<tr>'
@@ -214,28 +215,25 @@ Return (cHTML)
 ¦¦+-----------------------------------------------------------------------+¦¦
 ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-User Function GetProdTB(cFiltro,lPneu)
+User Function GetProdTB(cFiltro)
 Local cRet:= ""
 Local cEstVend:= ""
 
 cRet+='<option value=""></option>'
-
-
-
 	//Busca os itens da tabela de preço
 	cQry:="Select DA1_CODPRO, B1_DESC " 
 	cQry+=" From "+RetSqlName("DA0")+" DA0"
 	cQry+=" Inner Join "+RetSqlName("DA1")+" DA1 ON DA1_FILIAL = DA0_FILIAL AND DA1_CODTAB = DA0_CODTAB AND DA1.D_E_L_E_T_ = ' ' "
-	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"'AND B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
+	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
 	cQry+=" INNER JOIN "+RetSqlName("SA1")+" SA1 ON "
-	If HttpSession->Tipo = "S" //Supervisor
-		cQry+=" A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
-	Else
+	// If HttpSession->Tipo = "S" //Supervisor
+	// 	cQry+=" A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
+	// Else
 		cQry+=" A1_VEND = '"+HttpSession->CodVend+"'
-	Endif
+	// Endif
 	cQry+=" AND A1_MSBLQL <> '1' AND SA1.D_E_L_E_T_ = ' ' "
-	cQry+=" Where DA0_FILIAL = '"+xFilial("DA0")+"' "
-	cQry+=" And DA0_CODTAB = A1_TABELA "
+	cQry+=" Where "
+	cQry+="  DA0_CODTAB = A1_TABELA "
 	cQry+=" AND DA0_ATIVO = '1' "
 	cQry+=" AND DA0.D_E_L_E_T_ = ' ' "
 
@@ -245,9 +243,9 @@ cRet+='<option value=""></option>'
 	cQry:= "SELECT DA1_CODPRO, B1_DESC "
 	cQry+= "FROM "+RetSqlName("DA0")+" DA0 "
 	cQry+=" Inner Join "+RetSqlName("DA1")+" DA1 ON DA1_FILIAL = DA0_FILIAL AND DA1_CODTAB = DA0_CODTAB AND DA1.D_E_L_E_T_ = ' ' "
-	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"'AND B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
-	cQry+= "WHERE DA0_FILIAL = '"+xFilial("DA0")+"'
-	cQry+= "AND SUBSTRING(DA0_CODTAB,1,1) = 'C' "
+	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
+	cQry+= "WHERE '
+	cQry+= "SUBSTRING(DA0_CODTAB,1,1) = 'C' "
 	cQry+= "AND DA0_DATDE <= '"+DTOS(dDataBase)+"' "
 	cQry+= "AND DA0_DATATE >= '"+DTOS(dDataBase)+"' "
 	cQry+= "AND DA0.D_E_L_E_T_ = ' ' "
@@ -257,20 +255,22 @@ cRet+='<option value=""></option>'
 	//Tabela de preço do grupo de vendas
 	cQry:= "SELECT DA1_CODPRO, B1_DESC "
 	cQry+= "FROM "+RetSqlName("DA0")+" DA0 "
-	cQry+= "INNER JOIN "+RetSqlName("ZYG")+" ZYG ON ZYG_FILIAL = '"+xFilial("ZYG")+"' and ZYG.D_E_L_E_T_ = ' ' "
 	cQry+=" Inner Join "+RetSqlName("DA1")+" DA1 ON DA1_FILIAL = DA0_FILIAL AND DA1_CODTAB = DA0_CODTAB AND DA1.D_E_L_E_T_ = ' ' "
-	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"'AND B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
+	cQry+=" Inner Join "+RetSqlName("SB1")+" SB1 ON B1_COD = DA1_CODPRO AND SB1.D_E_L_E_T_ = ' ' "
 	
 	
 	//Busca os estados dos clientes
 	cQryEst:= "Select DISTINCT A1_EST "
 	cQryEst+= "FROM "+RetSqlName("SA1")+" SA1 "
 	cQryEst+= "Where SA1.D_E_L_E_T_ = ' ' "
-	If HttpSession->Tipo = "S" //Supervisor
-		cQryEst+=" A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
-	Else
-		cQryEst+=" A1_VEND = '"+HttpSession->CodVend+"'
-	Endif
+	// If HttpSession->Tipo = "S" //Supervisor
+	// 	cQryEst+=" A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
+	// Else
+		cQryEst+=" AND A1_VEND = '"+HttpSession->CodVend+"'
+	// Endif
+
+	conout("@@@ query2:" + cQryEst)
+
 	If Select("QEST") > 0
 		QEST->(dbCloseArea())
 	Endif
@@ -281,15 +281,15 @@ cRet+='<option value=""></option>'
 		QEST->(dbSkip())
 	End			
 
-	cQry+= " and ZYG_EST in "+FormatIn(cEstVend,"/")+"  "
-	cQry+= "WHERE DA0_FILIAL = '"+xFilial("DA0")+"' "
-	cQry+= "AND DA0_XGRUPO = ZYG_CODIGO "
-	cQry+= "AND DA0_ATIVO = '1' " 
+	cQry+= "WHERE "
+	cQry+= " DA0_ATIVO = '1' " 
 	cQry+= "AND DA0.D_E_L_E_T_ = ' ' "
 	
 
-	cQry+=" Group by DA1_CODPRO, B1_DESC "  
+	cQry+=" Group by DA1_CODPRO, B1_DESC " 
 
+	conout("@@@ query3:" + cQry)
+	
 	If Select("QRT") > 0
 		QRT->(dbCloseArea())
 	Endif	 	

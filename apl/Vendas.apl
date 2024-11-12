@@ -50,11 +50,11 @@ Web Extended Init cHtml Start U_inSite()
 	If Empty(HttpSession->CodVend)
 		cHtml:= '<META HTTP-EQUIV="Refresh" CONTENT="0 ; URL='+cSite+'">'	
 		Return cHtml
-	Else
-		If !Empty(HttpSession->Superv) .and. HttpSession->Superv <> HttpSession->CodVend
-			HttpSession->CodVend:= HttpSession->Superv
-		Endif
 	Endif
+	// Else
+	// 	If !Empty(HttpSession->Superv) .and. HttpSession->Superv <> HttpSession->CodVend
+	// 		HttpSession->CodVend:= HttpSession->Superv
+	// 	Endif
 	
 	// Pega do parâmetro com o Titulo do Portal
 	cTitle	:= SuperGetMV("PS_TITLE", .T., "Portal SMS")
@@ -189,6 +189,9 @@ Web Extended Init cHtml Start U_inSite()
 		If Select("QRA") > 0
 			QRA->(dbCloseArea())
 		Endif	
+
+		conout("@@@ query5:" + cQryA)
+
 		APWExOpenQuery(ChangeQuery(cQryA),'QRA',.T.)
 		
 		nLin:= 0
@@ -223,6 +226,8 @@ Web Extended Init cHtml Start U_inSite()
 			cQry += " Group by SUBSTRING(F2_EMISSAO,1,6) "
 			cQry += " Order by SUBSTRING(F2_EMISSAO,1,6) "
 			cQry := ChangeQuery(cQry)
+
+			conout("@@@ query6:" + cQry)
 			
 			If Select("QRY") > 0
 				QRY->(dbCloseArea())
@@ -346,12 +351,12 @@ Web Extended Init cHtml Start U_inSite()
 	cQry += " FROM "+RetSqlName("SD2")+"  SD2 "
 	cQry += " INNER JOIN "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE AND F2_CLIENTE = D2_CLIENTE "
 	cQry += " 	AND F2_LOJA = D2_LOJA  AND SF2.D_E_L_E_T_ = ' ' "
-	If HttpSession->Tipo = "S" //Supervisor
-		cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
-	Else
+	// If HttpSession->Tipo = "S" //Supervisor
+	// 	cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+	// Else
 //		cQry += "   AND F2_VEND1 = '"+HttpSession->CodVend+"' "
 		cQry += "   AND F2_VEND1 = '"+cVendLogin+"' "
-	Endif
+	// Endif
 	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"' AND B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE D2_EMISSAO BETWEEN '"+cDataDe+"' and '"+cDataAte+"' " 
 	cQry += " AND D2_CLIENTE = '"+cCliente+"' " 

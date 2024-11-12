@@ -840,7 +840,7 @@
 							msg +='	<div class="row form-group">'				
 							msg +='		<div class="col-lg-1"></div>'				
 							msg +='		<div class="col-lg-9">'
-							msg +='			<label class="control-label">Selecione a filial para geração do orçamento</label>'	              
+							msg +='			<label class="control-label">Selecione a filial para geração do pedido</label>'	              
 							msg +=' 		<div class="input-group">'	
 							msg +='				<select data-plugin-selectTwo class="form-control populate placeholder mb-md" data-plugin-options='+"'"  
 							msg +='					{ "placeholder": "Selecione...", "allowClear": false }'+"'"+' name="FILVEND" id="FILVEND" ' 
@@ -855,7 +855,7 @@
 							
 						 	if(msg != ""){
 							 	bootbox.dialog({
-								    title: 'Filial Para Orçamento',
+								    title: 'Filial Para Faturamento',
 								    message: "<p>"+msg+"</p>",
 								    backdrop: true,
 								    closeButton: false,
@@ -881,7 +881,7 @@
 																return;
 															}
 															if(retfil != "" &&  retfil.indexOf("Expires") == -1) {
-																location.href='u_AddOrc.apw?PR=<%=cLCodLogin%>'
+																location.href='u_AddPed.apw?PR=<%=cLCodLogin%>'
 															} else {
 																bootbox.alert("Falha ao logar na filial "+cFilVend+".");
 															}

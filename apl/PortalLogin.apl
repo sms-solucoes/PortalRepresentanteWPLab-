@@ -306,38 +306,38 @@ If SA3->(dbSeek(xFilial("SA3")+cLogin))
 					SA3->(dbGoTo(nRecSA3))
 			  */		 
 					//Verifica se vendedor é supervisor ou gerente
-					cQry:= "Select * "
-					cQry+= " From "+RetSqlName("SA3")+" SA3 "
-					cQry+= " Where (A3_XSUPERV =  '"+SA3->A3_COD+"' OR A3_XGERENT =  '"+SA3->A3_COD+"') "
-					cQry+= " And A3_MSBLQL <> '1' "
-					cQry+= " And SA3.D_E_L_E_T_ = ' ' "
-					If Select("SUP") > 0
-						SUP->(dbCloseArea())
-					Endif
+					// cQry:= "Select * "
+					// cQry+= " From "+RetSqlName("SA3")+" SA3 "
+					// cQry+= " Where (A3_XSUPERV =  '"+SA3->A3_COD+"' OR A3_XGERENT =  '"+SA3->A3_COD+"') "
+					// cQry+= " And A3_MSBLQL <> '1' "
+					// cQry+= " And SA3.D_E_L_E_T_ = ' ' "
+					// If Select("SUP") > 0
+					// 	SUP->(dbCloseArea())
+					// Endif
 	
-					APWExOpenQuery(ChangeQuery(cQry),'SUP',.T.)
+					// APWExOpenQuery(ChangeQuery(cQry),'SUP',.T.)
 					
-					If SUP->(!Eof())
-						HttpSession->Tipo		:= "S"
-						HttpSession->Perfil		:= "Supervisor"
-						lGeren:= .f.	
-						HttpSession->Superv		:= SA3->A3_COD
-						HttpSession->Equipe 	+= SA3->A3_COD+"|"  //Supervisor
-						While SUP->(!Eof())
-							If !Empty(SUP->A3_XGERENT) .and. !lGeren
-								lGeren:= .T.
-								HttpSession->Perfil		:= "Supervisor/Gerente"
-							Endif
-							HttpSession->Equipe += SUP->A3_COD+"|"  //Equipe de vendas
-							HttpSession->Representantes += SUP->A3_COD+" - "+SUP->A3_NOME+"|"
-							SUP->(dbSkip())
-						End 
-						HttpSession->Equipe:= Substr(HttpSession->Equipe,1,Len(HttpSession->Equipe)-1)
-						HttpSession->Representantes:= Substr(HttpSession->Representantes,1,Len(HttpSession->Representantes)-1)	
-					Else 
+					// If SUP->(!Eof())
+					// 	HttpSession->Tipo		:= "S"
+					// 	HttpSession->Perfil		:= "Supervisor"
+					// 	lGeren:= .f.	
+					// 	HttpSession->Superv		:= SA3->A3_COD
+					// 	HttpSession->Equipe 	+= SA3->A3_COD+"|"  //Supervisor
+					// 	While SUP->(!Eof())
+					// 		If !Empty(SUP->A3_XGERENT) .and. !lGeren
+					// 			lGeren:= .T.
+					// 			HttpSession->Perfil		:= "Supervisor/Gerente"
+					// 		Endif
+					// 		HttpSession->Equipe += SUP->A3_COD+"|"  //Equipe de vendas
+					// 		HttpSession->Representantes += SUP->A3_COD+" - "+SUP->A3_NOME+"|"
+					// 		SUP->(dbSkip())
+					// 	End 
+					// 	HttpSession->Equipe:= Substr(HttpSession->Equipe,1,Len(HttpSession->Equipe)-1)
+					// 	HttpSession->Representantes:= Substr(HttpSession->Representantes,1,Len(HttpSession->Representantes)-1)	
+					// Else 
 						HttpSession->Tipo		:= "V"
 						HttpSession->Perfil		:= "Representante"
-					Endif
+					// Endif
 					HttpSession->CodVend	:= SA3->A3_COD				// Codigo do Fornecedor
 					HttpSession->NomeReduz	:= Alltrim(SA3->A3_NREDUZ)	// Nome do Usuário
 					HttpSession->Nome	 	:= Alltrim(SA3->A3_NOME)	// Nome Completo
@@ -435,13 +435,12 @@ Default HttpSession->Loja:= ""
 	Endif 	     
 	cCodLogin := U_SetParPR(cCodVend)
 	If Len(HttpSession->aMenu) == 0
-		
 		// Gera os itens do Menu Pai 
-		cQryMnPai := " SELECT ZM1_CODIGO, ZM1_NOME, ZM1_MNUPAI, ZM1_ROTINA, ZM1_ALIAS, ZM1_ICONE  " 
-		cQryMnPai += " FROM "+RetSqlName("ZM1")+" ZM1 " 
-		cQryMnPai += " WHERE ZM1_FILIAL = '"+xFilial("ZM1")+"' "
-		cQryMnPai += 	" AND ZM1.ZM1_MNUPAI = ' ' "
-		cQryMnPai += 	" AND ZM1.D_E_L_E_T_ = ' ' "
+		cQryMnPai := " SELECT ZM0_CODIGO, ZM0_NOME, ZM0_MNUPAI, ZM0_ROTINA, ZM0_ALIAS, ZM0_ICONE  " 
+		cQryMnPai += " FROM "+RetSqlName("ZM0")+" ZM0 " 
+		cQryMnPai += " WHERE ZM0_FILIAL = '"+xFilial("ZM0")+"' "
+		cQryMnPai += 	" AND ZM0.ZM0_MNUPAI = ' ' "
+		cQryMnPai += 	" AND ZM0.D_E_L_E_T_ = ' ' "
 		
 		If Select("QRYMNP") > 0
 			QRYMNP->(dbCloseArea())
@@ -451,16 +450,16 @@ Default HttpSession->Loja:= ""
 	
 		While !QRYMNP->(Eof())
 			
-			aAdd(aMnuPai, {.F., QRYMNP->ZM1_CODIGO, QRYMNP->ZM1_NOME, QRYMNP->ZM1_MNUPAI, QRYMNP->ZM1_ROTINA, QRYMNP->ZM1_ALIAS, QRYMNP->ZM1_ICONE})
+			aAdd(aMnuPai, {.F., QRYMNP->ZM0_CODIGO, QRYMNP->ZM0_NOME, QRYMNP->ZM0_MNUPAI, QRYMNP->ZM0_ROTINA, QRYMNP->ZM0_ALIAS, QRYMNP->ZM0_ICONE})
 			
 			QRYMNP->(DbSkip())
 		EndDo
 	
 		// Gera os itens do Menu Filhos
-		cQryMenu := " SELECT ZM1_CODIGO, ZM1_NOME, ZM1_MNUPAI, ZM1_ROTINA, ZM1_ALIAS, ZM1_ICONE, ZM1_WIDGET " 
-		cQryMenu += " FROM "+RetSqlName("ZM1")+" ZM1 " 
-		cQryMenu += " WHERE ZM1_FILIAL = '"+xFilial("ZM1")+"' "
-		cQryMenu += 	" AND ZM1.ZM1_ALIAS IN ( "
+		cQryMenu := " SELECT ZM0_CODIGO, ZM0_NOME, ZM0_MNUPAI, ZM0_ROTINA, ZM0_ALIAS, ZM0_ICONE, ZM0_WIDGET " 
+		cQryMenu += " FROM "+RetSqlName("ZM0")+" ZM0 " 
+		cQryMenu += " WHERE ZM0_FILIAL = '"+xFilial("ZM0")+"' "
+		cQryMenu += 	" AND ZM0.ZM0_ALIAS IN ( "
 		//cQryMenu += 		" SELECT DISTINCT 'SCR' AS ALIAS "
 		//cQryMenu += 		" FROM "+RetSqlName("SCR")+" SCR "
 		//cQryMenu += 		" WHERE SCR.CR_FILIAL = '"+xFilial("SCR")+"'"
@@ -482,42 +481,42 @@ Default HttpSession->Loja:= ""
 		// cQryMenu += 			" AND SA2.A2_LOJA = '"+HttpSession->Loja+"' "
 		// cQryMenu +=				" AND SA2.D_E_L_E_T_ = ' ' "
 		cQryMenu +=			" ) "
-		cQryMenu += 	" AND ZM1.D_E_L_E_T_ = ' ' "
-		cQryMenu += " ORDER BY ZM1_MNUPAI "
+		cQryMenu += 	" AND ZM0.D_E_L_E_T_ = ' ' "
+		cQryMenu += " ORDER BY ZM0_MNUPAI "
 		
 		If Select("QRYMNU") > 0
 			QRYMNU->(dbCloseArea())
 		Endif	 
 		APWExOpenQuery(ChangeQuery(cQryMenu),'QRYMNU',.T.)
 	
-		ZM1->(DbSetOrder(1))
+		ZM0->(DbSetOrder(1))
 		
 		While !QRYMNU->(Eof())
 			
-			nPos := aScan(aMenus,{|x|x[2] == AllTrim(QRYMNU->ZM1_MNUPAI)})
+			nPos := aScan(aMenus,{|x|x[2] == AllTrim(QRYMNU->ZM0_MNUPAI)})
 			
 			If nPos == 0 
-				aAdd(aMenus, aMnuPai[aScan(aMnuPai,{|x|x[2] == AllTrim(QRYMNU->ZM1_MNUPAI)})])
+				aAdd(aMenus, aMnuPai[aScan(aMnuPai,{|x|x[2] == AllTrim(QRYMNU->ZM0_MNUPAI)})])
 				
-				conout("ProcName "+cMnuAtivo+" = "+AllTrim(Upper(QRYMNU->ZM1_ROTINA)))
+				conout("ProcName "+cMnuAtivo+" = "+AllTrim(Upper(QRYMNU->ZM0_ROTINA)))
 				
-				if !Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM1_ROTINA))
+				if !Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM0_ROTINA))
 					aMenus[Len(aMenus),1] := .T.
 				EndIf
 			Else
 			
-				conout("ProcName "+cMnuAtivo+" = "+AllTrim(Upper(QRYMNU->ZM1_ROTINA)))
+				conout("ProcName "+cMnuAtivo+" = "+AllTrim(Upper(QRYMNU->ZM0_ROTINA)))
 				
-				if !Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM1_ROTINA))
+				if !Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM0_ROTINA))
 					aMenus[nPos,1] := .T.
 				EndIf
 			EndIf
 			
-			aAdd(aMenus, {(!Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM1_ROTINA))), QRYMNU->ZM1_CODIGO, QRYMNU->ZM1_NOME, QRYMNU->ZM1_MNUPAI, AllTrim(QRYMNU->ZM1_ROTINA), QRYMNU->ZM1_ALIAS, AllTrim(QRYMNU->ZM1_ICONE)})
+			aAdd(aMenus, {(!Empty(cMnuAtivo) .And. cMnuAtivo == AllTrim(Upper(QRYMNU->ZM0_ROTINA))), QRYMNU->ZM0_CODIGO, QRYMNU->ZM0_NOME, QRYMNU->ZM0_MNUPAI, AllTrim(QRYMNU->ZM0_ROTINA), QRYMNU->ZM0_ALIAS, AllTrim(QRYMNU->ZM0_ICONE)})
 			
-			// Salva os WidGet definidos na tabela ZM1
-			If !Empty(AllTrim(QRYMNU->ZM1_WIDGET))
-				aAdd(aWidGet, {QRYMNU->ZM1_CODIGO, QRYMNU->ZM1_NOME, AllTrim(QRYMNU->ZM1_WIDGET), AllTrim(QRYMNU->ZM1_ICONE), AllTrim(QRYMNU->ZM1_ROTINA)})
+			// Salva os WidGet definidos na tabela ZM0
+			If !Empty(AllTrim(QRYMNU->ZM0_WIDGET))
+				aAdd(aWidGet, {QRYMNU->ZM0_CODIGO, QRYMNU->ZM0_NOME, AllTrim(QRYMNU->ZM0_WIDGET), AllTrim(QRYMNU->ZM0_ICONE), AllTrim(QRYMNU->ZM0_ROTINA)})
 			EndIf
 			
 			QRYMNU->(DbSkip())
@@ -549,7 +548,7 @@ Default HttpSession->Loja:= ""
 		Next
 		
 	EndIf
-	 
+	
 	For nI := 1 To Len(aMenus)
 		// Inclui os menus Pais.
 		If Empty(Alltrim(aMenus[nI,4]))

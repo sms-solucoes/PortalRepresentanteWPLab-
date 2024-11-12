@@ -60,7 +60,7 @@
 	Endif
 %>
 <!DOCTYPE html>
-<html class="sidebar-left-collapsed">
+<html class="fixed sidebar-left-collapsed">
 <head>
 	<!-- Basic -->
 	<meta charset="iso-8859-1">

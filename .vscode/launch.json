@@ -7,12 +7,28 @@
 			"name": "TOTVS Language Debug",
 			"program": "${command:AskForProgramName}",
 			"cwb": "${workspaceFolder}",
-			"smartclientBin": "../totvs/bin/smartclient/smartclient.exe",
+			"smartclientBin": "C:/Clientes/WP Lab/smartclient/smartclient.exe",
 			"isMultiSession": true,
 			"enableTableSync": true,
+			"enableMultiThread": true,
 			"extendFeatures": {
 				"charDetails": false
 			}
 		}
+	],
+	"lastPrograms": [
+		{
+			"label": "sigamdi"
+		},
+		{
+			"args": [
+				"0004660001"
+			],
+			"label": "u_DadosCli"
+		}
+	],
+	"lastProgramExecuted": "sigamdi",
+	"lastProgramArguments": [
+		"0004660001"
 	]
 }

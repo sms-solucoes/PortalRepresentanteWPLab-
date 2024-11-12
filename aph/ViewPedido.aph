@@ -1,0 +1,325 @@
+<%
+	/**** Pagina de login do site ****/
+	Local clPEDCabec  := ""
+    Local clPEDItens  := ""
+    Local clNumSC5    := ""
+	Local clOCCliente := ""
+	Local clEmissao   := ""
+	Local clTabPreco  := ""
+	Local clCliente   := ""
+	if type ("cPEDCabec") <> "U"
+		clPEDCabec := cPEDCabec
+	Endif
+	if type ("cPEDItens") <> "U"
+		clPEDItens := cPEDItens
+	Endif
+	if type ("cNumSC5") <> "U"
+		clNumSC5 := cNumSC5
+	Endif
+	if type ("cOCCliente") <> "U"
+		clOCCliente := cOCCliente
+	Endif
+	if type ("cEmissao") <> "U"
+		clEmissao := cEmissao
+	Endif
+	if type ("cTabPreco") <> "U"
+		clTabPreco := cTabPreco
+	Endif
+	if type ("cCliente") <> "U"
+		clCliente := cCliente
+	Endif
+%>
+<!DOCTYPE html>
+<html class="fixed sidebar-left-collapsed">
+	<head>
+		<!-- Basic -->
+		<meta charset="iso-8859-1">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+	
+		<title><%=cTitle%></title>
+	
+		<meta name="keywords" content="<%=cTitle%>" />
+		<meta name="description" content="<%=cTitle%>">
+		<meta name="author" content="SMSTI">
+	
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+	
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+	
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
+	
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+	
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+	
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+	
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+	    <script src="assets/vendor/style-switcher/style.switcher.localstorage.js"></script>
+	
+	</head>
+	<body>
+		<section class="body">
+		
+			<!-- start: header -->
+			<header class="header">
+				<%=cHeader%>
+			</header>
+			<!-- end: header -->
+		    
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<aside id="sidebar-left" class="sidebar-left">
+				
+				    <div class="sidebar-header">
+				        <div class="sidebar-title">
+				            Menu
+				        </div>
+				        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+				            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				        </div>
+				    </div>
+						
+				    <div class="nano">
+				        <div class="nano-content">
+				            <nav id="menu" class="nav-main" role="navigation">
+				            
+				                <ul class="nav nav-main">
+				                    <%=cMenus%>
+				                </ul>
+				            </nav>
+				        </div>
+						
+				        <script>
+				            // Maintain Scroll Position
+				            if (typeof localStorage !== 'undefined') {
+				                if (localStorage.getItem('sidebar-left-position') !== null) {
+				                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+				                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+				                    
+				                    sidebarLeft.scrollTop = initialPosition;
+				                }
+				            }
+				        </script>
+					</div>
+						
+				</aside>
+				<!-- end: sidebar -->
+		
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2><%=cPagina%></h2>
+					
+						<div class="right-wrapper pull-right">
+						</div>
+					</header>
+		
+					<!-- start: page -->
+					<section class="panel">
+					<!-- <header class="panel-heading">
+					</header> -->
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel form-wizard" id="w9">
+									<form action = "" method="post" class="form-horizontal" id="formOrc">
+										<div class="tabs">
+											<ul class="nav nav-tabs nav-justify">
+												<li class="active">
+													<a href="#orc-informar" data-toggle="tab" class="text-center">Detalhes</a>
+												</li>
+											</ul>
+													
+											<div class="tab-content">
+												<div id="orc-informar" class="tab-pane active">
+													<!-- linha 1: dados da empresa -->
+													<div class="row form-group">
+														<div class="col-lg-2">
+															<label class="control-label">Número</label>
+															<input id="C5_NUM" name="C5_NUM" class="form-control" value="<%=clNumSC5%>" readonly>
+														</div> 
+														<div class="col-lg-2">
+															<label class="control-label">Emissao</label>
+															<input id="C5_EMISSAO" name="C5_EMISSAO" class="form-control" value="<%=clEmissao%>" readonly>
+														</div> 
+														<div class="col-lg-2">
+															<label class="control-label">OC Cliente</label>
+															<input id="C5_XOCCLI" name="C5_XOCCLI" class="form-control" value="<%=clOCCliente%>" readonly>
+														</div> 
+													</div>
+		
+													<div class="mb-md hidden-lg hidden-xl"></div>
+													<div class="mb-md hidden-lg hidden-xl"></div>
+
+													<div class="row form-group">			    
+														<div class="col-lg-6">
+															<label class="control-label">Cliente</label>
+															<%=clCliente%>
+														</div> 
+														<div class="col-lg-4">
+															<label class="control-label">Tabela</label>
+															<%=clTabPreco%>
+														</div>
+													</div>
+														
+													<div class="mb-md hidden-lg hidden-xl"></div>															
+													<div class="mb-md hidden-lg hidden-xl"></div>
+													
+													<!-- linha 3: input  -->
+													<div class="row form-group">	              
+													 	<div class="col-lg-2">
+															<label class="control-label">Condição de Pagamento</label>
+															<%=cCondPag%>
+														</div>
+														              
+													 	<div class="col-lg-2">
+															<label class="control-label">Tipo de Frete</label>
+															<%=cTpFrete%>
+														</div>
+													              
+													 	<div class="col-lg-2">
+															<label class="control-label">Valor do Frete</label>
+															<input id="C5_FRETE" name="C5_FRETE" class="form-control money" placeholder="0,00" value="<%=cValFre%>" disabled>
+														</div>
+													    
+																
+														<div class="col-lg-4">
+															<label class="control-label">Transportadora</label>
+															<input id="C5_TRANSP" name="C5_TRANSP" class="form-control" value="<%=cTransp%>" disabled>
+														</div>
+														
+													</div>		
+		
+													<!-- tabela com os produtos da nf -->
+													<div class="table-responsive" id="ItensOrc">
+														<section class="panel">
+															<header class="panel-heading">
+																<h2 class="panel-title">Itens do Pedido</h2>
+															</header>
+															<table class="table table-bordered table-striped mb-none table-hover table-condensed" id="datatable-editable" aria-describedby="datatable-details_info">
+																<thead>
+																	<tr>
+																		<%=clPEDCabec%>
+																	</tr>
+																</thead>
+																<tbody> 
+																	<%=clPEDItens%>
+																														
+																</tbody>
+															</table>
+														</section>	
+													</div>	
+													<br>
+                                                     
+             										<!-- botÃµes com aÃ§Ãµes na tabela dos itens -->
+													<%=cBtnItens%>
+
+                                                    <br>
+                                                    <br>
+																											
+													<!-- Totais 
+													<div class="col-lg-6"></div>-->
+													<div class="col-lg-13">
+														<section class="panel">
+															<header class="panel-heading">
+																<h2 class="panel-title">Totais da Nota Fiscal</h2>
+															</header>
+															<div class="panel-body">
+															
+																<div class="form-inline" align="center">
+																	<div class="row">
+																		<div class="col-sm-12">	      
+																			<label class="">Itens&nbsp;</label>               
+																			<input class="form-control" id="TOTAL_ITENS" name="TOTAL_ITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Frete&nbsp;</label>
+																			<input class="form-control" id="TOTAL_FRETE" name="TOTAL_FRETE"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTFrete,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">Total&nbsp;</label>
+																			<input class="form-control" id="TOTAL_ORC" name="TOTAL_ORC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
+																	    </div>
+																</div>
+															</div>
+														</section>
+													</div>
+													<br>
+			                                        <br>
+													<div class="row form-group" align="center">
+														<%=cBotoes%>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>			
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			
+				<footer class="panel-footer text-right">
+					Desenvolvido por  <img src="images/sms.png"  />
+				</footer>
+			</div>		
+		</section>
+		<!-- end: page -->
+	
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/select2/js/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> 
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/autosize/autosize.js"></script>
+		<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+		
+		<!-- Examples 
+		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		-->
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script> 
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+		<script src="custom/js/jquery.maskMoney.js"></script> 
+		<script src="custom/js/portalMask.js"></script>
+		<script src="custom/js/datatables.editable.js"></script>
+		<script src="custom/js/bootbox.js"></script>
+		<script type="text/javascript">
+	</body>
+</html>

@@ -141,19 +141,21 @@ Web Extended Init cHtml Start U_inSite()
 	// Busca as notas fiscais
 	cQry := " SELECT DISTINCT F2_FILIAL, F2_DOC, F2_SERIE, F2_CLIENTE, F2_LOJA, A1_NREDUZ, F2_EMISSAO, F2_VALMERC, F2_VALFAT, F2_CHVNFE, D2_PEDIDO, F2_VEND1 VEND, SF2.R_E_C_N_O_ RECSF2 "
 	cQry += " FROM "+RetSqlName("SF2")+" SF2 "
-	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_FILIAL = '"+xFilial("SA1")+"' AND A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry += " INNER JOIN "+RetSqlName("SD2")+" SD2 ON D2_FILIAL = F2_FILIAL AND D2_DOC = F2_DOC AND D2_SERIE = F2_SERIE AND SD2.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE " // AND F2_FILIAL = '"+xFilial("SF2")+"'
-	If HttpSession->Tipo = 'S' //Supervisor acessa todas as informações da sua equipe
-    	cQry+= " F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
-	Else
+	// If HttpSession->Tipo = 'S' //Supervisor acessa todas as informações da sua equipe
+    // 	cQry+= " F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+	// Else
 //		cQry += "  F2_VEND1 = '"+HttpSession->CodVend+ "' "
 		cQry += "  F2_VEND1 = '"+cVendLogin+ "' "
-	Endif
+	// Endif
 	cQry += " AND F2_TIPO = 'N' "
 	cQry += " AND F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' "
 	cQry += " AND SF2.D_E_L_E_T_ = ' ' "
 	cQry += " ORDER BY F2_DOC, F2_EMISSAO "
+
+	conout("@@@ query4:" + cQry)
 	
 	If Select("QRY") > 0
 		QRY->(dbCloseArea())

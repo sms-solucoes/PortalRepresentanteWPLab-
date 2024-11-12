@@ -88,7 +88,7 @@ User Function InSite(lCheckSess)
 
 	// Verificar filial logada
 	if empty(HttpSession->Empresa)
-		cSrvEmpresa := "02"
+		cSrvEmpresa := "01"
 	else
 		cSrvEmpresa := HttpSession->Empresa
 	EndIf
