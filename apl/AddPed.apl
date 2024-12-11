@@ -33,7 +33,7 @@ private cCliente	:= ""
 private cTabela		:= ""
 private cBtnItens	:= ""
 private cObsInterna	:= ""
-private cObsNota	:= "ORDEM DE COMPRA CLIENTE:"
+private cObsNota	:= ""
 private cCodLogin 	:= ""
 private cVendLogin	:= ""
 private cMenus	  	:= ""
@@ -147,7 +147,7 @@ Web Extended Init cHtml Start U_inSite()
 	cCondPag:='<input class="form-control" type="text" id="C5_CONDPAG" name="C5_CONDPAG" value="" disabled> '
 
 	//Percentual Trade ======================================
-	cTrade:='<input class="form-control" type="text" onchange="javascript:validaTrade(this.value), validaAplicacao()" id="C5_XTRADE" name="C5_XTRADE" value="0"> '
+	cTrade:='<input class="form-control" type="text" onchange="javascript:validaTrade(this.value), validaAplicacao(), TotalGeral() " id="C5_XTRADE" name="C5_XTRADE" value="0"> '
 
 	//Percentual Trade ======================================
 	cTradeBase:='<input class="form-control" type="hidden"  id="C5_XTRADEBASE" name="C5_XTRADEBASE" value="0"> '
@@ -155,7 +155,7 @@ Web Extended Init cHtml Start U_inSite()
 	//Aplicacao =================================================
 	aApli:= {{"BO","Boleto"},{"NF","Nota Fiscal"},{"CC","Conta Corrente"}}
 	cAplicacao:='<select data-plugin-selectTwo class="form-control poulate mb-md" data-plugin-options='+"'"+'{"minimumResultsForSearch": "-1"}'+"'"'
-	cAplicacao+=' name="C5_XAPLIC" id="C5_XAPLIC" onchange="javascript:validaAplicacao()">'
+	cAplicacao+=' name="C5_XAPLIC" id="C5_XAPLIC" onchange="javascript:validaAplicacao(), atualizaMsgNota(this)">'
 	For f:= 1 to Len(aApli)
 		cAplicacao+='	<option value="'+aApli[f,1]+'">'+aApli[f,2]+'</option>'
 	Next
@@ -211,6 +211,9 @@ Web Extended Init cHtml Start U_inSite()
 				 	//Campo obrigatório
 					cOrcItens += Iif(aItens[nLin][7],'required="" aria-required="true" ','')
 					//Inicia todos os campos desabilitados
+					If aItens[nLin,2] == "C6_NUMPCOM" 
+						cOrcItens+='onchange="javascript:atualizaOC(this) "'
+					endif
 					If aItens[nLin,2] <> ("C6_NUMPCOM") 
 						cOrcItens += 'disabled '
 						cOrcItens += 'value="'+Alltrim(xValue)+'">'
@@ -241,6 +244,10 @@ Web Extended Init cHtml Start U_inSite()
 	cOrcItens += '<input type="hidden" id="PROXIMO" name="PROXIMO" value="01"/>
 	cOrcItens += '<input type="hidden" name="C5_NUM" id="C5_NUM" value="" />'
 	cOrcItens += '<input type="hidden" name="OPCAO" id="OPCAO" value="3" />'
+
+	cOrcItens += '<input type="hidden" name="TXTPAD" id="TXTPAD" value="ORDEM DE COMPRA CLIENTE:" />'
+	cOrcItens += '<input type="hidden" name="TXTORDEM" id="TXTORDEM" value="" />'
+	cOrcItens += '<input type="hidden" name="TXTMSGNOTA" id="TXTMSGNOTA" value="BO" />'
 	
 	cBtnItens+='<div class="row form-group">'
 	cBtnItens+='	<div class="col-sm-2">'
@@ -357,9 +364,10 @@ Web Extended Init cHtml Start U_inSite()
     cCliente	:= Left(HttpPost->C5_CLIENTE,6)
 	cLoja		:= Right(HttpPost->C5_CLIENTE,6)
 	cTrade		:= HttpPost->C5_XTRADE
-	cObs		:= HttpPost->C5_XMSGNF
+	cObsInterna	:= HttpPost->C5_XOBSINT
+	cObsNota	:= HttpPost->C5_XMSGNF
 
-	cNumSC5 := HttpPost->C5_NUM
+	// cNumSC5 := HttpPost->C5_NUM
 	cAplicacao := HttpPost->C5_XAPLIC
 	cItens:= HttpPost->aItens
 	
@@ -403,19 +411,9 @@ Web Extended Init cHtml Start U_inSite()
 	aadd(aCabSC5,{"C5_ORIGEM" ,"PORTAL",Nil})
 	aadd(aCabSC5,{"C5_TIPO" ,"N",Nil})
 	aadd(aCabSC5,{"C5_XAPLIC" , cAplicacao,Nil})
-
-	if cAplicacao = "BO"
-		cObs += " - Desconto comercial trade 5% - BOLETO"
-		aadd(aCabSC5,{"C5_DESCFI" , val(cTrade) ,Nil})
-	ELSEIF cAplicacao = "NF"
-		cObs += " - Desconto comercial trade 5% - NOTA FISCAL"
-	ELSEIF cAplicacao = "CC"
-		cObs += " - Desconto comercial trade 5% - CONTA CORRENTE"
-	ENDIF
-
-
-
-	aadd(aCabSC5,{"C5_XMENNOT" ,cObs ,Nil})
+	aadd(aCabSC5,{"C5_XMENNOT" ,cObsNota ,Nil})
+	aadd(aCabSC5,{"C5_XOBSINT" ,cObsInterna ,Nil})
+	aadd(aCabSC5,{"C5_XTRADE" ,cTrade ,Nil})
 
     //Monta os itens
 	dbSelectArea("SB1")
@@ -463,7 +461,6 @@ Web Extended Init cHtml Start U_inSite()
 						aadd(aLinhaSC5Bonus,{"C6_PRUNIT" ,A410Arred(nPrcVen, "C6_PRCVEN"),Nil})
 						aadd(aLinhaSC5Bonus,{"C6_PRCVEN" ,A410Arred(nPrcVen, "C6_PRCVEN"),Nil})
 						aadd(aLinhaSC5Bonus,{"C6_VALOR" , NoRound( nValorBonus, 2 ), Nil}) 
-						aadd(aLinhaSC5Bonus,{"C6_NUMPCOM" , nNumpcom, Nil}) 
 						aadd(aItemSC5Bonus,aLinhaSC5Bonus)
 					endif 
 					
@@ -512,6 +509,7 @@ Web Extended Init cHtml Start U_inSite()
 
 			if len(aItemSC5Bonus) > 0
 				lMsErroAuto:= .F.
+				//  aScan(aHeader,{|x| AllTrim(x[2])=="CK_PRCVEN"})
 				MATA410(aCabSC5,aItemSC5Bonus,nOpc)
 
 				If lMsErroAuto

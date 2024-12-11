@@ -990,7 +990,7 @@ static function wgTopProd(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFilLim
 	cQry+= "),"
 
 	cQry+= "QRYRES AS ("
-	cQry+= "SELECT D2_COD, B1_DESC, QTD, SOMAVALOR, "
+	cQry+= "SELECT D2_COD, B1_DESC, QTD, SOMAVALOR, " 
 	cQry+= " ROW_NUMBER() OVER (PARTITION BY BM_GRUPO ORDER BY SOMAVALOR DESC) AS POSICAO, " 
 	cQry+= " SUM(SOMAVALOR) OVER (PARTITION BY BM_GRUPO) AS SOMAGRUPO " 
 	cQry+= " FROM  QRYVALORES "

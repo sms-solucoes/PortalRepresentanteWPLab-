@@ -395,8 +395,10 @@ User Function fFilVend(cCodVend,cFilFiltro)
 	APWExOpenQuery(ChangeQuery(cQry),'QRF',.T.)	
 	
 	While QRF->(!Eof())
-		cRet+= '	<option value="'+Alltrim(QRF->M0_CODFIL)+'" '+Iif(Alltrim(QRF->M0_CODFIL)= cFilFiltro,' selected ','')+'>'+Alltrim(QRF->M0_CODFIL)+" - "+Alltrim(QRF->M0_FILIAL)+'</option>'
-	    QRF->(dbSkip())
+		if QRF->M0_CODFIL = '030103' .or.  QRF->M0_CODFIL = '030104' .or.  QRF->M0_CODFIL = '040101'
+			cRet+= '	<option value="'+Alltrim(QRF->M0_CODFIL)+'" '+Iif(Alltrim(QRF->M0_CODFIL)= cFilFiltro,' selected ','')+'>'+Alltrim(QRF->M0_CODFIL)+" - "+Alltrim(QRF->M0_FILIAL)+'</option>'
+		endif
+		QRF->(dbSkip())
 	End
 
 Return cRet

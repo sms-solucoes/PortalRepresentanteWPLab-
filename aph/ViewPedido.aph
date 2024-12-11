@@ -159,10 +159,6 @@
 															<label class="control-label">Emissao</label>
 															<input id="C5_EMISSAO" name="C5_EMISSAO" class="form-control" value="<%=clEmissao%>" readonly>
 														</div> 
-														<div class="col-lg-2">
-															<label class="control-label">OC Cliente</label>
-															<input id="C5_XOCCLI" name="C5_XOCCLI" class="form-control" value="<%=clOCCliente%>" readonly>
-														</div> 
 													</div>
 		
 													<div class="mb-md hidden-lg hidden-xl"></div>
@@ -179,11 +175,11 @@
 														</div>
 													</div>
 														
-													<div class="mb-md hidden-lg hidden-xl"></div>															
+													<div class="mb-md hidden-lg hidden-xl"></div>
 													<div class="mb-md hidden-lg hidden-xl"></div>
 													
 													<!-- linha 3: input  -->
-													<div class="row form-group">	              
+													<div class="row form-group">
 													 	<div class="col-lg-2">
 															<label class="control-label">Condição de Pagamento</label>
 															<%=cCondPag%>
@@ -221,7 +217,6 @@
 																</thead>
 																<tbody> 
 																	<%=clPEDItens%>
-																														
 																</tbody>
 															</table>
 														</section>	
@@ -246,15 +241,18 @@
 																<div class="form-inline" align="center">
 																	<div class="row">
 																		<div class="col-sm-12">	      
-																			<label class="">Itens&nbsp;</label>               
-																			<input class="form-control" id="TOTAL_ITENS" name="TOTAL_ITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
+																			<label class="">QUANT:&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_QITENS" name="TOTAL_QITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTQtdItem,"@E 999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">Frete&nbsp;</label>
-																			<input class="form-control" id="TOTAL_FRETE" name="TOTAL_FRETE"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTFrete,"@E 999,999,999,999.99")%>></input>
+																			<label class="">VLR TOTAL:&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_PED" name="TOTAL_PED"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">Total&nbsp;</label>
-																			<input class="form-control" id="TOTAL_ORC" name="TOTAL_ORC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
-																	    </div>
+																			<label class="">VLR DESC:&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_DESC" name="TOTAL_DESC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotalDes,"@E 999,999,999,999.99")%>></input>
+																			&nbsp;&nbsp;&nbsp;&nbsp;
+																			<label class="">VLR LIQ:&nbsp;</label>
+																			<input class="form-control text-right" id="TOTAL_LIQ" name="TOTAL_LIQ" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
+																		</div> 
 																</div>
 															</div>
 														</section>

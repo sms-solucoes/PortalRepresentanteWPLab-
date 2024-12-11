@@ -158,12 +158,12 @@
 													<!-- linha 3: input  -->
 													<div class="row form-group">
 													 	<div class="col-lg-4">
-															<label class="control-label">Tabela de Preço</label>
+															<label class="control-label">Tabela de Preï¿½o</label>
 															<%=cTabela%>
 														</div>
 																  
 													 	<div class="col-lg-4"> 
-															<label class="control-label">Condição de Pagamento</label>
+															<label class="control-label">Condiï¿½ï¿½o de Pagamento</label>
 															<%=cCondPag%>
 														</div>
 													</div>
@@ -177,20 +177,20 @@
 														</div>
 																  
 													 	<div class="col-lg-4"> 
-															<label class="control-label">Aplicação</label>
+															<label class="control-label">Aplicaï¿½ï¿½o</label>
 															<%=cAplicacao%>
 														</div>
 													</div>
 
-													<!-- linha 6: Observações  -->
+													<!-- linha 6: Observaï¿½ï¿½es  -->
 													<div class="row form-group">		
 														<div class="col-md-5">
-															<label class="control-label" for="textareaDefault">Observação Interna</label>
+															<label class="control-label" for="textareaDefault">Observaï¿½ï¿½o Interna</label>
 															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XOBSINT" name="C5_XOBSINT" <%=Iif(!lEdit,'disabled','')%>><%=cObsInterna%></textarea>
 														</div> 
-														<div class="col-md-6"> 	<!-- style="display:none;" PARA NÃO EXIBIR-->
-															<label class="control-label" for="textareaDefault">Observação para Nota Fiscal</label>
-															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XMSGNF" name="C5_XMSGNF" <%=Iif(!lEdit,'disabled','')%>><%=cObsNota%></textarea>
+														<div class="col-md-6"> 	<!-- style="display:none;" PARA Nï¿½O EXIBIR-->
+															<label class="control-label" for="textareaDefault">Observaï¿½ï¿½o para Nota Fiscal</label>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XMSGNF" name="C5_XMSGNF" readonly><%=cObsNota%></textarea>
 														</div>
 													</div>
 													<br>
@@ -218,7 +218,7 @@
 													</div>	
 													<br>
 													 
-			 										<!-- botões com ações na tabela dos itens -->
+			 										<!-- botï¿½es com aï¿½ï¿½es na tabela dos itens -->
 													<%=cBtnItens%>
 
 													<br>
@@ -328,12 +328,13 @@
 			var gSalvando = false;
 
 			/**
-			Desabilita o enter na página
+			Desabilita o enter na pï¿½gina
 			**/
 			$(function(){
 				$('form').bind("keypress",function(e){
 					if (e.keyCode == 13) return false;
 				});
+				$("#C5_XAPLIC").trigger('change')
 			}); 
 						
 		
@@ -377,13 +378,13 @@
 							}
 							
 							if ( ret == "NOK1" ) {
-								bootbox.alert('Cliente e tabela de Preço sem Condição de pagamento vinculada!');
+								bootbox.alert('Cliente e tabela de Preï¿½o sem Condiï¿½ï¿½o de pagamento vinculada!');
 								$("#C5_TABELA").val('')
 								$("#C5_CONDPAG").val('')
 								$("#C5_XTRADE").val('')
 							}
 							else if( ret == "NOK2" ) {
-								bootbox.alert('Cliente sem tabela de Preço ou tabela fora de vigência/inativa!');
+								bootbox.alert('Cliente sem tabela de Preï¿½o ou tabela fora de vigï¿½ncia/inativa!');
 								$("#C5_TABELA").val('')
 								$("#C5_CONDPAG").val('')
 								$("#C5_XTRADE").val('')
@@ -402,7 +403,7 @@
 			}
 
 			/**
-			Busca os produtos a partir da tabela de Preço
+			Busca os produtos a partir da tabela de Preï¿½o
 			**/
 			function selProd(){
 				var tabpreco;
@@ -426,10 +427,10 @@
 							}
 							
 							if ( produtos == "" ) {
-								bootbox.alert('Não foram encontrados produtos para a tabela de Preço!');
+								bootbox.alert('Nï¿½o foram encontrados produtos para a tabela de Preï¿½o!');
 							}
 							else {
-								//Bloqueia a edição do campo de tabela
+								//Bloqueia a ediï¿½ï¿½o do campo de tabela
 							 	//Preenche o select dos produtos
 							 	$("#C6_PRODUTO"+item).append($.parseHTML(produtos));
 							 	$('.selectpicker').selectpicker('render');
@@ -480,7 +481,7 @@
 					message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Buscando dados do produto... Aguarde...</p>',
 					closeButton: false
 				});
-				  //valida a digitação duplicada de itens
+				  //valida a digitaï¿½ï¿½o duplicada de itens
 				for (i = 1; i<=nItens; i++) { 
 					cItem = String(i);
 					if (parseInt(i) < 10 ){cItem = "0"+String(i)};
@@ -497,10 +498,10 @@
 				}
 				
 				if (!lProdOK ) {
-					bootbox.alert("Este item já foi informado no pedido!");
+					bootbox.alert("Este item jï¿½ foi informado no pedido!");
 					dialogProd.modal('hide');
 				}
-				//Fim da validação de itens duplicados
+				//Fim da validaï¿½ï¿½o de itens duplicados
 
 				if ( ! objInput.is('[readonly]') && $.trim(objInput.val()) != "" && lProdOK ) {
 					
@@ -510,7 +511,7 @@
 						data: { Produto: objInput.val() },
 						error: function (jqXHR, textStatus, error){
 							dialogProd.modal('hide');
-							bootbox.alert("Falha ao recuperar informações!");
+							bootbox.alert("Falha ao recuperar informaï¿½ï¿½es!");
 							console.log(error);
 						},
 						success: function( data ) {
@@ -585,7 +586,7 @@
 			}
 
 			/**
-			Função para ver detalhes da linha
+			Funï¿½ï¿½o para ver detalhes da linha
 			**/
 			function detalheOrc(cItem){
 			 	var msg = ""
@@ -600,7 +601,7 @@
 			 	msg +='		<h2 class="panel-title">Detalhes da linha</h2>'
 			 	msg +='	</header>'
 				msg +='	<br>'
-				//Descrição do produto 
+				//Descriï¿½ï¿½o do produto 
 				msg +='	<div class="row form-group">'				
 				msg +='		<div class="col-lg-1"></div>'				
 				msg +='		<div class="col-lg-11">'
@@ -645,8 +646,8 @@
 				cItem = parseInt(cItem);
 				
 				bootbox.confirm({
-					title: "Exclusão da linha",
-					message: "Confirma a Exclusão desta linha?",
+					title: "Exclusï¿½o da linha",
+					message: "Confirma a Exclusï¿½o desta linha?",
 					buttons: {
 						cancel: {
 							label: 'Cancelar'
@@ -659,7 +660,7 @@
 						if (result){
 							if (cItem < 10 ){cItem = "0"+String(cItem)};
 							
-							//Desabilita o botão
+							//Desabilita o botï¿½o
 							//btnRem.attr({ 'disabled': 'disabled' });
 							
 							$("#C6_ITEM"+cItem).val("x");
@@ -679,7 +680,7 @@
 			}
 
 			/**
-			Verifica se a quantidade é mÚltiplo da embalagem
+			Verifica se a quantidade ï¿½ mï¿½ltiplo da embalagem
 			**/
 			function VldQtd(cItemAtu) {
 				var nQuant;
@@ -701,7 +702,7 @@
 				if (nQuant > 0){ 
 					if (nQtdEmb > 0){
 						if (nQuant != nQtdEmb){
-							bootbox.alert("Atenção! A quantidade informada é diferente da quantidade da caixaria. Caixaria: "+nQtdEmb.toString()+".");
+							bootbox.alert("Atenï¿½ï¿½o! A quantidade informada ï¿½ diferente da quantidade da caixaria. Caixaria: "+nQtdEmb.toString()+".");
 						}
 					}	
 
@@ -728,8 +729,8 @@
 				if(parseInt(trade) > parseInt(tradeBase)){
 					$("#orc-informar").html();
 						new PNotify({
-							title: 'Trade Inválida!',
-							text: 'O valor de trade não pode ser maior que '+tradeBase+'!',
+							title: 'Trade Invï¿½lida!',
+							text: 'O valor de trade nï¿½o pode ser maior que '+tradeBase+'!',
 							type: 'error',
 						});
 					$("#C5_XTRADE").val(tradeBase)
@@ -742,18 +743,19 @@
 				var qtdItens = $("#PROXIMO").val();
 				var qtdItensInt = parseInt(qtdItens);
 				var trade = parseInt($("#C5_XTRADE").val());
+				var indice = ""
 
 				for(var i = 1; i <= qtdItensInt; i++){
 					if(qtdItensInt < 10){
-						qtdItensInt = "0"+qtdItensInt.toString();
+						indice = "0"+i.toString();
 					}else{
-						qtdItensInt = qtdItensInt.toString();
+						indice = i.toString();
 					}
 
 					if(aplicacao == "NF"){
-						$("#C6_DESCONT"+qtdItensInt).val(trade)
+						$("#C6_DESCONT"+indice).val(trade)
 					}else{
-						$("#C6_DESCONT"+qtdItensInt).val("0")
+						$("#C6_DESCONT"+indice).val(0)
 					}
 				}
 				
@@ -774,14 +776,14 @@
 				var cItmOrc;
 				/*
 				bootbox.confirm({
-					message: "Confirma a inclusão de uma nova linha?",
+					message: "Confirma a inclusï¿½o de uma nova linha?",
 					buttons: {
 						confirm: {
 							label: 'Sim',
 							className: 'btn btn-primary'
 						},
 						cancel: {
-							label: 'Não',
+							label: 'Nï¿½o',
 							className: 'btn btn-default'
 						}
 					},
@@ -790,7 +792,7 @@
 						 */   
 							if (parseInt(linhaAtu) < 10 ){linhaAtu = "0"+String(linhaAtu)};
 							
-							//Desabilita o botão
+							//Desabilita o botï¿½o
 							btnAdd.attr({ 'disabled': 'disabled' });
 					 
 							//Valida o Grid
@@ -799,8 +801,8 @@
 								
 								$("#orc-informar").html();
 									new PNotify({
-										title: 'Quantidade máxima',
-										text: 'O pedido atingiu a quantidade máxima de itens. Crie um novo pedido.',
+										title: 'Quantidade mï¿½xima',
+										text: 'O pedido atingiu a quantidade mï¿½xima de itens. Crie um novo pedido.',
 										type: 'error',
 									});      
 								btnAdd.removeAttr('disabled');	
@@ -826,13 +828,13 @@
 									
 									$("#orc-informar").html();
 										new PNotify({
-											title: 'Campo obrigatório',
+											title: 'Campo obrigatï¿½rio',
 											text: 'Verifique o preenchimento dos campos Produto e Quantidade antes de incluir uma nova linha!',
 											type: 'error',
 										});
 									btnAdd.removeAttr('disabled');
 									
-									//Força fechar a janela
+									//Forï¿½a fechar a janela
 									if (lRet == false){
 										bootbox.hideAll();
 									}		
@@ -868,7 +870,7 @@
 										case 3:
 											$('tr:last').find('td:last').attr('style','right');
 										break;
-										//Preço de tabela
+										//Preï¿½o de tabela
 										case 4:
 											$('tr:last').find('td:last').attr('style','right');
 										break;
@@ -880,7 +882,7 @@
 										case 6:
 											$('tr:last').find('td:last').attr('style','right');
 										break;
-										//Quantidade Bônus
+										//Quantidade Bï¿½nus
 										case 7:
 											
 										break;
@@ -888,7 +890,7 @@
 										case 8:
 											$('tr:last').find('td:last').attr('style','right');
 										break;
-										//ações
+										//aï¿½ï¿½es
 										case 9:
 											$('tr:last').find('td:last').addClass('actions');
 										break;
@@ -904,7 +906,7 @@
 								//Atualiza a quantidade de linhas
 								$("#PROXIMO").val(linhaAtu);
 							
-								//Habilita o botão para adicionar itens
+								//Habilita o botï¿½o para adicionar itens
 								btnAdd.removeAttr('disabled'); 
 								formate();
 							};
@@ -991,7 +993,7 @@
 					campo.setAttribute('aria-required', 'true'); 
 				break;
 
-				//Preço de tabela
+				//Preï¿½o de tabela
 				case 4:
 	 				campo = document.createElement('input'); 
 					campo.setAttribute('id', 'C6_PRCVEN'+linha);
@@ -1020,20 +1022,20 @@
 					campo.setAttribute('class', 'form-control text-right only-numbers');
 					campo.setAttribute('disabled', 'disable'); 
 					campo.setAttribute('type', 'text');
-					campo.setAttribute('value', descont.toString()); 
+					campo.setAttribute('value', parseInt(descont)); 
 					campo.setAttribute('placeholder', '0'); 
 					campo.setAttribute('onchange', 'javascript:VldQtd("'+linha+'"),TotalItem("'+linha+'")'); 
 				break;
 				
-				//Quantidade Bônus
+				//Quantidade Bï¿½nus
 				case 7:
 					campo = document.createElement('input'); 
 					campo.setAttribute('id', 'C6_BONUS'+linha);
 					campo.setAttribute('name', 'C6_BONUS'+linha);
-					campo.setAttribute('class', 'form-control text-right only-numbers');
+					campo.setAttribute('class', 'form-control text-right');
 					campo.setAttribute('disabled', 'disable'); 
 					campo.setAttribute('type', 'text');
-					campo.setAttribute('value', '0');
+					campo.setAttribute('placeholder', '0'); 
 				break;
 
 				//Ordem de compra
@@ -1044,9 +1046,10 @@
 					campo.setAttribute('class', 'form-control text-right');
 					campo.setAttribute('type', 'text');
 					campo.setAttribute('value', $("#C6_NUMPCOM"+linhaAnt).val());
+					campo.setAttribute('onchange', 'javascript:atualizaOC(this)'); 
 				break;
 
-				//ações
+				//aï¿½ï¿½es
 				case 9:
 					//Detalhes da linha
 					campo = document.createElement('i');
@@ -1064,7 +1067,7 @@
 				}
 				cell.appendChild(campo); // apenda o campo na celula da tabela
 
-				//Adiciona as variáveis hidden
+				//Adiciona as variï¿½veis hidden
 				if (col == tam){
 					$('.selectpicker').selectpicker('render');
 					$('.selectpicker').selectpicker('refresh');
@@ -1131,6 +1134,55 @@
 			}
 
 			/**
+			Atualiza campo msg nota
+			**/
+
+			function atualizaOC(obj){
+				var oc 		= obj.value;
+				var msgAtu 	= $('#TXTORDEM').val().split(',')
+
+				if(!msgAtu.includes(oc) && oc !== ''){
+					msgAtu.push(oc)
+				}
+
+				$('#TXTORDEM').val(msgAtu.toString())
+				montaMsgNota()
+			}
+
+			function atualizaMsgNota(obj){
+				var aplicacao	= obj.value;
+				var trade		= $("#C5_XTRADE").val();
+				var msg			= ""
+
+				if(aplicacao == 'BO'){
+					msg = 'Desconto comercial trade '+trade+'% - BOLETO'
+				}else if(aplicacao == 'NF'){
+					msg = 'Desconto comercial trade '+trade+'% - NOTA FISCAL'
+				}else if(aplicacao == 'CC'){
+					msg = 'Desconto comercial trade '+trade+'% - CONTA CORRENTE'
+				}
+
+				$('#TXTMSGNOTA').val(msg)
+				montaMsgNota()
+			}
+
+			function montaMsgNota(){
+				var txtmsgnota	= $('#TXTMSGNOTA').val();
+				var txtordem	= $('#TXTORDEM').val();
+				var txtpad		= $('#TXTPAD').val();
+				var msgfinal	= ""
+
+				$("#C5_XMSGNF").val('')
+
+				msgfinal += txtpad + ' ' + txtordem
+				msgfinal += '\n'
+				msgfinal += txtmsgnota
+
+				$("#C5_XMSGNF").val(msgfinal)
+			}
+
+
+			/**
 			Total Geral
 			**/
 			function TotalGeral() {
@@ -1158,7 +1210,8 @@
 						nQuant 		= parseFloat($("#C6_QTDVEN"+cItem).val().replace('.',"").replace(",",".")); 
 						nTotQuant 	+= nQuant; 
 						nVlrUnit 	+= nQuant * ($('#C6_PRCVEN'+cItem).maskMoney('unmasked')[0]);
-						nTotal 		+= $('#C6_VALOR'+cItem).maskMoney('unmasked')[0] ;
+						// nTotal 		+= $('#C6_VALOR'+cItem).maskMoney('unmasked')[0] ;
+						nTotal 		+= nQuant * ($('#C6_PRCVEN'+cItem).maskMoney('unmasked')[0])
 					}
 				}
 				
@@ -1221,11 +1274,11 @@
 				}
 
 				if (!lOk) {
-					bootbox.alert("O produto " + cCodProd + " está com 2 itens no pedido com Preços diferentes.")
+					bootbox.alert("O produto " + cCodProd + " estï¿½ com 2 itens no pedido com Preï¿½os diferentes.")
 					return false;
 				}
 
-				//Desabilita o botão
+				//Desabilita o botï¿½o
 				btnSlv.attr({
 					'disabled': 'disabled'
 				});
@@ -1242,7 +1295,7 @@
 						}
 						if (retorno == "nok" || retorno == '' || retorno.indexOf("Expires") != -1) {
 							$("#orc-informar").html();
-							bootbox.alert('Não foi possível realizar a operação pois a sessão foi fechada. Faça login novamente.');
+							bootbox.alert('Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o pois a sessï¿½o foi fechada. Faï¿½a login novamente.');
 							lRet = false;
 							btnSlv.removeAttr('disabled');
 						}
@@ -1258,7 +1311,7 @@
 
 					$("#orc-informar").html();
 					new PNotify({
-						title: 'Campo obrigatório',
+						title: 'Campo obrigatï¿½rio',
 						text: 'Preencha o campo Cliente!',
 						type: 'error',
 					});
@@ -1266,14 +1319,14 @@
 					$("#C5_CLIENTE").focus();
 				}
 
-				//Tabela de Preço
+				//Tabela de Preï¿½o
 				if (lRet == true && $("#C5_TABELA").val() == "") {
 					lRet = false;
 
 					$("#orc-informar").html();
 					new PNotify({
-						title: 'Campo obrigatório',
-						text: 'Preencha o campo Tabela de Preço!',
+						title: 'Campo obrigatï¿½rio',
+						text: 'Preencha o campo Tabela de Preï¿½o!',
 						type: 'error',
 					});
 					btnSlv.removeAttr('disabled');
@@ -1285,21 +1338,21 @@
 
 				// 	$("#orc-informar").html();
 				// 	new PNotify({
-				// 		title: 'Campo obrigatório',
+				// 		title: 'Campo obrigatï¿½rio',
 				// 		text: 'Preencha o campo Modalidade!',
 				// 		type: 'error',
 				// 	});
 				// 	btnSlv.removeAttr('disabled');
 				// 	$("#C5_XMODALI").focus();
 				// }
-				//Condição de pagamento 
+				//Condiï¿½ï¿½o de pagamento 
 				if (lRet == true && $("#C5_CONDPAG").val() == "") {
 					lRet = false;
 
 					$("#orc-informar").html();
 					new PNotify({
-						title: 'Campo obrigatório',
-						text: 'Preencha o campo Condição de Pagamento!',
+						title: 'Campo obrigatï¿½rio',
+						text: 'Preencha o campo Condiï¿½ï¿½o de Pagamento!',
 						type: 'error',
 					});
 					btnSlv.removeAttr('disabled');
@@ -1329,7 +1382,7 @@
 
 						$("#orc-informar").html();
 						new PNotify({
-							title: 'Campo obrigatório',
+							title: 'Campo obrigatï¿½rio',
 							text: 'Verifique o preenchimento dos campos Produto e Quantidade!',
 							type: 'error',
 						});
@@ -1353,7 +1406,6 @@
 				salvarOrc(btnSlv)
 			});
 
-
 			function salvarOrc(btnSlv) {
 
 				bootbox.confirm({
@@ -1361,7 +1413,7 @@
 					message: "Confirma o salvamento do pedido com os valores em tela?",
 					buttons: {
 						cancel: {
-							label: 'Não'
+							label: 'Nï¿½o'
 						},
 						confirm: {
 							label: 'Sim'
@@ -1369,25 +1421,38 @@
 					},
 					callback: function (result) {
 						if (result) {
-							btnSlv.attr('disabled');
-							doSave();
+							// Desabilita o botï¿½o imediatamente apï¿½s o clique
+							btnSlv.prop('disabled', true);
+							bootbox.hideAll();
+
+							showModalLoad(btnSlv)
+
 						} else {
 							btnSlv.removeAttr('disabled');
 						}
 					}
-				});			
+				});
+			}
+			
+			function showModalLoad(btnSlv) {
+				// Exibe o modal de carregamento
+				bootbox.alert({
+					message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Salvando orï¿½amento... Aguarde...</p>',
+					closeButton: false
+				});
+
+				setTimeout(() => {
+					doSave(btnSlv);
+				}, 100);
 			}
 
-			function doSave() {
+
+			function doSave(btnSlv) {
 				var numped = "";
 				if (gSalvando) {
 					return;
 				}
 				gSalvando = true;
-				var dialogSlv = bootbox.dialog({
-					message: '<p class="text-center"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Salvando orçamento... Aguarde...</p>',
-					closeButton: false
-				}); 
 				
 				//busca os itens cadastrados
 				var ITENS = ""; 
@@ -1417,6 +1482,7 @@
 					C5_CONDPAG: $('#C5_CONDPAG').val(),	
 					C5_NUM: $('#C5_NUM').val(),
 					C5_XMSGNF: $('#C5_XMSGNF').val(),
+					C5_XOBSINT: $('#C5_XOBSINT').val(),
 					C5_XAPLIC: $("#C5_XAPLIC").select2('val'),
 					C5_XTRADE: $("#C5_XTRADE").val(),
 					PROXIMO: $('#PROXIMO').val(), 
@@ -1425,18 +1491,18 @@
 	
 	
 	   			if($("#OPCAO").val() == "3"){
-	   				msg = "O pedido foi incluído com sucesso.";
-	   				titulo = "inclusão de pedido";
+	   				msg = "O pedido foi incluï¿½do com sucesso.";
+	   				titulo = "inclusï¿½o de pedido";
 	   				operacao = "incluir";            
 	   			}
 	   			if($("#OPCAO").val() == "4"){
 	   				msg = "O pedido foi alterado com sucesso.";
-	   				titulo = "Alteração de pedido";
+	   				titulo = "Alteraï¿½ï¿½o de pedido";
 	   				operacao = "alterar";
 	   			}
 	   			if($("#OPCAO").val() == "5"){
-	   				msg = "O pedido foi excluído com sucesso.";
-	   				titulo = "Exclusão de pedido";
+	   				msg = "O pedido foi excluï¿½do com sucesso.";
+	   				titulo = "Exclusï¿½o de pedido";
 	   				operacao = "excluir";
 	   			}
 
@@ -1450,7 +1516,7 @@
 					gSalvando = false;
 	   				bootbox.alert({
 	   					title: titulo,
-	   					message: "Não foi possível "+operacao+" o pedido.",
+	   					message: "Nï¿½o foi possï¿½vel "+operacao+" o pedido.",
 	   					backdrop: true,
 	   					callback: function (result) {
 	   						btnSlv.removeAttr('disabled');
@@ -1475,7 +1541,7 @@
 						});
 	   				} else {
 	   					if ($("#OPCAO").val() == "3") {
-	   						numoped = " Foi gerado o pedido nº "+strXml+"."
+	   						numoped = " Foi gerado o pedido nï¿½ "+strXml+"."
 	   					}
 	   					bootbox.alert({
 	   						title: titulo,

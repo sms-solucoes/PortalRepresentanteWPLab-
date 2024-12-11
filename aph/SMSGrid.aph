@@ -100,8 +100,8 @@
 	<link rel="stylesheet" href="assets/vendor/select2/css/select2.css" />
 	<link rel="stylesheet" href="assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/basic.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/dropzone.css" />
+	<!-- <link rel="stylesheet" href="assets/vendor/dropzone/basic.css" />
+	<link rel="stylesheet" href="assets/vendor/dropzone/dropzone.css" /> -->
 	<!-- 20210106  -->
 	<link rel="stylesheet" href="ndtb/DataTables-1.10.23/css/dataTables.bootstrap.min.css" />
 	<link rel="stylesheet" href="ndtb/Buttons-1.6.5/css/buttons.dataTables.min.css" />
@@ -251,7 +251,7 @@
                 
 			
 
-				<div class="modal fade" id="dialogMsgFin" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<!-- <div class="modal fade" id="dialogMsgFin" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -264,7 +264,7 @@
 								<input type="hidden" id="recCliente"/>
 								<br>
 								<label class="control-label">Anexos</label>
-								<form action="/u_uploadfile.apw?PR=<%=cLCodLogin%>" method="POST" enctype="multipart/form-data" id="dropzone-form" class="dropzone dz-square dz-clickable">
+								<form action="/u_uploadfile.apw?PR=" method="POST" enctype="multipart/form-data" id="dropzone-form" class="dropzone dz-square dz-clickable">
 									<div class="dz-default dz-message">
 										<span>Clique ou arraste e solte os arquivos aqui</span>
 									</div>
@@ -277,7 +277,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 
 
@@ -328,9 +328,9 @@
 	<script src="ndtb/pdfmake-0.1.53/vfs_fonts.js"></script>
 	<script src="ndtb/Buttons-1.6.5/js/buttons.html5.js"></script>
 	<script src="ndtb/Buttons-1.6.5/js/buttons.print.min.js"></script>
-	<script src="assets/vendor/dropzone/dropzone.js"></script>
+	<!-- <script src="assets/vendor/dropzone/dropzone.js"></script>
 
-	<script src="custom/js/dropzone.js"></script>
+	<script src="custom/js/dropzone.js"></script> -->
 
 	<!-- Theme Base, Components and Settings -->
 	<script src="assets/javascripts/theme.js"></script>
@@ -379,7 +379,7 @@
 	   		//Ordenação da tabela
 			oTable.fnSort( [ ] );
 			
-			if( url_atual.match('orcamento.apw') || url_atual.match('Orcamento.apw'))
+			if( url_atual.match('pedido.apw') || url_atual.match('Pedido.apw'))
 			{
 				oTable.fnSort( [1,	'desc' ] );
             }            
@@ -427,7 +427,7 @@
             //    
             //    //Envio de e-mail
             //    $.ajax({
-		    //		url: "U_"+cform+"?PR=<%=cLCodLogin%>",
+		    //		url: "U_"+cform+"?PR=",
 		    //		data: 'email='+cemail+'&pagina='+cform+'&doc='+cdoc,
 		    //		type: "POST",
 		    //		async: false,

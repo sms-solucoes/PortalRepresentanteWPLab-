@@ -48,6 +48,8 @@ Private cEmissao	:= ""
 Private cTabPreco	:= ""
 Private nTVlrUnit	:= 0
 Private nTTotal		:= 0
+Private nTQtdItem	:= 0
+Private nTTotalDes	:= 0
 Private nTImpostos	:= 0
 Private nTFrete		:= 0
 Private nItens		:= 0
@@ -117,7 +119,7 @@ Web Extended Init cHtml Start U_inSite()
 				{"Quantidade","C6_QTDVEN","80px","right","C",.F.,.T.,.F.,"0"},;
 				{"V.Unitário","C6_PRCVEN","80px","right","D",.F.,.F.,.T.,"0,00000"},;
 				{"Total","C6_VALOR","80px","right","E",.F.,.F.,.T.,"0,00"},;
-				{"Prev.Ent","C6_ENTREG","80px","left","E",.F.,.F.,.T.,""},;
+				{"Ord.Compra","C6_PEDCOM","80px","left","E",.F.,.F.,.T.,""},;
 				{"Status","C6_STATUS","80px","left","E",.F.,.F.,.T.,""};
 			  }			
 
@@ -167,7 +169,6 @@ Web Extended Init cHtml Start U_inSite()
 	
 	//Preenchimento dos itens
 	nTFrete:= SC5->C5_FRETE
-	nTTotal:= nTFrete
 	dbSelectArea("SC6")
 	SC6->(dbSetOrder(1))
 	SC6->(dbSeek(xFilial("SC6")+SC5->C5_NUM))
@@ -175,10 +176,12 @@ Web Extended Init cHtml Start U_inSite()
 		nItens++
 		cPEDItens += '<tr class="odd" id="linha'+StrZero(nItens,2)+'">'
 		
+		nTQtdItem += SC6->C6_QTDVEN
 		nTVlrUnit +=  SC6->C6_QTDVEN * SC6->C6_PRCVEN
+		nTTotalDes += nTVlrUnit * (SA1->A1_XTRADE / 100)
+		nTTotal   := nTVlrUnit - nTTotalDes
 		// nTTotal:=  nTVlrUnit + nTFrete
 		For nLin := 1 to Len(aItens)
-			
 			cPEDItens += '<td'+Iif(!Empty(aItens[nLin][4]),' align="'+aItens[nLin][4]+'"',"")+'>'
 			// Posicione("SB1",1,xFilial("SB1")+SD2->D2_COD,"B1_DESC")	
 			lMoeda:= aItens[nLin,8] //Indica se é Moeda  			
@@ -196,8 +199,8 @@ Web Extended Init cHtml Start U_inSite()
 						xValue := Alltrim(PadR(TransForm(SC6->&(aItens[nLin][2]),"@E 999,999,999.99"),14))
 				Case aItens[nLin][2] == 'C6_VALOR'
 						xValue := Alltrim(PadR(TransForm(SC6->C6_VALOR,"@E 999,999,999.99"),14))
-				Case aItens[nLin][2] == 'C6_ENTREG'
-						xValue := dtoc(SC6->C6_ENTREG)
+				Case aItens[nLin][2] == 'C6_PEDCOM'
+						xValue := dtoc(SC6->C6_PEDCOM)
 				Case aItens[nLin][2] == 'C6_STATUS'
 						if SC6->C6_QTDENT = SC6->C6_QTDVEN .or. C6_BLQ = "R"
 							xValue := "Faturado"
@@ -215,9 +218,7 @@ Web Extended Init cHtml Start U_inSite()
 			cPEDItens += ' style="text-align: '+aItens[nLin,4]+';" '
 			cPEDItens += ' value="'+Alltrim(xValue)+'" title="'+Alltrim(xValue)+'">'
 			cPEDItens += '</td>' 
-		Next	                                                                        
-		nTTotal   := nTVlrUnit + nTFrete
-			
+		Next			
 		cPEDItens += '</tr>'
 		SC6->(dbSkip())	
 	End	
