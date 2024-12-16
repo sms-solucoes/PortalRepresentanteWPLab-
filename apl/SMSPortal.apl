@@ -551,14 +551,6 @@ return aRet
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 static function wgFrmTopo(cNomeForm, cCodLogin, cFiltDe, cFilAte, cCodvend, cFilFlt, cFilGrp, cFilLimRes, cFilImport)
 	local cTopo := ""
-	local cSelGrT := iif(cFilGrp="T", " selected","")
-	local cSelGr1 := iif(cFilGrp="1", " selected","")
-	local cSelGr2 := iif(cFilGrp="2", " selected","")
-	local cSelGr3 := iif(cFilGrp="3", " selected","")
-	local cSelGr4 := iif(cFilGrp="4", " selected","")
-	local cSelGr5 := iif(cFilGrp="5", " selected","")
-	local cSelGr6 := iif(cFilGrp="6", " selected","")
-
 	cTopo:= '<div class="row form-group">'
 	cTopo+= '	<div class="col-sm-12">'
 	cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="'+cNomeForm+'.apw?PR='+cCodLogin+'">'
@@ -647,7 +639,7 @@ static function wgVendas(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTo
 	cQry+= " Select ( SUM(D2_VALBRUT) - SUM(D2_ICMSRET) - SUM(D2_VALIPI) - SUM(CASE WHEN F2_TPFRETE = 'C' THEN F2_FRETE else 0 END ) ) AS F2_VALFAT, 1 AS NFS, F2_DOC "
 	cQry+= " From "+RetSqlName("SF2")+" SF2 "
 	cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-	cQry+= " ON F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry+= " ON SF2.F2_FILIAL = SA1.A1_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry+= " INNER JOIN SD2010 SD2 ON SD2.D2_FILIAL = SF2.F2_FILIAL "
 	cQry+= " AND F2_DOC = D2_DOC "
 	cQry+= " AND F2_SERIE = D2_SERIE "

@@ -1014,11 +1014,13 @@ Web Extended Init cHtml Start U_inSite()
 			DA0->(DbSetOrder(1))
 			If DA0->(dbSeek(xFilial("DA0")+cTabela))
 				cCondDescri := Posicione("SE4",1,xFilial("SE4")+DA0->DA0_CONDPG,"E4_DESCRI")
-				cCondPag := iif(alltrim(cCondPag) == "", DA0->DA0_CONDPG, cCondPag) + " - " + cCondDescri
+				cCondPag := iif(alltrim(cCondPag) == "", DA0->DA0_CONDPG + " - " + cCondDescri, cCondPag + " - " + cCondDescri) 
 				cTabela := cTabela + " - " + DA0->DA0_DESCRI
 
 				if date() > DA0->DA0_DATATE .or. date() < DA0->DA0_DATDE .OR. DA0->DA0_ATIVO = '2'
 					cHtml := "NOK2"
+				elseif cCondPag = "" 
+					cHtml := "NOK1"
 				else
 					cHtml:= cTabela+"|"+cCondPag+"|"+cTrade
 				endif
