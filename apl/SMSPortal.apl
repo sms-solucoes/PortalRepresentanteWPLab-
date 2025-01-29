@@ -189,15 +189,7 @@ Web Extended Init cHtml Start U_inSite(Empty(cVendLogin))
 	//cEmissao:= Iif(Empty(cPerUser),AnoMes(date()),cPerUser)
 	cWidgets += wgVendas(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, @nVendaTotal, cFilImport)
 
-	//WidGet Pneus
-	// cWidgets += wgPneus(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, @lPneus, cFilImport)
-
-	//WidGet Saldo
-	// cWidGets += wgSaldo(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTotal, lPneus, cFilImport)
-
-	//saldo por filial
-	// cListaSaldo := wgSaldoAll(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTotal, lPneus, cFilImport, cFilLimRes)
-
+	
 	//WidGet Meta
 	cWgMeta := wgMeta(cCodVend, cDataDe, cDataAte, nVendaTotal)
 
@@ -250,8 +242,8 @@ Local cWidget := ""
 		cWidget += 	'<div class="panel-body">'
 		cWidget += 		'<div class="widget-summary">'
 		cWidget += 			'<div class="widget-summary-col widget-summary-col-icon">'
-		cWidget += 				'<div class="summary-icon bg-primary" style="position: relative;">'
-		cWidget +=					'<img style="width:'+aParWid[5]+'px; height:'+aParWid[6]+';position: absolute; top: 50%; left: 50%; margin: -'+cvaltochar(val(aParWid[6])/2)+'px 0 0 -'+cvaltochar(val(aParWid[5])/2)+'px;" src="imagens/'+aParWid[1]+'.png"  /> '
+		cWidget += 				'<div class="summary-icon bg-primary">'
+		cWidget +=					'<i class="'+aParWid[1]+'"></i>'
 		cWidget += 				'</div>'
 		cWidget += 			'</div>'
 		cWidget += 			'<div class="widget-summary-col">'
@@ -260,7 +252,8 @@ Local cWidget := ""
 		cWidget += 					'<div class="info">'
 		cWidget += 						'<strong class="amount" style="font-size: larger">'+aParWid[2]+'</strong>'
 		cWidget += 						'<br>'
-		cWidget += 						'<span class="text-primary">'+aParWid[4]+'</span>'
+		cWidget += 						'<span class="text-primary">'+aParWid[4]+'</span><br>'
+		cWidget += 						'<span class="text-primary">'+aParWid[5]+'</span>'
 		cWidget += 					'</div>'
 		cWidget += 				'</div>'
 		/*
@@ -277,160 +270,6 @@ Local cWidget := ""
 
 Return cWidGet
 
-/*__________________________________________________________________________
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦Funçäo    ¦ WidGetPC     ¦ Autor ¦ Matheus Bientinezi ¦ Data ¦29.03.23 ¦¦¦
-¦¦+----------+------------------------------------------------------------¦¦¦
-¦¦¦Descriçäo ¦ WidGet com o valor de saldo disponível para vendedor       ¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-Static Function wgSaldo(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTotal, lPneus, cFilImport)
-	Local cQry := ""
-	Local cRet := ""
-
-	cQry+= "Select SUM(ZYF_SALDO) SALDO "
-	cQry+= "From "+RetSqlName("ZYF")+" ZYF "
-	if !Empty(cFilFlt)
-		cQry+= "	Where ZYF_FILIAL = '"+cFilFlt+"' "
-	else
-		cQry+= "	Where ZYF_FILIAL  <> ' ' "
-	endif
-	if !Empty(cDataDe)
-		cQry += " AND ZYF_DATA BETWEEN '"+Year2Str(stod(cDataDe))+"/"+Month2Str(stod(cDataDe))+"' and " 
-	else
-		cQry += " AND ZYF_DATA BETWEEN '"+cValtoChar(Year(dDataBase))+"/"+StrZero(Month(dDataBase),2)+"' and " 
-	endif
-	if !Empty(cDataAte)
-		cQry += " '"+Year2Str(stod(cDataAte))+"/"+Month2Str(stod(cDataAte))+"' " 
-	else
-		cQry += " '"+cValtoChar(Year(dDataBase))+"/"+StrZero(Month(dDataBase),2)+"' " 
-	endif
-	if HttpSession->Tipo = 'D'  .or. cCodvend $ GetMv("AA_PRFILGR",,"")
-		cQry+= " AND ZYF_VEND <> '' "
-	else 
-		cQry+= " AND ZYF_VEND = '"+cCodVend+"' "
-	endif
-
-	if cFilGrp == "1"
-		cQry+= " AND ZYF_XPRODV = '1' "
-	elseif cFilGrp == "2"
-		cQry+= " AND ZYF_XPRODV = '2' "
-	elseif cFilGrp == "3"
-		cQry+= " AND ZYF_XPRODV = '3' "
-	elseif cFilGrp == "4"
-		cQry+= " AND ZYF_XPRODV = '4' "
-	elseif cFilGrp == "T" .AND. !(cCodvend $ GetMv("AA_PRFILGR",,""))
-		cQry+=" "
-	elseif cFilGrp == "T" .AND. cCodvend $ GetMv("AA_PRFILGR",,"")
-		cQry+= " AND ZYF_XPRODV <> '1' "
-	endif
-	cQry+= " And ZYF.D_E_L_E_T_ = ' ' "
-
-	APWExOpenQuery(cQry,'QSAL',.T.)
-
-	cSaldo:= Alltrim(Transform(QSAL->SALDO,PesqPict("SE1","E1_SALDO")))
-	cRet := U_GetWdGet(1, {"cofre", "R$ "+cSaldo, "Saldos", "", "50", "50"})
-	QSAL->(dbCloseArea())
-
-Return cRet
-
-/*__________________________________________________________________________
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦Funçäo    ¦ wgSaldoAll   ¦ Autor ¦ Matheus Bientinezi ¦ Data ¦29.03.23 ¦¦¦
-¦¦+----------+------------------------------------------------------------¦¦¦
-¦¦¦Descriçäo ¦ WidGet com o maiores valores de saldo por filial           ¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-Static Function wgSaldoAll(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTotal, lPneus, cFilImport, cFilLimRes)
-	Local cQry := ""
-	Local cRet := ""
-	local nLimDado := 10
-	local nCntLin := 0
-	if !Empty(cFilLimRes)
-		nLimDado := val(cFilLimRes)
-	endif
-
-	if HttpSession->Tipo $ 'SDVG'
-		cQry:= "Select SUM(ZYF.ZYF_SALDO) SALDO, ZYF.ZYF_FILIAL "
-		cQry+= "From "+RetSqlName("ZYF")+" ZYF "
-		if !Empty(cFilFlt)
-			cQry+= "	Where ZYF.ZYF_FILIAL = '"+cFilFlt+"' "
-		else
-			cQry+= "	Where ZYF.ZYF_FILIAL  <> ' ' "
-		endif
-		if !Empty(cDataDe)
-			cQry += " AND ZYF.ZYF_DATA BETWEEN '"+Year2Str(stod(cDataDe))+"/"+Month2Str(stod(cDataDe))+"' and " 
-		else
-			cQry += " AND ZYF.ZYF_DATA BETWEEN '"+cValtoChar(Year(dDataBase))+"/"+StrZero(Month(dDataBase),2)+"' and " 
-		endif
-		
-		if !Empty(cDataAte)
-			cQry += " '"+Year2Str(stod(cDataAte))+"/"+Month2Str(stod(cDataAte))+"' " 
-		else
-			cQry += " '"+cValtoChar(Year(dDataBase))+"/"+StrZero(Month(dDataBase),2)+"' " 
-		endif
-		if HttpSession->Tipo = 'D'//Supervisor acessa informações da sua equipe
-			cQry+= " AND ZYF.ZYF_VEND <> '' "
-		else 
-			cQry+= " AND ZYF.ZYF_VEND = '"+cCodVend+"' "
-		endif
-		if cFilGrp == "1"
-			cQry+= " AND ZYF.ZYF_XPRODV = '1' "
-		elseif cFilGrp == "2"
-			cQry+= " AND ZYF.ZYF_XPRODV = '2' "
-		elseif cFilGrp == "3"
-			cQry+= " AND ZYF.ZYF_XPRODV = '3' "
-		elseif cFilGrp == "4"
-			cQry+= " AND ZYF.ZYF_XPRODV = '4' "
-		elseif cFilGrp == "T"
-			cQry+=" "
-		endif
-		
-		cQry+= " And ZYF.D_E_L_E_T_ = ' ' "
-		cQry+= " GROUP BY ZYF.ZYF_FILIAL "
-		cQry+= " ORDER BY SUM(ZYF.ZYF_SALDO) DESC "
-
-		if Select("QSAL") > 0
-			QSAL->(dbCloseArea())
-		endif	
-		APWExOpenQuery(cQry,'QSAL',.T.)
-
-		cLista:= ""
-		While QSAL->(!Eof())
-			nCntLin++
-			cLista+= '<li>'
-			cLista+= '	<div class="row show-grid">'
-			cLista+= '		<div class="col-md-8"><span class="text">'+QSAL->ZYF_FILIAL+'</span></div>'
-			cLista+= '		<div class="col-md-3" align="right"><span class="text-primary">R$'+Alltrim(Transform(QSAL->SALDO,PesqPict("SE1","E1_SALDO")))+'</span></div>'
-			cLista+= '	</div>'
-			cLista+= '</li>'
-			if HttpSession->Tipo = 'D' .and. nCntLin = nLimDado
-				exit
-			endif
-			QSAL->(dbSkip())
-		End
-		QSAL->(dbCloseArea())
-
-		cRet += '<section class="panel">'
-		cRet += '	<header class="panel-heading">'
-		cRet += '		<h2 class="panel-title">'
-		cRet += '			<span class="va-middle">Saldo por Filial</span>'
-		cRet += '		</h2>'
-		cRet += '	</header>'
-		cRet += '	<div class="panel-body">'
-		cRet += '		<div class="content">'
-		cRet += '			<ul class="simple-user-list">'
-		cRet += 				cLista
-		cRet += '			</ul>'
-		cRet += '		</div>'
-		cRet += '	</div>'
-		cRet += '</section>'
-	endif
-Return cRet
 
 /*__________________________________________________________________________
 ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
@@ -556,7 +395,7 @@ static function wgFrmTopo(cNomeForm, cCodLogin, cFiltDe, cFilAte, cCodvend, cFil
 	cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="'+cNomeForm+'.apw?PR='+cCodLogin+'">'
 	
 	cTopo+= '		<label class="col-md-1 control-label">De:</label>'
-	cTopo+= '		<div class="col-md-2">'
+	cTopo+= '		<div class="col-md-3">'
 	cTopo+= '		 	<div class="input-group">'
 	cTopo+= '				<span class="input-group-addon">'
 	cTopo+= '					<i class="fa fa-calendar"></i>'
@@ -568,7 +407,7 @@ static function wgFrmTopo(cNomeForm, cCodLogin, cFiltDe, cFilAte, cCodvend, cFil
 	cTopo+= '		</div>'
   
 	cTopo+= '		<label class="col-md-1 control-label">Até:</label>'
-	cTopo+= '		<div class="col-md-2">'
+	cTopo+= '		<div class="col-md-3">'
 	cTopo+= '			<div class="input-group">'
 	cTopo+= '				<span class="input-group-addon">'
 	cTopo+= '					<i class="fa fa-calendar"></i>'
@@ -607,7 +446,6 @@ static function wgFrmTopo(cNomeForm, cCodLogin, cFiltDe, cFilAte, cCodvend, cFil
 	cTopo+= '			</select>'
 	cTopo+= '		</div>'	
 	*/
-	cTopo+= '<div><br><br></div>'
 	cTopo+= '		<div class="col-sm-2">'
 	cTopo+= '			<button class="btn btn-primary" id="btFiltroD" value="" onclick="this.value= '+"'"+'Aguarde...'+"'"+';this.disabled= '+"'"+'disabled'+"'"+';Filtro()" name="btFiltro">'
 	cTopo+= '			<i class="fa fa-refresh"></i> Atualizar</button>' 
@@ -656,7 +494,7 @@ static function wgVendas(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTo
 	cQry+= " Inner Join "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE "
 	cQry+= " And F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' And SF2.D_E_L_E_T_ = ' ' AND SF2.F2_VALFAT > 0"
 	cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-	cQry+= " ON F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry+= " ON F2_FILIAL = A1_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry+= " And SD2.D_E_L_E_T_ = ' '), "	
 
 	cQry+= "TOTAL_ITENS as (Select SUM(QTD) ITENS, SUM(D2_QUANT) AS SOMAQTD FROM ITENS),"
@@ -674,221 +512,17 @@ static function wgVendas(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTo
 		cVTicket:= Iif(QTM->NOTAS > 0,Transform(QTM->VALOR / QTM->NOTAS,PesqPict("SF2","F2_VALFAT")),"0,00")
 		cITicket:= Iif(QTM->NOTAS > 0,cValtoChar(Int(QTM->ITENS / QTM->NOTAS)),"0") 
 		
-		cRet += U_GetWdGet(1, {"dashboard", "R$ "+cVTicket, "Ticket Médio", cITicket+Iif(val(cITicket)>1," itens"," item")+", "+;
-				Iif(QTM->NOTAS > 0,cValtoChar(Int(QTM->SOMAQTD / QTM->NOTAS)),"0") +" unids. por pedido. "	, "60", "55"})
+		cRet += U_GetWdGet(1, {"fa fa-dashboard", "R$ "+cVTicket, "Ticket Médio", " por pedido. "	,"", "60", "55"})
 
 		//WidGet Pedidos Realizados
 		cVlrNfs:= Iif(QTM->VALOR > 0,Transform(QTM->VALOR,PesqPict("SF2","F2_VALFAT")),"0,00")
 		cQtdNfs:= Iif(QTM->NOTAS > 0,cValtoChar(QTM->NOTAS),"0") 
-		cRet += U_GetWdGet(1, {"cesta", "R$ "+cVlrNfs, "Pedidos Realizados", cQtdNfs+Iif(QTM->NOTAS > 1," pedidos"," pedido")+;
-			", "+ltrim(transform(QTM->ITENS,"@e 999,999"))+" itens, "+ltrim(transform(QTM->SOMAQTD,"@e 9,999,999"))+" unid.", "50", "50"})
+		cRet += U_GetWdGet(1, {"fa fa-shopping-basket", "R$ "+cVlrNfs, "Pedidos Realizados", cQtdNfs+Iif(QTM->NOTAS > 1," pedidos"," pedido")+;
+			", "+Alltrim(transform(QTM->ITENS,"@e 999,999"))+" itens, ",Alltrim(transform(QTM->SOMAQTD,"@e 9,999,999"))+" unid.", "50", "50"})
 		nVendaTotal := QTM->VALOR
 		QTM->(dbCloseArea())
 	endif
 	
-return cRet
-
-/*__________________________________________________________________________
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦Funçäo    ¦ wgPneus           ¦ Autor ¦ Pedro de Souza ¦ Data 15.09.21 ¦¦¦
-¦¦+----------+------------------------------------------------------------¦¦¦
-¦¦¦Descriçäo ¦ Retorna o Widget de vendas                                 ¦¦¦
-¦¦+-----------------------------------------------------------------------+¦¦
-¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-static function wgPneus(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, nVendaTotal, lPneus, cFilImport)
-	local cRet := ""
-	local cQry
-	Local cVPasseio	:= ""
-	Local cIPasseio	:= ""
-	Local cVCarga	:= ""
-	Local cICarga	:= ""
-	Local cVAgricola:= ""
-	Local cIAgricola:= ""
-
-	if HttpSession->Tipo = 'D' // Visao do diretor
-		lPneus := (cFilGrp == '1')
-	else
-		lPneus := Posicione("SA3",1,xFilial("SA3")+cCodVend,"A3_XPNEUS") == '1' 
-	endif
-
-	if lPneus
-		//Pneu passeio
-		cQry:= "With " 
-		cQry+= "PASSEIO as ( "
-		cQry+= "Select F2_DOC,(SUM(D2_VALBRUT) - SUM(D2_ICMSRET) - SUM(D2_VALIPI) - SUM(CASE WHEN F2_TPFRETE = 'C' THEN F2_FRETE else 0 END)) AS FATP, 1 AS QTDP, SUM(D2_QUANT) AS SUMD2QUANT "
-		cQry+= "From "+RetSqlName("SD2")+" SD2 " 
-		cQry+= "Inner Join "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE " 
-		cQry+= "And F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' And SF2.D_E_L_E_T_ = ' ' And SF2.F2_VALFAT > 0 "
-		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T'// Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " INNER JOIN "+RetSqlName("SBM")+" SBM ON SBM.BM_GRUPO = SD2.D2_GRUPO AND SBM.D_E_L_E_T_ = ' ' "
-			endif
-		endif
-
-		if HttpSession->Tipo = 'S' //Supervisor acessa informações da sua equipe
-			cQry+= " INNER JOIN "+RetSqlName("ZDV")+" ZDV "
-			cQry+=  " ON SF2.F2_FILIAL = ZDV.ZDV_FILIAL AND ZDV_TABELA = 'SF2' AND F2_DOC+F2_SERIE = ZDV_CODERP AND ZDV.D_E_L_E_T_ = ' ' AND ZDV.ZDV_CODVEN = '"+cCodVend+"'"
-		endif
-
-		cQry+= "    INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = SUBSTRING(D2_FILIAL, 1,2) AND B1_COD = D2_COD AND B1_GRUPO IN ('20','21','22', '24') AND SB1.D_E_L_E_T_ = ' ' "
-		
-		if !Empty(cFilFlt)
-			cQry+= "	Where D2_FILIAL  = '"+cFilFlt+"' "
-		else
-			if !Empty(cFilImport)
-				cQry+= " INNER JOIN "+RetSqlName("ZC2")+" ZC2 "
-				cQry+=  " ON SD2.D2_FILIAL = ZC2.ZC2_FILVEN AND ZC2_FILIMP = '" + cFilImport + "' AND ZC2.D_E_L_E_T_ = ' ' "
-			endif
-			cQry+= "	Where D2_FILIAL  <> ' ' "
-		endif
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T' // Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " AND SBM.BM_XPRDVE = '"+cFilGrp+"' "
-				// cQry+= "	AND exists(SELECT 1 FROM "+RetSqlName("SA3")+" SA3 "
-				// cQry+=        " WHERE D_E_L_E_T_ = ' ' AND SA3.A3_COD = SF2.F2_VEND1 AND SA3.A3_XPRDVEN = '"+cFilGrp+"')"
-			endif
-		elseif HttpSession->Tipo <> 'S' // Vendedor simples
-			cQry+= "		AND F2_VEND1 = '"+cCodVend+"' 
-		endif
-
-		cQry+= "And SD2.D_E_L_E_T_ = ' ' "
-		cQry+= "GROUP BY F2_DOC ) "
-		cQry+= "Select SUM(FATP) PASSEIO, SUM(QTDP) QTD_PASSEIO, SUM(SUMD2QUANT) SOMAQTDE "
-		cQry+= "FROM PASSEIO "
-			
-		if Select("QTP") > 0
-			QTP->(dbCloseArea())
-		endif	
-		APWExOpenQuery(cQry,'QTP',.T.)
-		
-		cVPasseio:= Iif(QTP->PASSEIO > 0,Transform(QTP->PASSEIO,PesqPict("SF2","F2_VALFAT")),"0,00")
-		cIPasseio:= Iif(QTP->QTD_PASSEIO > 0,cValtoChar(Int(QTP->QTD_PASSEIO)),"0") 
-		cRet += U_GetWdGet(1, {"carro", "R$ "+cVPasseio, "Pneu Passeio", cIPasseio+Iif(val(cIPasseio)>1," pedidos"," pedido")+;
-		   ", "+ltrim(transform(QTP->SOMAQTDE, "@e 999,999,999"))+" unid.", "65", "50"})
-		QTP->(dbCloseArea())
-		
-		//pneu carga
-		cQry:= "With "
-  		cQry+= "CARGA as ( "
-		cQry+= "Select DISTINCT F2_DOC, (SUM(D2_VALBRUT) - SUM(D2_ICMSRET) - SUM(D2_VALIPI) - SUM(CASE WHEN F2_TPFRETE = 'C' THEN F2_FRETE else 0 END)) AS FATC, 1 AS QTDC, SUM(D2_QUANT) AS SUMD2QUANT  " 
-		cQry+= "From "+RetSqlName("SD2")+" SD2 "
-		cQry+= "Inner Join "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE " 
-		cQry+= "And F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' And SF2.D_E_L_E_T_ = ' ' And SF2.F2_VALFAT > 0"
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T'// Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " INNER JOIN "+RetSqlName("SBM")+" SBM ON SBM.BM_GRUPO = SD2.D2_GRUPO AND SBM.D_E_L_E_T_ = ' ' "
-			endif
-		endif
-
-		if HttpSession->Tipo = 'S'  //Supervisor acessa informações da sua equipe
-			cQry+= " INNER JOIN "+RetSqlName("ZDV")+" ZDV "
-			cQry+=  " ON SF2.F2_FILIAL = ZDV.ZDV_FILIAL AND ZDV_TABELA = 'SF2' AND F2_DOC+F2_SERIE = ZDV_CODERP AND ZDV.D_E_L_E_T_ = ' ' AND ZDV.ZDV_CODVEN = '"+cCodVend+"'"
-		endif
-
-		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
-		cQry+= "    Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = SUBSTRING(D2_FILIAL, 1,2) AND B1_COD = D2_COD AND B1_GRUPO IN ('23', '26') AND SB1.D_E_L_E_T_ = ' ' "
-		
-		if !Empty(cFilFlt)
-			cQry+= "	Where D2_FILIAL  = '"+cFilFlt+"' "
-		else
-			if !Empty(cFilImport)
-				cQry+= " INNER JOIN "+RetSqlName("ZC2")+" ZC2 "
-				cQry+=  " ON SD2.D2_FILIAL = ZC2.ZC2_FILVEN AND ZC2_FILIMP = '" + cFilImport + "' AND ZC2.D_E_L_E_T_ = ' ' "
-			endif
-			cQry+= "	Where D2_FILIAL  <> ' ' "
-		endif
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T' // Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " AND SBM.BM_XPRDVE = '"+cFilGrp+"' "
-			endif
-		elseif HttpSession->Tipo <> 'S' // Vendedor simples
-			cQry+= "		AND F2_VEND1 = '"+cCodVend+"' 
-		endif
-
-		cQry+= "And SD2.D_E_L_E_T_ = ' ' "
-		cQry+= "GROUP BY F2_DOC ) "
-		cQry+= "Select SUM(FATC) CARGA, SUM(QTDC) QTD_CARGA, SUM(SUMD2QUANT) SOMAQTDE "
-		cQry+= "FROM CARGA "
-
-	  	if Select("QTC") > 0
-			QTC->(dbCloseArea())
-		endif	
-		APWExOpenQuery(cQry,'QTC',.T.)
-	  
-	   	cVCarga:= Iif(QTC->CARGA > 0,Transform(QTC->CARGA,PesqPict("SF2","F2_VALFAT")),"0,00")
-		cICarga:= Iif(QTC->QTD_CARGA > 0,cValtoChar(Int(QTC->QTD_CARGA)),"0") 
-		cRet += U_GetWdGet(1, {"caminhao", "R$ "+cVCarga, "Pneu Carga", cICarga+Iif(val(cICarga)>1," pedidos"," pedido")+;
-		   ", "+ltrim(transform(QTC->SOMAQTDE, "@e 999,999,999"))+" unid.", "65", "50"})
-		QTC->(dbCloseArea())
-		
-		//peneu agricola
-		cQry:= "With "
-  		cQry+= "Agricola as ( "	
-		cQry+= "Select DISTINCT F2_DOC, (SUM(D2_VALBRUT) - SUM(D2_ICMSRET) - SUM(D2_VALIPI) - SUM(CASE WHEN F2_TPFRETE = 'C' THEN F2_FRETE else 0 END)) AS FATA, 1 AS QTDC, SUM(D2_QUANT) AS SUMD2QUANT  " 
-		cQry+= "From "+RetSqlName("SD2")+" SD2 "
-		cQry+= "Inner Join "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE " 
-		cQry+= "And F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' And SF2.D_E_L_E_T_ = ' ' And SF2.F2_VALFAT > 0"
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T'// Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " INNER JOIN "+RetSqlName("SBM")+" SBM ON SBM.BM_GRUPO = SD2.D2_GRUPO AND SBM.D_E_L_E_T_ = ' ' "
-			endif
-		endif
-
-		if HttpSession->Tipo = 'S'  //Supervisor acessa informações da sua equipe
-			cQry+= " INNER JOIN "+RetSqlName("ZDV")+" ZDV "
-			cQry+=  " ON SF2.F2_FILIAL = ZDV.ZDV_FILIAL AND ZDV_TABELA = 'SF2' AND F2_DOC+F2_SERIE = ZDV_CODERP AND ZDV.D_E_L_E_T_ = ' ' AND ZDV.ZDV_CODVEN = '"+cCodVend+"'"
-		endif
-
-		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
-		cQry+= "    Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = SUBSTRING(D2_FILIAL, 1,2) AND B1_COD = D2_COD AND B1_GRUPO IN ('27', '28') AND SB1.D_E_L_E_T_ = ' ' "
-		
-		if !Empty(cFilFlt)
-			cQry+= "	Where D2_FILIAL  = '"+cFilFlt+"' "
-		else
-			if !Empty(cFilImport)
-				cQry+= " INNER JOIN "+RetSqlName("ZC2")+" ZC2 "
-				cQry+=  " ON SD2.D2_FILIAL = ZC2.ZC2_FILVEN AND ZC2_FILIMP = '" + cFilImport + "' AND ZC2.D_E_L_E_T_ = ' ' "
-			endif
-			cQry+= "	Where D2_FILIAL  <> ' ' "
-		endif
-
-		if HttpSession->Tipo = 'D' .or. cFilGrp <> 'T' // Visao do diretor
-			if cFilGrp <> 'T'
-				cQry+= " AND SBM.BM_XPRDVE = '"+cFilGrp+"' "
-				// cQry+= "	AND exists(SELECT 1 FROM "+RetSqlName("SA3")+" SA3 "
-				// cQry+=        " WHERE D_E_L_E_T_ = ' ' AND SA3.A3_COD = SF2.F2_VEND1 AND SA3.A3_XPRDVEN = '"+cFilGrp+"')"
-			endif
-		elseif HttpSession->Tipo <> 'S' // Vendedor simples
-			cQry+= "		AND F2_VEND1 = '"+cCodVend+"' 
-		endif
-
-		cQry+= "And SD2.D_E_L_E_T_ = ' ' "	
-		cQry+= "GROUP BY F2_DOC ) "	
-		cQry+= "Select SUM(FATA) Agricola, SUM(QTDC) QTD_Agricola, SUM(SUMD2QUANT) SOMAQTDE "
-		cQry+= "FROM Agricola "
-
-	  	if Select("QTC") > 0
-			QTC->(dbCloseArea())
-		endif	
-		APWExOpenQuery(cQry,'QTC',.T.)
-
-		cVAgricola:= Iif(QTC->Agricola > 0,Transform(QTC->Agricola,PesqPict("SF2","F2_VALFAT")),"0,00")
-		cIAgricola:= Iif(QTC->QTD_Agricola > 0,cValtoChar(Int(QTC->QTD_Agricola)),"0") 
-		cRet += U_GetWdGet(1, {"trator", "R$ "+cVAgricola, "Pneu Agricola", cIAgricola+Iif(val(cIAgricola)>1," pedidos"," pedido")+;
-			", "+ltrim(transform(QTC->SOMAQTDE, "@e 999,999,999"))+" unid.", "65", "60"})
-		QTC->(dbCloseArea())
-	endif
 return cRet
 
 /*__________________________________________________________________________
@@ -956,93 +590,46 @@ return cRet
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 static function wgTopProd(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFilLimRes, cFilImport)
 	local cRet := ""
-	local cQry
-	local nLimDado := 10
-	local cGrpProd
-	local cCabTabs := ""
-	local cDetTabs := ""
-	local nIndGrp  := 1
-	local cAliTmp
+	local cQry := ""
+
 	// Itens mais vendidos
-	if !Empty(cFilLimRes) // Visao do diretor
-		nLimDado := val(cFilLimRes)
-	endif
-	cQry:= " WITH QRYVALORES AS ("
-	cQry+= " SELECT BM_GRUPO, D2_COD,  B1_DESC, SUM(D2_QUANT) AS QTD, SUM(D2_VALBRUT - D2_ICMSRET - D2_VALIPI - D2_VALFRE) AS SOMAVALOR "
-	cQry+= " FROM "+RetSqlName("SD2")+" SD2 " 
-	cQry+= " INNER JOIN "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE " 
-	cQry+= " AND F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' AND '"+cDataAte+"' AND SF2.D_E_L_E_T_ = ' ' AND SF2.F2_VALFAT > 0 "
-	cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-	cQry+= " ON F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
-	cQry+= " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = SUBSTRING(D2_FILIAL, 1,2) AND B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
-	cQry+= " INNER JOIN "+RetSqlName("SBM")+" SBM ON B1_GRUPO = BM_GRUPO AND SBM.D_E_L_E_T_ = ' ' "
-	cQry+= " AND F2_VEND1 = '"+cCodVend+"' 
-	cQry+= " AND SD2.D_E_L_E_T_ = ' ' "
-	cQry+= " GROUP BY D2_COD, B1_DESC, BM_GRUPO "
-	cQry+= "),"
-
-	cQry+= "QRYRES AS ("
-	cQry+= "SELECT D2_COD, B1_DESC, QTD, SOMAVALOR, " 
-	cQry+= " ROW_NUMBER() OVER (PARTITION BY BM_GRUPO ORDER BY SOMAVALOR DESC) AS POSICAO, " 
-	cQry+= " SUM(SOMAVALOR) OVER (PARTITION BY BM_GRUPO) AS SOMAGRUPO " 
-	cQry+= " FROM  QRYVALORES "
-	cQry+= ")"
-	cQry+= "SELECT D2_COD, B1_DESC, QTD, SOMAVALOR, POSICAO, SOMAGRUPO"
-	cQry+= " FROM  QRYRES "
-	cQry+= " WHERE POSICAO <= "+cValToChar(nLimDado)
-	cQry+= " ORDER BY "
-	cQry+= " SOMAGRUPO DESC, POSICAO "
-
-	if Select("QTV") > 0
+	cQry:= "Select TOP 10 D2_COD,  B1_DESC, SUM(D2_QUANT) AS QTD "
+	cQry+= "From "+RetSqlName("SD2")+" SD2 " 
+	cQry+= "Inner Join "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE " 
+	cQry+= "And F2_TIPO = 'N' And F2_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' And SF2.D_E_L_E_T_ = ' ' "
+	If HttpSession->Tipo = 'S' //Supervisor acessa informações da sua equipe
+		If !Empty(cVndFlt)
+			cQry+= "		AND F2_VEND1 = '"+cVndFlt+"' "
+		Else	
+			cQry+= "		AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+		Endif
+	Else 
+		cQry+= "		AND F2_VEND1 = '"+cCodVend+"' 
+	Endif    
+    cQry+= "    Inner Join "+RetSqlName("SB1")+" SB1 ON B1_FILIAL =  SUBSTRING(D2_FILIAL,1,4) AND B1_COD = D2_COD AND  SB1.D_E_L_E_T_ = ' ' "
+	cQry+= "	Where D2_FILIAL  <> '' "
+	cQry+= "And SD2.D_E_L_E_T_ = ' ' "
+	cQry+= "Group by D2_COD, B1_DESC "
+	cQry+= "Order by SUM(D2_QUANT) DESC "
+	conout("Qry top vendas --->> "+cqry)
+	If Select("QTV") > 0
 		QTV->(dbCloseArea())
-	endif
+	Endif	
+    APWExOpenQuery(cQry,'QTV',.T.)
 
-	cAliTmp = MPSysOpenQuery(cQry,'QTV')	
-
-	While (cAliTmp)->(!Eof())
-		cGrpProd := (cAliTmp)->BM_GRUPO
-		cCabTabs+= '<li' + iif(Empty(cCabTabs),' class="active"','') + '>'
-		cCabTabs+= '<a href="#tbGr' + cValToChar(nIndGrp) + '" data-toggle="tab"></i>' + iif(Empty((cAliTmp)->BM_GRUPO), "OUTROS", trim((cAliTmp)->BM_GRUPO)) + '</a>'
-		cCabTabs+= '</li>' + CRLF
-		cDetTabs +='<div id="tbGr' + cValToChar(nIndGrp++) + '" class="tab-pane ' + iif(Empty(cDetTabs),' active','') + '">'
-		While (cAliTmp)->(!Eof()) .and. (cAliTmp)->BM_GRUPO == cGrpProd
-			cDetTabs+= '<li>' + CRLF
-			cDetTabs+= '	<figure class="image rounded">'
-			cDetTabs+= '	<img src="assets/images/favicon.png" alt="pneu" class="img-circle">'
-			cDetTabs+= '	</figure>'
-			cDetTabs+= '	<div class="profile-info">'
-			cDetTabs+= '		<span class="title">'+(cAliTmp)->B1_DESC+'</span>'
-			cDetTabs+= '		<span class="message truncate">'+cvaltochar((cAliTmp)->QTD)+Iif((cAliTmp)->QTD > 1,' itens vendidos',' item vendido')
-			cDetTabs+= '&nbsp;, valor R$ '+ltrim(transform((cAliTmp)->SOMAVALOR, "@e 9,999,999.99"))+'</span>'
-			cDetTabs+= '	</div>'
-			cDetTabs+= '</li>' + CRLF
-			(cAliTmp)->(dbSkip())
-		enddo
-		cDetTabs +='</div>' + CRLF 
-	EndDo
-	(cAliTmp)->(dbCloseArea())
-
-	cRet += '<section class="panel">'
-	cRet += '	<header class="panel-heading">'
-	cRet += '		<h2 class="panel-title">'
-	cRet += '			<span class="va-middle">Produtos Mais Vendidos</span>'
-	cRet += '		</h2>'
-	cRet += '	</header>'
-	cRet += '	<div class="panel-body">'
-	cRet += '		<div class="content">'
-	cRet += '			<ul class="simple-user-list">'
-	cRet += '				<div class="tabs">'
-	cRet += '					<ul class="nav nav-tabs">' + CRLF
-	cRet += 					cCabTabs
-	cRet += '				</ul>' + CRLF
-	cRet += '				<div class="tab-content">'
-	cRet += 					cDetTabs
-	cRet += '				</div>'
-	cRet += 			'</div>'
-	cRet += '			</ul>'
-	cRet += '		</div>'
-	cRet += '	</div>'
-	cRet += '</section>'
+	While QTV->(!Eof())
+		cRet+= '<li>'
+		cRet+= '	<figure class="image rounded">'
+		cRet+= '	<img src="/images/prod.jpg" alt="" class="img-circle">'
+		cRet+= '	</figure>'
+		cRet+= '	<div class="profile-info">'
+		cRet+= '		<span class="title">'+QTV->B1_DESC+'</span>'
+		cRet+= '		<span class="message truncate">'+cvaltochar(QTV->QTD)+Iif(QTV->QTD > 1,' itens vendidos',' item vendido')+'</span>'
+		cRet+= '	</div>'
+		cRet+= '</li>'
+	    QTV->(dbSkip())
+	End
+	QTV->(dbCloseArea())
 return cRet
 
 /*__________________________________________________________________________
@@ -1071,13 +658,13 @@ static function wgMesAMes(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFilImp
 	cQry+= " AND F2_SERIE = D2_SERIE "
 	cQry+= " AND SD2.D_E_L_E_T_ = ' '  "
 	cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-	cQry+= " ON F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry+= " ON A1_COD = F2_CLIENTE AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' AND SF2.F2_FILIAL = SA1.A1_FILIAL "
 	cQry+= " And F2_TIPO = 'N' And SF2.F2_VALFAT > 0 "
 	cQry+= " AND F2_VEND1 = '"+cCodVend+"' 
-	cQry+= "And F2_EMISSAO between '"+cPerDe+"' and '"+cPerAte+"' "
-	cQry+= "And SF2.D_E_L_E_T_ = ' ' " 
-	cQry+= "Group by substring(F2_EMISSAO,1,6)" 
-	cQry+= "Order by substring(F2_EMISSAO,1,6)" 
+	cQry+= " And F2_EMISSAO between '"+cPerDe+"' and '"+cPerAte+"' "
+	cQry+= " And SF2.D_E_L_E_T_ = ' ' " 
+	cQry+= " Group by substring(F2_EMISSAO,1,6)" 
+	cQry+= " Order by substring(F2_EMISSAO,1,6)" 
 	
 	if Select("QMM") > 0
 		QMM->(dbCloseArea())
@@ -1158,7 +745,7 @@ static function wgTopVendSemCategoria(cFilFlt, cCodVend, cDataDe, cDataAte, cFil
 		
 		cQry+= "Inner Join "+RetSqlName("SA3")+" SA3 ON A3_FILIAL = '"+xFilial("SA3")+"' and A3_COD = F2_VEND1 AND SA3.D_E_L_E_T_ = ' ' "
 		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
+		cQry+=  " ON SA1.A1_FILIAL = F2_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
 		
 		if !Empty(cFilFlt)
 			cQry+= "	Where F2_FILIAL  = '"+cFilFlt+"' "
@@ -1265,7 +852,7 @@ static function wgTopVend(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFilLim
 		
 		cQry+= "Inner Join "+RetSqlName("SA3")+" SA3 ON A3_FILIAL = '"+xFilial("SA3")+"' and A3_COD = F2_VEND1 AND SA3.D_E_L_E_T_ = ' ' "
 		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
+		cQry+=  " ON SA1.A1_FILIAL = F2_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
 		
 		if !Empty(cFilFlt)
 			cQry+= "	Where F2_FILIAL  = '"+cFilFlt+"' "
@@ -1386,7 +973,7 @@ static function wgTopComissao(cFilFlt, cCodVend, cDataDe, cDataAte,cFilGrp, cFil
 		
 		cQry := " Select TOP("+cvaltochar(nLimDado)+") E3_VEND, A3_NOME, FORMAT(SUM(E3_COMIS), 'C', 'pt-br') AS VALOR "
 		cQry += " FROM "+RetSqlName("SE3")+" SE3 "
-		cQry += " INNER JOIN "+ RetSqlName("SA1")+" SA1 ON A1_FILIAL = '"+xFilial("SA1")+"' And A1_COD = E3_CODCLI "
+		cQry += " INNER JOIN "+ RetSqlName("SA1")+" SA1 ON A1_FILIAL = E3_FILIAL And A1_COD = E3_CODCLI "
 		cQry += " AND A1_LOJA = E3_LOJA And SA1.D_E_L_E_T_= ' ' "
 		cQry += " INNER JOIN SA3010 SA3 ON A3_COD = E3_VEND AND SA3.D_E_L_E_T_ = '' "
 		cQry += " LEFT JOIN "+ RetSqlName("SE1")+" SE1 ON E1_FILIAL = E3_FILIAL and E1_PREFIXO = E3_PREFIXO and E1_NUM = E3_NUM "
@@ -1467,7 +1054,7 @@ static function wgTopInadimplentes(cFilFlt, cCodVend, cDataDe, cDataAte,cFilGrp,
 		// Buscar os Títulos
 		cQry += " SELECT TOP("+cvaltochar(nLimDado)+") E1_CLIENTE, A1_CGC, E1_NOMCLI, SUM(E1_SALDO) AS E1_SALDO, A1_EST "
 		cQry += " FROM "+RetSqlName("SE1")+" SE1 "
-		cQry += " INNER JOIN "+ RetSqlName("SA1")+" SA1 ON  A1_COD = E1_CLIENTE AND A1_LOJA = E1_LOJA "
+		cQry += " INNER JOIN "+ RetSqlName("SA1")+" SA1 ON A1_FILIAL = E1_FILIAL AND A1_COD = E1_CLIENTE AND A1_LOJA = E1_LOJA "
 		If HttpSession->Tipo $ 'SG' //Supervisor acessa todos os clientes da sua equipe
 			cQry+= " AND A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
 		Elseif  HttpSession->Tipo $ 'V'
@@ -1571,7 +1158,7 @@ static function wgTopFiliais(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFil
 		endif
 
 		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
+		cQry+=  " ON SA1.A1_FILIAL = F2_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
 		cQry+= "Inner Join "+RetSqlName("SA3")+" SA3 ON A3_FILIAL = '"+xFilial("SA3")+"' and A3_COD = F2_VEND1 AND SA3.D_E_L_E_T_ = ' ' "
 		cQry+= "Inner Join "+RetSqlName("Z00")+" Z00 ON Z00_FILIAL = F2_FILIAL and Z00.D_E_L_E_T_ = ' ' "
 		
@@ -1677,7 +1264,7 @@ static function wgTopEstados(cFilFlt, cCodVend, cDataDe, cDataAte, cFilGrp, cFil
 		endif
 		
 		cQry+= " INNER JOIN "+RetSqlName("SA1")+" SA1 "
-		cQry+=  " ON SA1.A1_FILIAL = '"+xFilial("SA1")+"' AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
+		cQry+=  " ON SA1.A1_FILIAL = F2_FILIAL AND F2_CLIENTE = A1_COD AND F2_LOJA = A1_LOJA AND SA1.A1_GRPAUTO <> '1' AND SA1.D_E_L_E_T_ = ' ' "
 		cQry+= "Inner Join "+RetSqlName("SA3")+" SA3 ON A3_FILIAL = '"+xFilial("SA3")+"' and A3_COD = F2_VEND1 AND SA3.D_E_L_E_T_ = ' ' "
 		
 		if !Empty(cFilFlt)

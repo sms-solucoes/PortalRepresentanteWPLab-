@@ -155,7 +155,7 @@ Web Extended Init cHtml Start U_inSite()
     // cTopo+= '				</select>'
     // cTopo+= '			</div>'
     // cTopo+= '		</div>'
-  	cTopo+= '		<label class="col-md-1 control-label">Emissão De:</label>'
+  	cTopo+= '		<label class="col-md-2 control-label">Emissão De:</label>'
     cTopo+= '  		<div class="col-md-3">'
 	cTopo+= '		 	<div class="input-group">'
     cTopo+= '    			<span class="input-group-addon">'
@@ -167,7 +167,7 @@ Web Extended Init cHtml Start U_inSite()
     cTopo+= '			</div>'
     cTopo+= '		</div>'       
   
-    cTopo+= '		<label class="col-md-1 control-label">Emissão Até:</label>'
+    cTopo+= '		<label class="col-md-2 control-label">Emissão Até:</label>'
 	cTopo+= '		<div class="col-md-3">'
 	cTopo+= '			<div class="input-group">'
     cTopo+= '				<span class="input-group-addon">'
@@ -183,7 +183,7 @@ Web Extended Init cHtml Start U_inSite()
     cTopo+= '	</form>'
 	cTopo+= '	</div>'
 	cTopo+= '</div>'
-	 	
+
 	cQry := " SELECT DISTINCT SC5.C5_FILIAL, "
 	cQry += " SC5.C5_NUM, "
 	cQry += " SC5.C5_CLIENTE, "
@@ -192,9 +192,9 @@ Web Extended Init cHtml Start U_inSite()
 	cQry += " SA1.A1_EMAIL, "
 	cQry += " SA1.A1_CGC, "
 	cQry += " SC5.C5_EMISSAO, "
-	cQry += " SC5.C5_NOTA /*, SCJ.CJ_STATUS */" //  R_E_CNO C5RECNO
+	cQry += " SC5.C5_NOTA , SC5.R_E_C_N_O_ C5RECNO "
 	cQry += " FROM "+RetSqlName("SC5")+" SC5 " 
-	cQry += " INNER Join "+RetSqlName("SA1")+" SA1 ON A1_COD = SC5.C5_CLIENTE AND A1_LOJA = SC5.C5_LOJACLI AND SA1.D_E_L_E_T_ = ' ' " 
+	cQry += " INNER Join "+RetSqlName("SA1")+" SA1 ON A1_FILIAL = SC5.C5_FILIAL AND A1_COD = SC5.C5_CLIENTE AND A1_LOJA = SC5.C5_LOJACLI AND SA1.D_E_L_E_T_ = ' ' " 
 	cQry += " WHERE C5_TIPO = 'N'" // AND F2_FILIAL = '"+xFilial("SF2")+"'
 	cQry += " AND SC5.D_E_L_E_T_ = ' ' "
 	cQry += " AND SC5.C5_VEND1 = '"+cVendLogin+"' "
@@ -226,7 +226,7 @@ Web Extended Init cHtml Start U_inSite()
 		// 	oObjLog:saveMsg("Registro "+QRY->CJ_NUM)
 		// endif
 		//Atualiza os controles do grid
-		cLink:= "U_ViewPedido.apw?PR="+cCodLogin+"&rec="+QRY->C5_NUM
+		cLink:= "U_ViewPedido.apw?PR="+cCodLogin+"&rec="+cvaltochar(QRY->C5RECNO)
 		// clink:="#"
 		cLinkDet  := '"onclick="window.document.location='+"'"+cLink+"&opc=view'"+';"'
 		cItens+='<tr>'

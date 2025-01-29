@@ -120,11 +120,20 @@
 												<div id="orc-informar" class="tab-pane active">
 													<!-- linha 1: dados da empresa -->
 													<div class="row form-group">
-														<div class="col-lg-4">
+														<div class="col-lg-2">
 															<label class="control-label">Nota Fiscal</label>
 															<input id="NOTA_FISCAL" name="NOTA_FISCAL" class="form-control" value="<%=cNFSerie%>" readonly>
 														</div> 
-														<div class="col-lg-6">
+														<div class="col-lg-2">
+															<label class="control-label">Emissão</label>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	<i class="fa fa-calendar"></i>
+																</span>
+																<input type="text" id="F2_EMISSAO" name="F2_EMISSAO" class="form-control" value="<%=cEmissao%>" disabled>
+															</div>
+														</div>
+														<div class="col-lg-8">
 															<label class="control-label">Chave NFE</label>
 															<input id="F2_CHVNFE" name="F2_CHVNFE" class="form-control" value="<%=cChaveNF%>" readonly>
 														</div>
@@ -134,18 +143,13 @@
 													<div class="mb-md hidden-lg hidden-xl"></div>
 
 													<div class="row form-group">			    
-														<div class="col-lg-6">
+														<div class="col-lg-8">
 															<label class="control-label">Cliente</label>
 															<%=cCliente%>
 														</div> 
 														<div class="col-lg-4">
-															<label class="control-label">Emissão</label>
-															<div class="input-group">
-																<span class="input-group-addon">
-																	<i class="fa fa-calendar"></i>
-																</span>
-																<input type="text" id="F2_EMISSAO" name="F2_EMISSAO" class="form-control" value="<%=cEmissao%>" disabled>
-															</div>
+															<label class="control-label">Condição de Pagamento</label>
+															<%=cCondPag%>
 														</div>
 													</div>
 														
@@ -153,24 +157,19 @@
 													<div class="mb-md hidden-lg hidden-xl"></div>
 													
 													<!-- linha 3: input  -->
-													<div class="row form-group">	              
-													 	<div class="col-lg-2">
-															<label class="control-label">Condição de Pagamento</label>
-															<%=cCondPag%>
-														</div>
-														              
-													 	<div class="col-lg-2">
+													<div class="row form-group">
+													 	<div class="col-lg-3">
 															<label class="control-label">Tipo de Frete</label>
 															<%=cTpFrete%>
 														</div>
 													              
-													 	<div class="col-lg-2">
+													 	<div class="col-lg-3">
 															<label class="control-label">Valor do Frete</label>
 															<input id="F2_FRETE" name="F2_FRETE" class="form-control money" placeholder="0,00" value="<%=cValFre%>" disabled>
 														</div>
 													    
 																
-														<div class="col-lg-4">
+														<div class="col-lg-6">
 															<label class="control-label">Transportadora</label>
 															<input id="F2_TRANSP" name="F2_TRANSP" class="form-control" value="<%=cTransp%>" disabled>
 														</div>
@@ -235,7 +234,7 @@
 																			<label class="">Frete&nbsp;</label>
 																			<input class="form-control" id="TOTAL_FRETE" name="TOTAL_FRETE"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTFrete,"@E 999,999,999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">Total&nbsp;</label>
+																			<label class="text-weight-extrabold">Total&nbsp;</label>
 																			<input class="form-control" id="TOTAL_ORC" name="TOTAL_ORC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
 																	    </div>
 																</div>

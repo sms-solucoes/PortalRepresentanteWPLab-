@@ -88,17 +88,21 @@ Web Extended Init cHtml Start U_inSite()
 	
 	//Atualiza as variáveis
 	cEndServ := GetMv('MV_WFBRWSR')
-	cNumSC5 := HttpGet->rec 
-	cNFSerie := cNumSC5
+	nRECSC5 := val(HttpGet->rec) 
 	
-	//Posiciona na Nota Fiscal
-	If !Empty(cNumSC5)
-		SC5->(dbSetOrder(1))  //
-		SC5->(dbSeek(xFilial("SC5")+cNumSC5))
-		
-		dbSelectArea("SC6")
-		SC6->(dbSeek(xFilial("SC6")+SC6->C6_NOTA+SC6->C6_SERIE))
-	Endif	 
+	//Posiciona no pedido
+	SC5->(dbGoto(nRECSC5))
+	cNumSC5:= SC5->C5_NUM
+
+	//Troca de filial
+	u_PTChgFil(SC5->C5_FILIAL)
+	
+	dbSelectArea("SC5")
+	SC5->(dbGoTo(nRECSC5))
+
+	dbSelectArea("SC6")
+	dbSetOrder(1)
+	SC6->(dbSeek(SC5->C5_FILIAL+SC5->C5_NUM))
 	// if !empty(SC5->(fieldpos("C5_XOCCLI")))
 	// 	cOCCliente := SC5->C5_XOCCLI
 	// endif
@@ -119,19 +123,19 @@ Web Extended Init cHtml Start U_inSite()
 				{"Quantidade","C6_QTDVEN","80px","right","C",.F.,.T.,.F.,"0"},;
 				{"V.Unitário","C6_PRCVEN","80px","right","D",.F.,.F.,.T.,"0,00000"},;
 				{"Total","C6_VALOR","80px","right","E",.F.,.F.,.T.,"0,00"},;
-				{"Ord.Compra","C6_PEDCOM","80px","left","E",.F.,.F.,.T.,""},;
+				{"Ord.Compra","C6_NUMPCOM","80px","left","E",.F.,.F.,.T.,""},;
 				{"Status","C6_STATUS","80px","left","E",.F.,.F.,.T.,""};
 			  }			
 
 
 
 		    
-	// // Cria o cabeçalho dos Itens
+	//Cria o cabeçalho dos Itens
 	For nLin := 1 to Len(aItens)
 		cPEDCabec += '<th style="width: '+aItens[nLin,3]+'; text-align: '+aItens[nLin,4]+';">'+aItens[nLin][1]+'</th>'
 	Next 
 	
-	// //Tipo de frete
+	//Tipo de frete
 	aTpFrete:= {{"S","Sem Frete"},{"C","CIF"},{"F","FOB"}}
 	cTpFrete:='<select class="form-control mb-md" name="F2_TPFRETE" id="F2_TPFRETE" value="'+SC5->C5_TPFRETE+'" disabled>'
 
@@ -153,9 +157,9 @@ Web Extended Init cHtml Start U_inSite()
 	cTabPreco+='</select>'	
 	
 	//Transportadora
-	cTransp:= SC5->C5_TRANSP+' - '+Alltrim(Posicione("SA4",1,xFilial("SA4")+SC5->C5_TRANSP,"A4_NREDUZ"))
+	cTransp:= SC5->C5_TRANSP+' - '+Alltrim(Posicione("SA4",1,"      "+SC5->C5_TRANSP,"A4_NREDUZ"))
 		
-    // //Condição de Pagamento
+    //Condição de Pagamento
 	cCondPag:='<select class="form-control mb-md" name="F2_COND" id="F2_COND" required="" aria-required="true" disabled>'
 	cCondPag+='	<option value="'+SC5->C5_CONDPAG+'">'+SC5->C5_CONDPAG+" - "+Posicione("SE4",1,xFilial("SE4")+SC5->C5_CONDPAG,"E4_DESCRI")+'</option>'		
 	cCondPag+='</select>'	                             
@@ -171,14 +175,14 @@ Web Extended Init cHtml Start U_inSite()
 	nTFrete:= SC5->C5_FRETE
 	dbSelectArea("SC6")
 	SC6->(dbSetOrder(1))
-	SC6->(dbSeek(xFilial("SC6")+SC5->C5_NUM))
+	SC6->(dbSeek(SC5->C5_FILIAL+SC5->C5_NUM))
 	While SC6->(!Eof()) .and. SC6->C6_NUM = SC5->C5_NUM
 		nItens++
 		cPEDItens += '<tr class="odd" id="linha'+StrZero(nItens,2)+'">'
 		
 		nTQtdItem += SC6->C6_QTDVEN
 		nTVlrUnit +=  SC6->C6_QTDVEN * SC6->C6_PRCVEN
-		nTTotalDes += nTVlrUnit * (SA1->A1_XTRADE / 100)
+		nTTotalDes += (SC6->C6_QTDVEN * SC6->C6_PRCVEN) * (SC5->C5_DESCFI / 100)
 		nTTotal   := nTVlrUnit - nTTotalDes
 		// nTTotal:=  nTVlrUnit + nTFrete
 		For nLin := 1 to Len(aItens)
@@ -199,8 +203,9 @@ Web Extended Init cHtml Start U_inSite()
 						xValue := Alltrim(PadR(TransForm(SC6->&(aItens[nLin][2]),"@E 999,999,999.99"),14))
 				Case aItens[nLin][2] == 'C6_VALOR'
 						xValue := Alltrim(PadR(TransForm(SC6->C6_VALOR,"@E 999,999,999.99"),14))
-				Case aItens[nLin][2] == 'C6_PEDCOM'
-						xValue := dtoc(SC6->C6_PEDCOM)
+				Case aItens[nLin][2] == 'C6_NUMPCOM'
+						xValue := SC6->C6_NUMPCOM
+						//xValue := dtoc(SC6->C6_PEDCOM)
 				Case aItens[nLin][2] == 'C6_STATUS'
 						if SC6->C6_QTDENT = SC6->C6_QTDVEN .or. C6_BLQ = "R"
 							xValue := "Faturado"

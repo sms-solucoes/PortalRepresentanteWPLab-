@@ -174,11 +174,10 @@ Web Extended Init cHtml Start U_inSite()
 		//Busca o acumulado de vendas para o período
 		cQryA := " SELECT F2_CLIENTE CLIENTE, F2_LOJA LOJA, A1_NOME NOME, SUM(F2_VALFAT) VALOR, A1_VEND "
 		cQryA += " FROM "+RetSqlName("SF2")+"  SF2 "
-		cQryA += " INNER JOIN "+RetSqlName("SA1")+"  SA1 ON A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+		cQryA += " INNER JOIN "+RetSqlName("SA1")+"  SA1 ON A1_FILIAL = F2_FILIAL AND A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 		If HttpSession->Tipo = 'S' //Supervisor acessa todas as informações da sua equipe
 	    	cQryA+= " WHERE F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
 		Else
-//			cQryA += " WHERE F2_VEND1 = '"+HttpSession->CodVend+ "' "
 			cQryA += " WHERE F2_VEND1 = '"+cVendLogin+ "' "
 		Endif
 		cQryA += " AND F2_EMISSAO BETWEEN '"+cDataDe+"' and '"+cDataAte+"' " 
@@ -351,13 +350,12 @@ Web Extended Init cHtml Start U_inSite()
 	cQry += " FROM "+RetSqlName("SD2")+"  SD2 "
 	cQry += " INNER JOIN "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE AND F2_CLIENTE = D2_CLIENTE "
 	cQry += " 	AND F2_LOJA = D2_LOJA  AND SF2.D_E_L_E_T_ = ' ' "
-	// If HttpSession->Tipo = "S" //Supervisor
-	// 	cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
-	// Else
-//		cQry += "   AND F2_VEND1 = '"+HttpSession->CodVend+"' "
+	If HttpSession->Tipo = "S" //Supervisor
+	 	cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+	Else
 		cQry += "   AND F2_VEND1 = '"+cVendLogin+"' "
-	// Endif
-	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = '"+xFilial("SB1")+"' AND B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
+	Endif
+	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_FILIAL = SUBSTRING(D2_FILIAL,1,4) AND B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE D2_EMISSAO BETWEEN '"+cDataDe+"' and '"+cDataAte+"' " 
 	cQry += " AND D2_CLIENTE = '"+cCliente+"' " 
 	cQry += " AND D2_LOJA = '"+cLoja+"' " 
@@ -370,7 +368,8 @@ Web Extended Init cHtml Start U_inSite()
 	Endif
 	
 	cQry := ChangeQuery(cQry)
-	
+	conout("@@@ query7:" + cQry)
+
 	If Select("QRY") > 0
 		QRY->(dbCloseArea())
 	Endif	

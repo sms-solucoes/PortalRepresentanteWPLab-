@@ -94,12 +94,12 @@ Web Extended Init cHtml Start U_inSite()
 	[10] - Hidden
 	[11] - MaxLength
 	*/
-	aItens := {	{"Item","C6_ITEM","70px","text-left","C",.F.,.F.,.F.,"",.F.,""},;  
-				{"Produto","C6_PRODUTO","500px","text-left","C",.T.,.T.,.F.,"Selecione...",.F.,""},;
+	aItens := {	{"Item","C6_ITEM","*","text-left","C",.F.,.F.,.F.,"",.F.,""},;  
+				{"Produto","C6_PRODUTO","280px","text-left","C",.T.,.T.,.F.,"Selecione...",.F.,""},;
 				{"Un. Medida","C6_UM","*","text-right","C",.F.,.T.,.F.,"",.F.,""},;
 				{"Quantidade","C6_QTDVEN","*","text-right","N",.T.,.T.,.F.,"0",.F.,""},;
 				{"V. Tabela","C6_PRCVEN","*","text-right","N",.F.,.F.,.T.,"0,00",.F.,""},;
-				{"Total","C6_VALOR","150px","text-right","N",.F.,.F.,.T.,"0,00",.F.,""},;
+				{"Total","C6_VALOR","100px","text-right","N",.F.,.F.,.T.,"0,00",.F.,""},;
 				{"Desconto (%)","C6_DESCONT","*","text-right","N",.T.,.F.,.F.,"0",.F.,""},;
 				{"Qtd. Bônus","C6_BONUS","*","text-right","N",.T.,.T.,.F.,"0",.F.,""},;
 				{"Ord. Compra","C6_NUMPCOM","*","text-right","C",.T.,.T.,.F.,"",.F.,""},;
@@ -155,7 +155,7 @@ Web Extended Init cHtml Start U_inSite()
 	//Aplicacao =================================================
 	aApli:= {{"BO","Boleto"},{"NF","Nota Fiscal"},{"CC","Conta Corrente"}}
 	cAplicacao:='<select data-plugin-selectTwo class="form-control poulate mb-md" data-plugin-options='+"'"+'{"minimumResultsForSearch": "-1"}'+"'"'
-	cAplicacao+=' name="C5_XAPLIC" id="C5_XAPLIC" onchange="javascript:validaAplicacao(), atualizaMsgNota(this)">'
+	cAplicacao+=' name="C5_XAPLIC" id="C5_XAPLIC" onchange="javascript:validaAplicacao(), atualizaMsgNota()">'
 	For f:= 1 to Len(aApli)
 		cAplicacao+='	<option value="'+aApli[f,1]+'">'+aApli[f,2]+'</option>'
 	Next
@@ -189,7 +189,7 @@ Web Extended Init cHtml Start U_inSite()
 				   //Cria o select para o produto
 				   	cOrcItens +='<select class="selectpicker" name="C6_PRODUTO'+cItem+'" id="C6_PRODUTO'+cItem+'" '
 					cOrcItens += Iif(aItens[nLin][7],'required="" aria-required="true" ','')+' data-live-search="true" '                                           
-					cOrcItens +='onchange="javascript:gatProduto($(this))" data-width="500px" value="">' //style="size:4" data-width="90%" style="height:90%"
+					cOrcItens +='onchange="javascript:gatProduto($(this))" data-width="280px" value="">' //style="size:4" data-width="90%" style="height:90%"
 					cOrcItens +='	<option value="">Selecione...</option>'
 					cOrcItens+='</select>'
 				Else
@@ -363,7 +363,7 @@ Web Extended Init cHtml Start U_inSite()
 	nTotSC6 	:= val(HttpPost->PROXIMO)
     cCliente	:= Left(HttpPost->C5_CLIENTE,6)
 	cLoja		:= Right(HttpPost->C5_CLIENTE,6)
-	cTrade		:= HttpPost->C5_XTRADE
+	cTrade		:= val(HttpPost->C5_XTRADE)
 	cObsInterna	:= HttpPost->C5_XOBSINT
 	cObsNota	:= HttpPost->C5_XMSGNF
 
@@ -396,10 +396,10 @@ Web Extended Init cHtml Start U_inSite()
 
 	//Monta o cabeçalho
 	// cNumSC5 := GetSxeNum("SC5", "C5_NUM")
-	If !Empty(cNumSC5)
-		aadd(aCabSC5,{"C5_NUM",cNumSC5,Nil})
-		nOpc := 4
-	EndIf
+	// If !Empty(cNumSC5)
+	// 	aadd(aCabSC5,{"C5_NUM",cNumSC5,Nil})
+	// 	nOpc := 4
+	// EndIf
 
 	aadd(aCabSC5,{"C5_VEND1",  cVendedor, Nil})
 	aadd(aCabSC5,{"C5_CLIENTE",SA1->A1_COD,Nil})
@@ -414,6 +414,10 @@ Web Extended Init cHtml Start U_inSite()
 	aadd(aCabSC5,{"C5_XMENNOT" ,cObsNota ,Nil})
 	aadd(aCabSC5,{"C5_XOBSINT" ,cObsInterna ,Nil})
 	aadd(aCabSC5,{"C5_XTRADE" ,cTrade ,Nil})
+
+	if cAplicacao = 'BO'
+		aadd(aCabSC5,{"C5_DESCFI" ,cTrade ,Nil})
+	endif
 
     //Monta os itens
 	dbSelectArea("SB1")
@@ -441,6 +445,7 @@ Web Extended Init cHtml Start U_inSite()
 					aadd(aLinhaSC5,{"C6_PRODUTO",SB1->B1_COD,Nil})
 					aadd(aLinhaSC5,{"C6_LOCAL"	, SB1->B1_LOCPAD,Nil})
 					aadd(aLinhaSC5,{"C6_QTDVEN" ,nQuantSC6,Nil})
+					// aadd(aLinhaSC5,{"C6_QTDENT" ,nQuantSC6,Nil})
 					aadd(aLinhaSC5,{"C6_DESCONT" ,nDescont,Nil})
 					aadd(aLinhaSC5,{"C6_OPER" 	,"01", Nil}) 
 					//aadd(aLinhaSC5,{"C6_TES" 	, "", Nil}) 
@@ -455,6 +460,7 @@ Web Extended Init cHtml Start U_inSite()
 						aadd(aLinhaSC5Bonus,{"C6_PRODUTO",SB1->B1_COD,Nil})
 						aadd(aLinhaSC5Bonus,{"C6_LOCAL"	, SB1->B1_LOCPAD,Nil})
 						aadd(aLinhaSC5Bonus,{"C6_QTDVEN" ,val(nBonus),Nil})
+						// aadd(aLinhaSC5Bonus,{"C6_QTDENT" ,val(nBonus),Nil})
 						aadd(aLinhaSC5Bonus,{"C6_DESCONT" ,0,Nil})
 						aadd(aLinhaSC5Bonus,{"C6_OPER" 	,"01", Nil}) 
 						//aadd(aLinhaSC5Bonus,{"C6_TES" 	, "", Nil}) 
@@ -475,7 +481,7 @@ Web Extended Init cHtml Start U_inSite()
 		Next
 		cCab := varinfo("cab", aCabSC5, , .f., .f. ) 
 		cCab += varinfo("aItemSC5", aItemSC5, , .f., .f. ) 
-		// memowrite("\temp\salvoarm.txt", cCab)
+		 memowrite("\temp\salvoarm.txt", cCab)
 
 		//Chama execauto para inclusão do pedido
 		If Len(aCabSC5) > 0 .and. Len(aItemSC5) > 0 .and. lRet

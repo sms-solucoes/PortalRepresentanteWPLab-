@@ -150,14 +150,14 @@ Web Extended Init cHtml Start U_inSite()
     cQry := " SELECT D2_FILIAL, D2_EMISSAO, D2_DOC, D2_SERIE, D2_COD, B1_DESC, D2_QUANT, D2_PRCVEN, D2_TOTAL, D2_VALBRUT, "
 	cQry += " D2_CLIENTE, D2_LOJA, A1_NOME, A1_NREDUZ, A1_DDD, A1_TEL, F2_VEND1 "
 	cQry += " FROM "+RetSqlName("SD2")+"  SD2 "
-	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_COD = D2_CLIENTE AND A1_LOJA = D2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_FILIAL = D2_FILIAL AND A1_COD = D2_CLIENTE AND A1_LOJA = D2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry += " INNER JOIN "+RetSqlName("SF2")+" SF2 ON F2_FILIAL = D2_FILIAL AND F2_DOC = D2_DOC AND F2_SERIE = D2_SERIE AND F2_CLIENTE = D2_CLIENTE "
 	cQry += " 	AND F2_LOJA = D2_LOJA AND SF2.D_E_L_E_T_ = ' ' "
-    // If HttpSession->Tipo = "S" //Supervisor
-	// 	cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
-	// Else
-		cQry += "   AND F2_VEND1 = '"+HttpSession->CodVend+"' "
-	// Endif
+    If HttpSession->Tipo = "S" //Supervisor
+		cQry += "   AND F2_VEND1 in "+FormatIn(HttpSession->Equipe,"|")+" "
+	Else
+		cQry += "   AND F2_VEND1 = '"+cVendLogin+"' "
+	Endif
 	cQry += " INNER JOIN "+RetSqlName("SB1")+" SB1 ON B1_COD = D2_COD AND SB1.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE D2_EMISSAO BETWEEN '"+cDataDe+"' and '"+cDataAte+"' " 
 	

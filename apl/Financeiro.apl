@@ -93,7 +93,7 @@ Web Extended Init cHtml Start U_inSite()
 	
     //Filtros
     cTopo:= '<div class="row form-group">'
-    cTopo+= '	<div class="col-sm-12" align="right">'
+    cTopo+= '	<div class="col-sm-12" align="left">'
     cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="U_Financeiro.apw?PR='+cCodLogin+'">'
     
     cTopo+= '		<label class="col-md-2 control-label">Tipo Data:</label>'
@@ -143,12 +143,12 @@ Web Extended Init cHtml Start U_inSite()
 	cQry := " SELECT DISTINCT case when e1_saldo>0 then 'ABERTO' else 'BAIXADO' end STATUS, E1_FILIAL, E1_NUM, E1_CLIENTE, E1_LOJA, E1_PREFIXO, E1_PARCELA, E1_EMISSAO, "
 	cQry += " E1_VENCREA, E1_TIPO, E1_VALOR, E1_SALDO, E1_NUMBCO, E1_PORTADO, E1_ACRESC, E1_VALJUR, E1_DECRESC, SE1.R_E_C_N_O_ NUMREC, A1_CGC, A1_NREDUZ, A1_VEND VEND "
 	cQry += "FROM "+RetSqlName("SE1")+" SE1 "
-	cQry += " JOIN " + RetSqlName("SA1")+" SA1 ON (E1_CLIENTE = A1_COD AND E1_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ')"
+	cQry += " JOIN " + RetSqlName("SA1")+" SA1 ON E1_FILIAL = A1_FILIAL AND E1_CLIENTE = A1_COD AND E1_LOJA = A1_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	If HttpSession->Tipo = 'S' //Supervisor acessa todas as informações da sua equipe
     	cQry+= " WHERE A1_VEND in "+FormatIn(HttpSession->Equipe,"|")+" "
 	Else	
 //		cQry+= " WHERE A1_VEND ='"+HttpSession->CodVend+ "' "
-		cQry+= " WHERE A1_VEND ='"+cVendLogin+ "' "
+		cQry+= " WHERE A1_VEND ='"+cCodLogin+ "' "
 	Endif	
 	If cFiltro = '1' //Emissão
 		cQry+= " AND E1_EMISSAO between '"+cDataDe+"' and '"+cDataAte+"' "

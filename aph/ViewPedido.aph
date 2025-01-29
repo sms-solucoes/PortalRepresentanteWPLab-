@@ -165,7 +165,7 @@
 													<div class="mb-md hidden-lg hidden-xl"></div>
 
 													<div class="row form-group">			    
-														<div class="col-lg-6">
+														<div class="col-lg-8">
 															<label class="control-label">Cliente</label>
 															<%=clCliente%>
 														</div> 
@@ -180,7 +180,7 @@
 													
 													<!-- linha 3: input  -->
 													<div class="row form-group">
-													 	<div class="col-lg-2">
+													 	<div class="col-lg-3">
 															<label class="control-label">Condição de Pagamento</label>
 															<%=cCondPag%>
 														</div>
@@ -196,7 +196,7 @@
 														</div>
 													    
 																
-														<div class="col-lg-4">
+														<div class="col-lg-5">
 															<label class="control-label">Transportadora</label>
 															<input id="C5_TRANSP" name="C5_TRANSP" class="form-control" value="<%=cTransp%>" disabled>
 														</div>
@@ -223,7 +223,7 @@
 													</div>	
 													<br>
                                                      
-             										<!-- botÃµes com aÃ§Ãµes na tabela dos itens -->
+             										<!-- botões com ações na tabela dos itens -->
 													<%=cBtnItens%>
 
                                                     <br>
@@ -234,23 +234,23 @@
 													<div class="col-lg-13">
 														<section class="panel">
 															<header class="panel-heading">
-																<h2 class="panel-title">Totais da Nota Fiscal</h2>
+																<h2 class="panel-title">Totais do Pedido</h2>
 															</header>
 															<div class="panel-body">
 															
 																<div class="form-inline" align="center">
 																	<div class="row">
 																		<div class="col-sm-12">	      
-																			<label class="">QUANT:&nbsp;</label>
+																			<label class="">Quantidade&nbsp;</label>
 																			<input class="form-control text-right" id="TOTAL_QITENS" name="TOTAL_QITENS"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTQtdItem,"@E 999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">VLR TOTAL:&nbsp;</label>
+																			<label class="">Total&nbsp;</label>
 																			<input class="form-control text-right" id="TOTAL_PED" name="TOTAL_PED"  placeholder="0,00" disabled="" type="text" value=<%=Transform(nTVlrUnit,"@E 999,999,999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">VLR DESC:&nbsp;</label>
+																			<label class="">Desconto&nbsp;</label>
 																			<input class="form-control text-right" id="TOTAL_DESC" name="TOTAL_DESC" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotalDes,"@E 999,999,999,999.99")%>></input>
 																			&nbsp;&nbsp;&nbsp;&nbsp;
-																			<label class="">VLR LIQ:&nbsp;</label>
+																			<label class="text-weight-extrabold">Líquido&nbsp;</label>
 																			<input class="form-control text-right" id="TOTAL_LIQ" name="TOTAL_LIQ" placeholder="0,00" disabled="" type="text" value=<%=Transform(nTTotal,"@E 999,999,999,999.99")%>></input>
 																		</div> 
 																</div>

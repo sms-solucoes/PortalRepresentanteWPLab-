@@ -141,15 +141,12 @@
 
 													<!-- linha 1: dados da empresa -->
 													<div class="row form-group">
-														<div class="col-lg-8">
+														<div class="col-lg-5">
 															<label class="control-label">Filial de Faturamento</label>
 															<%=cFilFat%>
 														</div>
-													</div>
-
-													<!-- linha 1: dados da empresa -->
-													<div class="row form-group">
-														<div class="col-lg-8">
+														
+														<div class="col-lg-7">
 															<label class="control-label">Cliente</label>
 															<%=cCliente%>
 														</div>
@@ -162,21 +159,18 @@
 															<%=cTabela%>
 														</div>
 																  
-													 	<div class="col-lg-4"> 
+													 	<div class="col-lg-3"> 
 															<label class="control-label">Condição de Pagamento</label>
 															<%=cCondPag%>
 														</div>
-													</div>
-
-													<!-- linha 3: input  -->
-													<div class="row form-group">
-													 	<div class="col-lg-4"> 
+														
+														<div class="col-lg-2"> 
 															<label class="control-label">% Trade</label>
 															<%=cTrade%>
 															<%=cTradeBase%>
 														</div>
 																  
-													 	<div class="col-lg-4"> 
+													 	<div class="col-lg-3"> 
 															<label class="control-label">Aplicação</label>
 															<%=cAplicacao%>
 														</div>
@@ -184,13 +178,13 @@
 
 													<!-- linha 6: Observações  -->
 													<div class="row form-group">		
-														<div class="col-md-5">
+														<div class="col-md-6">
 															<label class="control-label" for="textareaDefault">Observação Interna</label>
 															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XOBSINT" name="C5_XOBSINT" <%=Iif(!lEdit,'disabled','')%>><%=cObsInterna%></textarea>
 														</div> 
 														<div class="col-md-6"> 	<!-- style="display:none;" PARA NÃO EXIBIR-->
 															<label class="control-label" for="textareaDefault">Observação para Nota Fiscal</label>
-															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XMSGNF" name="C5_XMSGNF" <%=Iif(!lEdit,'disabled','')%>><%=cObsNota%></textarea>
+															<textarea class="form-control" rows="3" data-plugin-maxlength="" maxlength="240" id="C5_XMSGNF" name="C5_XMSGNF" disabled><%=cObsNota%></textarea>
 														</div>
 													</div>
 													<br>
@@ -396,6 +390,7 @@
 								$("#C5_XTRADEBASE").val(dados[2])
 
 								selProd();
+								atualizaMsgNota()
 							}
 						}
 				});
@@ -736,6 +731,8 @@
 						});
 					$("#C5_XTRADE").val(tradeBase)
 					$("#C5_XTRADE").focus()
+				} else {
+					atualizaMsgNota()
 				}
 			}
 
@@ -955,7 +952,7 @@
 					campo = document.createElement('select');
 					campo.setAttribute('class', 'selectpicker');
 					campo.setAttribute('data-live-search', 'true');
-					campo.setAttribute('data-width','500px');
+					campo.setAttribute('data-width','280px');
 					campo.setAttribute('id', 'C6_PRODUTO'+linha);
 					campo.setAttribute('name', 'C6_PRODUTO'+linha);
 					campo.setAttribute('required','')
@@ -1145,23 +1142,31 @@
 				if(!msgAtu.includes(oc) && oc !== ''){
 					msgAtu.push(oc)
 				}
-
+				msgAtu = msgAtu.toString()
+				if(msgAtu.substr(0,1)==","){
+					msgAtu = msgAtu.substr(1)
+				}
 				$('#TXTORDEM').val(msgAtu.toString())
-				montaMsgNota()
+				atualizaMsgNota()
 			}
 
-			function atualizaMsgNota(obj){
-				var aplicacao	= obj.value;
+			function atualizaMsgNota(){
+				var aplicacao	= $("#C5_XAPLIC").val();
 				var trade		= $("#C5_XTRADE").val();
 				var msg			= ""
 
-				if(aplicacao == 'BO'){
-					msg = 'Desconto comercial trade '+trade+'% - BOLETO'
-				}else if(aplicacao == 'NF'){
-					msg = 'Desconto comercial trade '+trade+'% - NOTA FISCAL'
-				}else if(aplicacao == 'CC'){
-					msg = 'Desconto comercial trade '+trade+'% - CONTA CORRENTE'
+				if(trade == "0" || trade == 0){
+					msg = ''
+				}else{
+					if(aplicacao == 'BO'){
+						msg = 'Desconto comercial trade '+trade+'% - BOLETO'
+					}else if(aplicacao == 'NF'){
+						msg = 'Desconto comercial trade '+trade+'% - NOTA FISCAL'
+					}else if(aplicacao == 'CC'){
+						msg = 'Desconto comercial trade '+trade+'% - CONTA CORRENTE'
+					}
 				}
+
 
 				$('#TXTMSGNOTA').val(msg)
 				montaMsgNota()
@@ -1522,7 +1527,7 @@
 	   					backdrop: true,
 	   					callback: function (result) {
 	   						btnSlv.removeAttr('disabled');
-	   						dialogSlv.modal('hide');   
+							bootbox.hideAll();  
 	   					}
 	   				});
 	   			}).done(function(strXml) {
@@ -1538,7 +1543,7 @@
 							backdrop: true,
 							callback: function (result) {
 								btnSlv.removeAttr('disabled');
-								dialogSlv.modal('hide');   
+								bootbox.hideAll();  
 							}
 						});
 	   				} else {
@@ -1551,7 +1556,7 @@
 	   						backdrop: true,
 	   						callback: function (result) {
 	   							document.location.href = "U_PedVenda.apw?PR=<%=cLCodLogin%>"; 
-	   							dialogSlv.modal('hide');  
+	   							bootbox.hideAll();  
 	   						}
 	   					});
 	

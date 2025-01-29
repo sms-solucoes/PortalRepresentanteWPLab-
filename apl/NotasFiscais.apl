@@ -92,7 +92,7 @@ Web Extended Init cHtml Start U_inSite()
 	
 	//Filtros
     cTopo:= '<div class="row form-group">'
-    cTopo+= '	<div class="col-sm-12" align="right">'
+    cTopo+= '	<div class="col-sm-12" align="left">'
     cTopo+= '	<form name="formGrid" id="formGrid" method="POST" action="U_NotasFiscais.apw?PR='+cCodLogin+'">'
      /*
     cTopo+= '		<label class="col-md-2 control-label">Cliente:</label>'
@@ -106,7 +106,7 @@ Web Extended Init cHtml Start U_inSite()
     cTopo+= '			</div>'
     cTopo+= '		</div>'
   	*/
-  	cTopo+= '		<label class="col-md-1 control-label">Emissão De:</label>'
+  	cTopo+= '		<label class="col-md-2 control-label">Emissão De:</label>'
     cTopo+= '  		<div class="col-md-3">'
 	cTopo+= '		 	<div class="input-group">'
     cTopo+= '    			<span class="input-group-addon">'
@@ -118,7 +118,7 @@ Web Extended Init cHtml Start U_inSite()
     cTopo+= '			</div>'
     cTopo+= '		</div>'       
   
-    cTopo+= '		<label class="col-md-1 control-label">Emissão Até:</label>'
+    cTopo+= '		<label class="col-md-2 control-label">Emissão Até:</label>'
 	cTopo+= '		<div class="col-md-3">'
 	cTopo+= '			<div class="input-group">'
     cTopo+= '				<span class="input-group-addon">'
@@ -141,7 +141,7 @@ Web Extended Init cHtml Start U_inSite()
 	// Busca as notas fiscais
 	cQry := " SELECT DISTINCT F2_FILIAL, F2_DOC, F2_SERIE, F2_CLIENTE, F2_LOJA, A1_NREDUZ, F2_EMISSAO, F2_VALMERC, F2_VALFAT, F2_CHVNFE, D2_PEDIDO, F2_VEND1 VEND, SF2.R_E_C_N_O_ RECSF2 "
 	cQry += " FROM "+RetSqlName("SF2")+" SF2 "
-	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
+	cQry += " INNER JOIN "+RetSqlName("SA1")+" SA1 ON A1_FILIAL = F2_FILIAL AND A1_COD = F2_CLIENTE AND A1_LOJA = F2_LOJA AND SA1.D_E_L_E_T_ = ' ' "
 	cQry += " INNER JOIN "+RetSqlName("SD2")+" SD2 ON D2_FILIAL = F2_FILIAL AND D2_DOC = F2_DOC AND D2_SERIE = F2_SERIE AND SD2.D_E_L_E_T_ = ' ' "
 	cQry += " WHERE " // AND F2_FILIAL = '"+xFilial("SF2")+"'
 	// If HttpSession->Tipo = 'S' //Supervisor acessa todas as informações da sua equipe
