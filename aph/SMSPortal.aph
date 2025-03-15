@@ -227,7 +227,7 @@
 					</div>	
 	
 					<div class="col-lg-7">
-						<!-- Vendas Mï¿½s a Mï¿½s (x R$1.000,00) -->
+						<!-- Vendas Mês a Mês (x R$1.000,00) -->
 						 <%=cLVendaMes%>
 					</div>
 					<!-- end: page -->
