@@ -102,7 +102,7 @@ Web Extended Init cHtml Start U_inSite()
 				{"Total","C6_VALOR","100px","text-right","N",.F.,.F.,.T.,"0,00",.F.,""},;
 				{"Desconto (%)","C6_DESCONT","*","text-right","N",.T.,.F.,.F.,"0",.F.,""},;
 				{"Qtd. Bônus","C6_BONUS","*","text-right","N",.T.,.T.,.F.,"0",.F.,""},;
-				{"Ord. Compra","C6_NUMPCOM","*","text-right","C",.T.,.T.,.F.,"",.F.,""},;
+				{"Ord. Compra","C6_PEDCLI","*","text-right","C",.T.,.T.,.F.,"",.F.,""},;
 				{"","ACAO","*","text-center","X",.F.,.F.,.F.,"",.F.,""}};
 		
 	// Cria o cabeçalho dos Itens
@@ -211,10 +211,10 @@ Web Extended Init cHtml Start U_inSite()
 				 	//Campo obrigatório
 					cOrcItens += Iif(aItens[nLin][7],'required="" aria-required="true" ','')
 					//Inicia todos os campos desabilitados
-					If aItens[nLin,2] == "C6_NUMPCOM" 
+					If aItens[nLin,2] == "C6_PEDCLI" 
 						cOrcItens+='onchange="javascript:atualizaOC(this) "'
 					endif
-					If aItens[nLin,2] <> ("C6_NUMPCOM") 
+					If aItens[nLin,2] <> ("C6_PEDCLI") 
 						cOrcItens += 'disabled '
 						cOrcItens += 'value="'+Alltrim(xValue)+'">'
 					endif
@@ -452,7 +452,7 @@ Web Extended Init cHtml Start U_inSite()
 					aadd(aLinhaSC5,{"C6_PRUNIT" ,A410Arred(nPrcVen, "C6_PRCVEN"),Nil})
 					aadd(aLinhaSC5,{"C6_PRCVEN" ,A410Arred(nPrcVen, "C6_PRCVEN"),Nil})
 					aadd(aLinhaSC5,{"C6_VALOR" , NoRound( nValor, 2 ), Nil}) 
-					aadd(aLinhaSC5,{"C6_NUMPCOM" , nNumpcom, Nil}) 
+					aadd(aLinhaSC5,{"C6_PEDCLI" , nNumpcom, Nil}) 
 					aadd(aItemSC5,aLinhaSC5)
 					// Salva a posicao inicial deste produto caso precise ajustar estoque
 					if val(nBonus) > 0
