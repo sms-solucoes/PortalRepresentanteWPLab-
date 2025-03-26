@@ -533,15 +533,15 @@ Web Extended Init cHtml Start U_inSite()
 				else
 					cHtml:= cNumOrigem+" - Bonificacao: "+ SC5->C5_NUM + "<br><br>"
 
-					// dbSelectArea("SC5")
-					// SC5->(DbSetOrder(1))
-					// If SC5->(dbSeek(xFilial("SC5")+cNumOrigem))
-					// 	SC5->C5_XBONUS := SC5->C5_NUM
-					// ENDIF
+					dbSelectArea("SC5")
+					SC5->(DbSetOrder(1))
+					If SC5->(dbSeek(xFilial("SC5")+cNumOrigem))
+						SC5->C5_XBONUS := SC5->C5_NUM
+					ENDIF
 
-					// If SC5->(dbSeek(xFilial("SC5")+ SC5->C5_NUM))
-					// 	SC5->C5_XORIG := cNumOrigem
-					// ENDIF
+					If SC5->(dbSeek(xFilial("SC5")+ SC5->C5_NUM))
+						SC5->C5_XORIG := cNumOrigem
+					ENDIF
 				endif
 			endif
 
@@ -769,7 +769,7 @@ Web Extended Init cHtml Start U_inSite()
 		cQry+="	,ACQ.ACQ_DATATE " 
 		cQry+=" FROM "+RetSqlName("ACR")+" ACR "
 		cQry+=" JOIN ACQ010 ACQ ON ACQ.ACQ_CODPRO = ACR.ACR_CODPRO AND ACQ.ACQ_FILIAL = ACR.ACR_FILIAL AND ACR.D_E_L_E_T_ = ' ' "
-		cQry+=" Where ACQ.ACQ_FILIAL = '"+xFilial("ACR")+"' "
+		cQry+=" Where ACQ.ACQ_FILIAL = '0301' "
 		cQry+=" And ACQ.ACQ_CODPRO = '"+cProduto+"' "
 
 		If Select("ACR") > 0

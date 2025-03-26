@@ -206,9 +206,9 @@ Web Extended Init cHtml Start U_inSite()
         	cItens+='   	<a href="#" data-toggle="tooltip" data-original-title="Abrir DANFE" title="" onClick="javascript:ViewDanfe('+cValtoChar(QRY->RECSF2)+',1);">'
         	cItens+='			<i class="fa fa-file-pdf-o"></i>'
         	cItens+='		</a>'
-			cItens+='   	<a href="#" data-toggle="tooltip" data-original-title="Abrir XML" title="" onClick="javascript:ViewDanfe('+cValtoChar(QRY->RECSF2)+',2);">'
-        	cItens+='			<i class="fa fa-file-excel-o"></i>'
-        	cItens+='		</a>'
+			// cItens+='   	<a href="#" data-toggle="tooltip" data-original-title="Abrir XML" title="" onClick="javascript:ViewDanfe('+cValtoChar(QRY->RECSF2)+',2);">'
+        	// cItens+='			<i class="fa fa-file-excel-o"></i>'
+        	// cItens+='		</a>'
 	    Endif
 	    cItens+='	</td>'
 	    cItens+='</tr>'+CRLF
