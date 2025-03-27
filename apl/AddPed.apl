@@ -309,6 +309,7 @@ PRIVATE cDirOrc 	:= "anexosPortal\orcamento\"
 PRIVATE cDirErro  := "erro\"
 PRIVATE aItens	:= {}
 PRIVATE cNumSC5	:= ""
+PRIVATE cNumBon	:= ""
 PRIVATE cAplicacao:= ""
 PRIVATE lRet		:= .T.
 PRIVATE lPneu		:= .T.
@@ -532,19 +533,32 @@ Web Extended Init cHtml Start U_inSite()
 					cHtml:= "errobonus" 
 				else
 					cHtml:= cNumOrigem+" - Bonificacao: "+ SC5->C5_NUM + "<br><br>"
+					cNumBon := SC5->C5_NUM
+
+					// Salva a área atual
+					aAreaSC5 := SC5->(GetArea())
 
 					dbSelectArea("SC5")
 					SC5->(DbSetOrder(1))
 					If SC5->(dbSeek(xFilial("SC5")+cNumOrigem))
-						SC5->C5_XBONUS := SC5->C5_NUM
+						RecLock('SC5', .F.)
+						SC5->C5_XBONUS := cNumBon
+						MsUnLock()
 					ENDIF
 
-					If SC5->(dbSeek(xFilial("SC5")+ SC5->C5_NUM))
+					// Atualiza o pedido de bonificação
+					dbSelectArea("SC5")
+					SC5->(DbSetOrder(1))
+					If SC5->(dbSeek(xFilial("SC5")+ cNumBon))
+						RecLock('SC5', .F.)
 						SC5->C5_XORIG := cNumOrigem
+						MsUnLock()
 					ENDIF
+
+					// Restaura a área original
+					RestArea(aAreaSC5)
 				endif
 			endif
-
 		EndIf
 	Else
 		cHtml:= "erro"
@@ -769,8 +783,10 @@ Web Extended Init cHtml Start U_inSite()
 		cQry+="	,ACQ.ACQ_DATATE " 
 		cQry+=" FROM "+RetSqlName("ACR")+" ACR "
 		cQry+=" JOIN ACQ010 ACQ ON ACQ.ACQ_CODPRO = ACR.ACR_CODPRO AND ACQ.ACQ_FILIAL = ACR.ACR_FILIAL AND ACR.D_E_L_E_T_ = ' ' "
-		cQry+=" Where ACQ.ACQ_FILIAL = '0301' "
+		cQry+=" Where ACQ.ACQ_FILIAL = '"+xFilial("ACR")+"' "
 		cQry+=" And ACQ.ACQ_CODPRO = '"+cProduto+"' "
+
+		CONOUT("@@@QRY - bonificacao: " + cQry)
 
 		If Select("ACR") > 0
 			ACR->(dbCloseArea())
@@ -779,7 +795,12 @@ Web Extended Init cHtml Start U_inSite()
 		
 		//Preenche o select de produtos
 		While ACR->(!Eof()) 
-			if date() < stod(ACR->ACQ_DATATE) .AND. date() > stod(ACR->ACQ_DATDE)
+
+			CONOUT("@@@QRY - bonificacao:" + cvaltochar(stod(ACR->ACQ_DATATE)))
+			CONOUT("@@@QRY - bonificacao:" + cvaltochar(stod(ACR->ACQ_DATDE)))
+
+			if date() <= stod(ACR->ACQ_DATATE) .AND. date() >= stod(ACR->ACQ_DATDE)
+				CONOUT("@@@QRY - bonificacao: entrou aqui")
 				aAdd(aRet,cvaltochar(ACR->ACR_LOTE))
 				aAdd(aRet,cvaltochar(ACR->ACQ_QUANT))
 			endif
